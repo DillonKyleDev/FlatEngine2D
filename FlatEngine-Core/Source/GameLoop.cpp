@@ -70,21 +70,10 @@ namespace FlatEngine
 		RunUpdateOnScripts();
 		F_Physics->Update(GetDeltaTime());
 
-		static bool b_made = false;
-		static b2BodyId id;
-
-		//if (!b_made)
-		//{
-		//	Physics::BodyProps newprops;
-		//	F_Physics->CreateBox(newprops, id);
-		//	b_made = true;
-		//}
-		//Vector2 pos = Vector2(b2Body_GetPosition(id).x, b2Body_GetPosition(id).y);
-		//LogVector2(pos, "Pos: ");
-
 		std::map<long, Body> bodies = GetLoadedScene()->GetBodies();
 		for (std::map<long, Body>::iterator iterator = bodies.begin(); iterator != bodies.end(); iterator++)
 		{
+			//LogInt(iterator->second.GetBoxes().size());
 			//LogVector2(iterator->second.GetPosition(), "Pos: ");
 			for (Box& box : iterator->second.GetBoxes())
 			{

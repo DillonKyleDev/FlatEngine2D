@@ -275,11 +275,10 @@ namespace FlatGui
 	{
 		json projectJson;
 		FL::LoadGameProject(path, projectJson);
-
-		FL::F_sceneViewCameraObject = GameObject();
-		Transform* sceneViewTransform = FL::F_sceneViewCameraObject.AddTransform();
+		
+		Transform* sceneViewTransform = FL::F_sceneViewCameraObject->GetTransform();
 		Vector3 sceneCameraPos = Vector3();
-		Camera* sceneViewCamera = FL::F_sceneViewCameraObject.AddCamera();		
+		Camera* sceneViewCamera = FL::F_sceneViewCameraObject->GetCamera();		
 
 		if (projectJson["Project Properties"][0] != "NULL")
 		{			
@@ -475,18 +474,9 @@ namespace FlatGui
 		tm timeSaved = project.GetSavedTime();
 
 		Vector3 sceneViewPos = Vector3();
-		Camera* sceneViewCamera = FL::F_sceneViewCameraObject.GetCamera();
-		if (sceneViewCamera == nullptr)
-		{
-			FL::F_sceneViewCameraObject = GameObject();
-			sceneViewCamera = FL::F_sceneViewCameraObject.AddCamera();
-			Transform* sceneViewCameraTransform = FL::F_sceneViewCameraObject.AddTransform();
-			sceneViewPos = sceneViewCameraTransform->GetPosition();
-		}
-		else
-		{
-			sceneViewPos = FL::F_sceneViewCameraObject.GetTransform()->GetPosition();
-		}
+		Camera* sceneViewCamera = FL::F_sceneViewCameraObject->GetCamera();
+		Transform* sceneViewCameraTransform = FL::F_sceneViewCameraObject->GetTransform();
+		sceneViewPos = sceneViewCameraTransform->GetPosition();
 
 		json properties = json::object({
 			{ "path", path },
@@ -2096,8 +2086,8 @@ namespace FlatGui
 				scrolling.x += mouseDelta.x;
 				scrolling.y += mouseDelta.y;
 				lastMousePos = mousePos;	
-				FL::F_sceneViewCameraObject.GetCamera()->AddToHorizontalViewAngle(-mouseDelta.x * 0.25f);
-				FL::F_sceneViewCameraObject.GetCamera()->AddToVerticalViewAngle(mouseDelta.y * 0.25f);
+				FL::F_sceneViewCameraObject->GetCamera()->AddToHorizontalViewAngle(-mouseDelta.x * 0.25f);
+				FL::F_sceneViewCameraObject->GetCamera()->AddToVerticalViewAngle(mouseDelta.y * 0.25f);
 			}
 			if (ImGui::IsItemDeactivated())
 			{				

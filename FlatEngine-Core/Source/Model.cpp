@@ -260,10 +260,10 @@ namespace FlatEngine
         switch (viewport)
         {
         case ViewportType::SceneView:
-            primaryCamera = F_sceneViewCameraObject.GetCamera();
+            primaryCamera = F_sceneViewCameraObject->GetCamera();
             if (primaryCamera != nullptr)
             {
-                cameraPosition = F_sceneViewCameraObject.GetTransform()->GetPosition();
+                cameraPosition = F_sceneViewCameraObject->GetTransform()->GetPosition();
             }
             break;
         case ViewportType::GameView:

@@ -111,7 +111,7 @@ namespace FlatEngine
 			b2ContactHitEvent* hitEvent = contactEvents.hitEvents + i;
 			if (hitEvent->approachSpeed > hitSpeedForSound)
 			{
-				// Play sound
+				// Play sound, etc..
 			}
 		}
 	}

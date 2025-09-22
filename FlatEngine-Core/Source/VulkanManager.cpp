@@ -22,6 +22,7 @@
 
 namespace FlatEngine
 {
+    GameObject* F_sceneViewCameraObject = nullptr;
     std::string F_selectedMaterialName = "";
     ValidationLayers VM_validationLayers = ValidationLayers();
     uint32_t VM_currentFrame = 0;
@@ -758,6 +759,11 @@ namespace FlatEngine
 
     void VulkanManager::CreateSceneViewGridObjects()
     {
+        F_sceneViewCameraObject = F_sceneViewGridObjects.CreateGameObject();
+        F_sceneViewCameraObject->SetIsSceneViewGridObject(true);
+        F_sceneViewCameraObject->SetName("SceneViewCamera");
+        F_sceneViewCameraObject->AddCamera();
+
         GameObject* grid = F_sceneViewGridObjects.CreateGameObject();
         grid->SetIsSceneViewGridObject(true);
         grid->SetName("Grid");
@@ -838,41 +844,23 @@ namespace FlatEngine
 
             for (std::pair<long, Mesh> mesh : F_sceneViewGridObjects.GetMeshes())
             {
-                std::string materialName = mesh.second.GetMaterialName();
-                if (mesh.second.Initialized() && materialName != "")
+                std::shared_ptr<Material> material = mesh.second.GetMaterial();
+                if (mesh.second.Initialized() && material != nullptr)
                 {
-                    if (m_engineMaterials.count(materialName))
-                    {
-                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
-                        m_renderToTextureRenderPass.RecordCommandBuffer(m_engineMaterials.at(materialName)->GetGraphicsPipeline());
-                        m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable
-                    }                    
+                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
+                    m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
+                    m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                 }
             }
            
             for (std::pair<long, Mesh> mesh : FlatEngine::GetMeshes())
             {
-                std::string materialName = mesh.second.GetMaterialName();
-                if (mesh.second.Initialized() && materialName != "")
+                std::shared_ptr<Material> material = mesh.second.GetMaterial();
+                if (mesh.second.Initialized() && material != nullptr)
                 {
-                    if (m_engineMaterials.count(materialName))
-                    {
-                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
-                        m_renderToTextureRenderPass.RecordCommandBuffer(m_engineMaterials.at(materialName)->GetGraphicsPipeline());
-                        m_renderToTextureRenderPass.DrawIndexed(mesh.second);
-                    }
-                    else if (m_sceneViewMaterials.count(materialName))
-                    {
-                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
-                        m_renderToTextureRenderPass.RecordCommandBuffer(m_sceneViewMaterials.at(materialName)->GetGraphicsPipeline());
-                        m_renderToTextureRenderPass.DrawIndexed(mesh.second);
-                    }
-                    else if (m_gameViewMaterials.count(materialName))
-                    {
-                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
-                        m_renderToTextureRenderPass.RecordCommandBuffer(m_gameViewMaterials.at(materialName)->GetGraphicsPipeline());
-                        m_renderToTextureRenderPass.DrawIndexed(mesh.second);
-                    }
+                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
+                    m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
+                    m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                 }
             }
 

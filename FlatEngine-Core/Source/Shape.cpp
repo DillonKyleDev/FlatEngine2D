@@ -178,11 +178,13 @@ namespace FlatEngine
 		return m_shapeProps;
 	}
 
+	// Creates a stand-alone shape, not attached to a particular body
 	void Shape::CreateShape()
 	{
 		F_Physics->CreateShape(this);
 	}
 
+	// Creates a shape and links it to a Body, affecting it's properties
 	void Shape::CreateBodyShape()
 	{
 		F_Physics->CreateBodyShape(m_parentBody, this);

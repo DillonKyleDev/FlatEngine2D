@@ -187,11 +187,7 @@ namespace FlatGui
 	{
 		Vector3 position = transform->GetPosition();
 		Vector3 rotation = transform->GetRotations();
-		if (transform->GetParent()->GetBody() != nullptr)
-		{
-			position = transform->GetParent()->GetBody()->GetPosition();
-			rotation.z = transform->GetParent()->GetBody()->GetRotation();
-		}
+
 		float xPos = position.x;
 		float yPos = position.y;
 		float zPos = position.z;

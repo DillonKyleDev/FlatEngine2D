@@ -563,7 +563,7 @@ namespace FlatEngine
 			box.SetShapeProps(shapeProps);
 		}
 		m_boxes.push_back(box);
-		m_boxes.back().CreateShape();
+		m_boxes.back().CreateBodyShape();
 	}
 
 	void Body::AddCircle(Shape::ShapeProps shapeProps)
@@ -574,7 +574,7 @@ namespace FlatEngine
 			circle.SetShapeProps(shapeProps);
 		}		
 		m_circles.push_back(circle);		
-		m_circles.back().CreateShape();
+		m_circles.back().CreateBodyShape();
 	}
 
 	void Body::AddCapsule(Shape::ShapeProps shapeProps)
@@ -585,7 +585,7 @@ namespace FlatEngine
 			capsule.SetShapeProps(shapeProps);
 		}
 		m_capsules.push_back(capsule);
-		m_capsules.back().CreateShape();
+		m_capsules.back().CreateBodyShape();
 	}
 
 	void Body::AddPolygon(Shape::ShapeProps shapeProps)
@@ -596,7 +596,7 @@ namespace FlatEngine
 			polygon.SetShapeProps(shapeProps);
 		}
 		m_polygons.push_back(polygon);
-		m_polygons.back().CreateShape();
+		m_polygons.back().CreateBodyShape();
 	}
 
 	void Body::AddChain(Shape::ShapeProps shapeProps)
@@ -607,7 +607,7 @@ namespace FlatEngine
 			chain.SetShapeProps(shapeProps);
 		}
 		m_chains.push_back(chain);
-		m_chains.back().CreateShape();
+		m_chains.back().CreateBodyShape();
 	}
 
 	void Body::AddJoint(Joint* joint)

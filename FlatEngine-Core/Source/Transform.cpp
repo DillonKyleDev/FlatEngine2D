@@ -7,14 +7,15 @@
 
 namespace FlatEngine
 {
-	Transform::Transform(long myID, long parentID)
+	Transform::Transform(GameObject* parent, long myID, long parentID)
 	{
 		SetType(T_Transform);
 		SetID(myID);
 		SetParentID(parentID);
+		m_parent = parent;
 		m_position = Vector3(0, 0, 0);
 		m_scale = Vector3(1, 1, 1);		
-		m_rotation = Vector3(0, 0, 0);;
+		m_rotation = Vector3(0, 0, 0);
 	}
 
 	Transform::~Transform()
@@ -44,6 +45,12 @@ namespace FlatEngine
 		return data;
 	}
 
+
+	GameObject* Transform::GetParentPtr()
+	{
+		return m_parent;
+	}
+
 	float Transform::ClampRotation(float rotation, float min, float max)
 	{
 		if (rotation < min)
@@ -60,7 +67,7 @@ namespace FlatEngine
 
 	Vector3 Transform::GetAbsolutePosition()
 	{
-		Body* body = GetParent()->GetBody();
+		Body* body = m_parent->GetBody();
 
 		if (body != nullptr)
 		{
@@ -71,9 +78,9 @@ namespace FlatEngine
 
 		Vector3 positionOrigin = Vector3();
 
-		if (GetParent()->GetParent() != nullptr)
+		if (m_parent->GetParent() != nullptr)
 		{
-			positionOrigin = GetParent()->GetParent()->GetTransform()->GetAbsolutePosition();
+			positionOrigin = m_parent->GetParent()->GetTransform()->GetAbsolutePosition();
 		}
 
 		return positionOrigin + m_position;
@@ -85,9 +92,9 @@ namespace FlatEngine
 
 		Vector3 positionOrigin = Vector3();
 
-		if (GetParent()->GetParent() != nullptr)
+		if (m_parent->GetParent() != nullptr)
 		{
-			positionOrigin = GetParent()->GetParent()->GetTransform()->GetAbsolutePosition();
+			positionOrigin = m_parent->GetParent()->GetTransform()->GetAbsolutePosition();
 		}
 
 		return positionOrigin;
@@ -99,14 +106,14 @@ namespace FlatEngine
 
 		Body* body = nullptr;
 		
-		if (GetParent() != nullptr)
+		if (m_parent != nullptr)
 		{
-			body = GetParent()->GetBody();
+			body = m_parent->GetBody();
 		}
 
 		if (body != nullptr)
 		{
-			Vector2 newPos = Vector2(newPosition.x, newPosition.y);
+			Vector2 newPos = Vector2(newPosition.x, newPosition.z);
 			body->SetPosition(newPos);
 		}
 	}
@@ -114,16 +121,16 @@ namespace FlatEngine
 	Vector3 Transform::GetPosition()
 	{
 		Body* body = nullptr;
-		if (GetParent() != nullptr)
+		if (m_parent != nullptr)
 		{
-			body = GetParent()->GetBody();
+			body = m_parent->GetBody();
 		}
 
 		if (body != nullptr)
 		{
 			Vector2 bodyPos = body->GetPosition();
 			m_position.x = bodyPos.x;
-			m_position.y = bodyPos.y;
+			m_position.z = bodyPos.y;
 		}
 
 		return m_position;
@@ -133,9 +140,9 @@ namespace FlatEngine
 	{
 		Vector3 scaleOrigin = 1;
 
-		if (GetParent()->GetParent() != nullptr)
+		if (m_parent->GetParent() != nullptr)
 		{
-			scaleOrigin = GetParent()->GetParent()->GetTransform()->GetAbsoluteScale();
+			scaleOrigin = m_parent->GetParent()->GetTransform()->GetAbsoluteScale();
 		}
 
 		return scaleOrigin * m_scale;
@@ -154,16 +161,16 @@ namespace FlatEngine
 	void Transform::SetYRotation(float newRotation)
 	{
 		m_rotation.y = ClampRotation(newRotation);
+
+		if (m_parent != nullptr && m_parent->GetBody() != nullptr)
+		{
+			m_parent->GetBody()->SetRotation(-m_rotation.y);
+		}
 	}
 
 	void Transform::SetZRotation(float newRotation)
 	{
 		m_rotation.z = ClampRotation(newRotation);
-
-		if (GetParent()->GetBody() != nullptr)
-		{
-			GetParent()->GetBody()->SetRotation(m_rotation.z);
-		}
 	}
 
 	void Transform::SetRotation(Vector3 rotation)
@@ -178,23 +185,23 @@ namespace FlatEngine
 
 	float Transform::GetRotation()
 	{
-		Body* body = GetParent()->GetBody();
+		Body* body = m_parent->GetBody();
 
 		if (body != nullptr)
 		{
-			m_rotation.z = body->GetRotation();
+			m_rotation.y = -body->GetRotation();
 		}
 
-		return m_rotation.z;
+		return m_rotation.y;
 	}
 
 	Vector3 Transform::GetRotations()
 	{
-		Body* body = GetParent()->GetBody();
+		Body* body = m_parent->GetBody();
 
 		if (body != nullptr)
 		{
-			m_rotation.z = body->GetRotation();
+			m_rotation.y = -body->GetRotation();
 		}
 
 		return m_rotation;

@@ -13,14 +13,10 @@ layout(location = 1) in vec3 inColor;
 layout(location = 2) in vec2 inTexCoord;
 layout(location = 3) in vec3 inNormal;
 
-layout(location = 0) out vec4 fragColor;
-layout(location = 1) out vec2 fragTexCoord;
-layout(location = 2) out vec3 normal;
+layout(location = 0) out vec2 fragTexCoord;
+
 
 void main() {    
-    gl_Position = ubo.viewAndProjection * (ubo.model * vec4(inPosition.x, inPosition.y, inPosition.z, 1) + ubo.meshPosition);    
-    fragColor = vec4(inColor.x, inColor.y, inColor.z, 1);
+    gl_Position = ubo.viewAndProjection * (ubo.model * vec4(inPosition.x, inPosition.y, inPosition.z, 1) + ubo.meshPosition);        
     fragTexCoord = inTexCoord;
-    vec4 rotatedNormal = ubo.model * vec4(inNormal.x, inNormal.y, inNormal.z, 1);
-    normal = vec3(rotatedNormal.x, rotatedNormal.y, rotatedNormal.z);
 }

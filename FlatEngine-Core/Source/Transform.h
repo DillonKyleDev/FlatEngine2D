@@ -12,15 +12,19 @@ using namespace nlohmann::literals;
 
 namespace FlatEngine
 {
+	class GameObject;
+
 	class Transform : public Component
 	{
 	public:
-		Transform(long myID = -1, long parentID = -1);
+		Transform(GameObject* parent, long myID = -1, long parentID = -1);
 		~Transform();
 		std::string GetData();
 
-		static float ClampRotation(float rotation, float min = -180.0f, float max = 180.0f);
-				
+		GameObject* GetParentPtr();
+
+		static float ClampRotation(float rotation, float min = -180.0f, float max = 180.0f);				
+
 		void SetPosition(Vector3 position);
 		Vector3 GetPosition();
 		Vector3 GetAbsolutePosition();
@@ -41,6 +45,7 @@ namespace FlatEngine
 		void Move(Vector3 moveBy);
 
 	private:
+		GameObject* m_parent;
 		Vector3 m_position;
 		Vector3 m_scale;		
 		Vector3 m_rotation;

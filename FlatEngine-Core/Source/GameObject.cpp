@@ -210,7 +210,7 @@ namespace FlatEngine
 			}
 		}
 
-		Transform transform = Transform(nextID, m_ID);
+		Transform transform = Transform(this, nextID, m_ID);
 		transform.SetActive(b_active);
 		transform.SetCollapsed(b_collapsed);
 
@@ -287,7 +287,11 @@ namespace FlatEngine
 		long nextID = ID;
 		if (nextID == -1)
 		{
-			if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+			if (m_b_isSceneViewGridObject)
+			{
+				nextID = F_sceneViewGridObjects.GetNextComponentID();
+			}
+			else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 			{
 				nextID = GetLoadedProject().GetPersistantGameObjectScene()->GetNextComponentID();
 			}
@@ -302,7 +306,11 @@ namespace FlatEngine
 		camera.SetCollapsed(b_collapsed);
 		
 		Camera* cameraPtr = nullptr;
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			cameraPtr = F_sceneViewGridObjects.AddCamera(camera, m_ID);
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			cameraPtr = GetLoadedProject().GetPersistantGameObjectScene()->AddCamera(camera, m_ID);
 		}
@@ -555,7 +563,7 @@ namespace FlatEngine
 		Body body = Body(nextID, m_ID);
 		body.SetCollapsed(b_collapsed);
 
-		bodyProps.position = position;
+		bodyProps.position = Vector2(position.x, position.z);
 		bodyProps.rotation = b2MakeRot(DegreesToRadians(rotation));
 
 		Body* bodyPtr = nullptr;
@@ -785,7 +793,11 @@ namespace FlatEngine
 	}
 	Sprite* GameObject::GetSprite()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetSpriteByOwner(m_ID);
 		}
@@ -797,7 +809,11 @@ namespace FlatEngine
 	}
 	Camera* GameObject::GetCamera()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return F_sceneViewGridObjects.GetCameraByOwner(m_ID);
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetCameraByOwner(m_ID);
 		}
@@ -809,7 +825,11 @@ namespace FlatEngine
 	}
 	Animation* GameObject::GetAnimation()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetAnimationByOwner(m_ID);
 		}
@@ -821,7 +841,11 @@ namespace FlatEngine
 	}
 	Audio* GameObject::GetAudio()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetAudioByOwner(m_ID);
 		}
@@ -833,7 +857,11 @@ namespace FlatEngine
 	}
 	Button* GameObject::GetButton()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetButtonByOwner(m_ID);
 		}
@@ -845,7 +873,11 @@ namespace FlatEngine
 	}
 	Canvas* GameObject::GetCanvas()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetCanvasByOwner(m_ID);
 		}
@@ -857,7 +889,11 @@ namespace FlatEngine
 	}
 	std::vector<Script*> GameObject::GetScripts()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return std::vector<Script*>();
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetScriptsByOwner(m_ID);
 		}
@@ -869,7 +905,11 @@ namespace FlatEngine
 	}
 	Text* GameObject::GetText()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetTextByOwner(m_ID);
 		}
@@ -881,7 +921,11 @@ namespace FlatEngine
 	}
 	CharacterController* GameObject::GetCharacterController()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetCharacterControllerByOwner(m_ID);
 		}
@@ -893,7 +937,11 @@ namespace FlatEngine
 	}
 	Body* GameObject::GetBody()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetBodyByOwner(m_ID);
 		}
@@ -905,7 +953,11 @@ namespace FlatEngine
 	}
 	JointMaker* GameObject::GetJointMaker()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetJointMakerByOwner(m_ID);
 		}
@@ -917,7 +969,11 @@ namespace FlatEngine
 	}
 	TileMap* GameObject::GetTileMap()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return nullptr;
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetTileMapByOwner(m_ID);
 		}
@@ -930,7 +986,11 @@ namespace FlatEngine
 
 	Mesh* GameObject::GetMesh()
 	{
-		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		if (m_b_isSceneViewGridObject)
+		{
+			return F_sceneViewGridObjects.GetMeshByOwner(m_ID);
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
 		{
 			return GetLoadedProject().GetPersistantGameObjectScene()->GetMeshByOwner(m_ID);
 		}

@@ -189,7 +189,7 @@ namespace FlatEngine
 	extern Vector2 F_gameViewGridStep;
 
 	extern Camera* F_primaryCamera;
-	extern GameObject F_sceneViewCameraObject;
+	extern GameObject* F_sceneViewCameraObject;
 	extern bool F_b_sceneViewRightClicked;
 
 	// Scene View

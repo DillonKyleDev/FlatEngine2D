@@ -63,3 +63,10 @@ Deleting Mesh gameObjects does not work for all
 
 Crashes when changing Mesh material sometimes
 
+Crashes when you add images to images folder then go back to the engine while inside the images directorys
+
+Set up each component to have a GameObject* m_parentPtr so you can directly access it's parent instead of searching for it in the Scene.
+
+Reloading scene after stopping gameloop
+
+Rotations are in reverse, negative should go clockwise, positive should go counterclockwise

@@ -101,7 +101,6 @@ namespace FlatEngine
 	std::vector<std::pair<Collider*, Collider*>> F_ColliderPairs = std::vector<std::pair<Collider*, Collider*>>();
 
 	// Scene View
-	GameObject F_sceneViewCameraObject = GameObject();
 	Vector2* F_sceneViewCenter = nullptr;
 	Vector2* F_sceneViewGridStep = nullptr;
 	Vector2 F_sceneViewDimensions = Vector2();
@@ -110,7 +109,7 @@ namespace FlatEngine
 
 	void UpdateSceneViewCamera()
 	{
-		Camera* sceneViewCamera = F_sceneViewCameraObject.GetCamera();
+		Camera* sceneViewCamera = F_sceneViewCameraObject->GetCamera();
 
 		if (F_b_sceneViewRightClicked && sceneViewCamera != nullptr)
 		{			
@@ -154,7 +153,7 @@ namespace FlatEngine
 			Vector3& cameraVelocity = sceneViewCamera->GetVelocity();
 			if (cameraVelocity != 0)
 			{
-				Transform* transform = F_sceneViewCameraObject.GetTransform();
+				Transform* transform = F_sceneViewCameraObject->GetTransform();
 				Vector3 position = transform->GetPosition();
 				transform->SetPosition(position + cameraVelocity);
 				cameraVelocity = cameraVelocity * 0.95f;
@@ -988,7 +987,8 @@ namespace FlatEngine
 			Vector3 upDir = Vector3(rightDir.x, rightDir.y, 0).Cross(lookDir);
 			Vector3 downDir = Vector3(leftDir.x, leftDir.y, 0).Cross(lookDir);
 			float moveDamping = 0.005f;
-			Camera* sceneViewCamera = F_sceneViewCameraObject.GetCamera();
+			Camera* sceneViewCamera = F_sceneViewCameraObject->GetCamera();
+
 			if (engineContext->ActionPressed("MoveCameraLeft"))
 			{
 				sceneViewCamera->AddVelocity(Vector3(leftDir.x * moveDamping, leftDir.y * moveDamping, 0));

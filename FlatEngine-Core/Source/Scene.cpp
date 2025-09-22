@@ -163,14 +163,16 @@ namespace FlatEngine
 		GameObject newObject = GameObject(parentID, myID);
 		newObject.SetPersistant(m_b_persistantScene);
 		newObject.SetIsSceneViewGridObject(m_b_sceneViewGridScene);
-		newObject.AddTransform();
 
 		if (parentID != -1 && m_sceneObjects.count(parentID))
 		{
 			m_sceneObjects.at(parentID).AddChild(newObject.GetID());
 		}
 
-		return AddSceneObject(newObject);
+		GameObject* newObjectPtr = AddSceneObject(newObject);
+		newObjectPtr->AddTransform();
+
+		return newObjectPtr;
 	}
 
 	void Scene::DeleteGameObject(long sceneObjectID)
