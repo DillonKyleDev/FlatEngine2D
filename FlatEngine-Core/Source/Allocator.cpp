@@ -89,12 +89,22 @@ namespace FlatEngine
 
 		for (uint32_t i = 0; i < m_textureCount; i++)
 		{
+			VkShaderStageFlags shaderStage;
+			if (i == 0)
+			{
+				shaderStage = VK_SHADER_STAGE_FRAGMENT_BIT;
+			}
+			else
+			{
+				shaderStage = VK_SHADER_STAGE_VERTEX_BIT;
+			}
+
 			VkDescriptorSetLayoutBinding samplerLayoutBinding{};
 			samplerLayoutBinding.binding = i + 1;
 			samplerLayoutBinding.descriptorCount = 1;
 			samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			samplerLayoutBinding.pImmutableSamplers = nullptr;
-			samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+			samplerLayoutBinding.stageFlags = shaderStage;
 
 			m_bindings.push_back(samplerLayoutBinding);
 		}
@@ -270,8 +280,8 @@ namespace FlatEngine
 				imageInfos.resize(m_textureCount);
 
 				for (size_t j = 0; j < textures.size(); j++)
-				{				
-					imageInfos[j].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL; // LOOK INTO THIS FOR EXPECTS VKIMAGE TO BE IN SHADER_READONLY_OPTIMAL ERROR
+				{									
+					imageInfos[j].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 					imageInfos[j].imageView = textures[j].GetImageViews()[i];
 					imageInfos[j].sampler = textures[j].GetSampler();
 

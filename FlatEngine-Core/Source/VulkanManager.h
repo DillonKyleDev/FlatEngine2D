@@ -87,7 +87,10 @@ namespace FlatEngine
         void FreeImGuiTexture(uint32_t allocatedFrom);
         // Scene View
         void CreateSceneViewGridObjects();
-        std::vector<VkDescriptorSet>& GetSceneViewDescriptorSets();        
+        std::vector<VkDescriptorSet>& GetSceneViewDescriptorSets();   
+        bool ShowSceneViewGridObjects();
+        void SetShowSceneViewGridObjects(bool b_showGridObjects);
+        void ToggleShowSceneViewGridObjects();
         // Game View
         std::vector<VkDescriptorSet>& GetGameViewDescriptorSets();
 
@@ -111,6 +114,8 @@ namespace FlatEngine
         std::map<std::string, std::shared_ptr<Material>> m_gameViewMaterials;
         Texture m_sceneViewTexture;
         Texture m_gameViewTexture;        
+
+        bool m_b_showGridObjects;
 
         VkInstance m_instance;
         WinSys m_winSystem;

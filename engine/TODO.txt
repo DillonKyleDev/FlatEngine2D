@@ -70,3 +70,13 @@ Set up each component to have a GameObject* m_parentPtr so you can directly acce
 Reloading scene after stopping gameloop
 
 Rotations are in reverse, negative should go clockwise, positive should go counterclockwise
+
+Fix duplicate id's found in several inspector elements.. example: JointMaker bodyA and bodyB.. Remove references when right-clicking inputs
+
+RENDERING ORDER
+
+Grid is rendering over scene objects
+
+Other objects rendering through other objects
+
+Handle non-consumed vertex and fragment data in shaders, probably by leaving them in the shader files and not using them or by creating separate pipelines

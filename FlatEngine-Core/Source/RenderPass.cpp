@@ -4,8 +4,10 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Vector3.h"
+#include "Vector4.h"
 #include "FlatEngine.h"
 #include "Camera.h"
+#include "Light.h"
 
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
@@ -498,8 +500,38 @@ namespace FlatEngine
         VkPipeline& pipeline = graphicsPipeline.GetGraphicsPipeline();
         VkPipelineLayout& pipelineLayout = graphicsPipeline.GetPipelineLayout();
 
+        std::map<long, Light>& lights = GetLights();
         PushConstants pushConstants;
-        pushConstants.lightDirection = glm::vec4(1);
+        int lightCounter = 0;
+
+        for (std::map<long, Light>::iterator light = lights.begin(); light != lights.end(); light++)
+        {
+            Vector3 dir = light->second.GetDirection();
+            Vector4 color = light->second.GetColor();
+
+            if (lightCounter == 0)
+            {
+                pushConstants.light1Direction = glm::normalize(glm::vec4(dir.x, dir.y, dir.z, 1));
+                pushConstants.light1Color = glm::vec4(color.x, color.y, color.z, color.w);
+            }
+            else if (lightCounter == 1)
+            {
+                pushConstants.light2Direction = glm::normalize(glm::vec4(dir.x, dir.y, dir.z, 1));
+                pushConstants.light2Color = glm::vec4(color.x, color.y, color.z, color.w);
+            }
+            else if (lightCounter == 2)
+            {
+                pushConstants.light3Direction = glm::normalize(glm::vec4(dir.x, dir.y, dir.z, 1));
+                pushConstants.light3Color = glm::vec4(color.x, color.y, color.z, color.w);
+            }
+            else if (lightCounter == 3)
+            {
+                pushConstants.light4Direction = glm::normalize(glm::vec4(dir.x, dir.y, dir.z, 1));
+                pushConstants.light4Color = glm::vec4(color.x, color.y, color.z, color.w);
+            }
+
+            lightCounter++;
+        }        
 
         uint32_t pushOffset = 0;
         uint32_t pushSize = sizeof(PushConstants);

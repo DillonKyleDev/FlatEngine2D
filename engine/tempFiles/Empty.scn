@@ -144,7 +144,7 @@
                 }
             ],
             "id": 2,
-            "name": "Spaceboy",
+            "name": "Link",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.10000000149011612,
@@ -219,7 +219,7 @@
             "children": [],
             "collidesTags": [
                 {
-                    "Ball": false
+                    "Ball": true
                 },
                 {
                     "Collectable": false
@@ -289,7 +289,7 @@
                     "xRotation": 0.0,
                     "xScale": 1.0,
                     "yPosition": 0.0,
-                    "yRotation": 0.0,
+                    "yRotation": -0.0,
                     "yScale": 1.0,
                     "zPosition": 0.0,
                     "zRotation": 0.0,

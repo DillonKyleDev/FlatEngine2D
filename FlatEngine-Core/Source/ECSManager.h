@@ -28,6 +28,7 @@ namespace FlatEngine
 	class TileMap;
 	class JointMaker;
 	class Mesh;
+	class Light;
 
 	class ECSManager
 	{
@@ -50,6 +51,7 @@ namespace FlatEngine
 		CharacterController* AddCharacterController(CharacterController characterController, long ownerID);	
 		TileMap* AddTileMap(TileMap tileMap, long ownerID);
 		Mesh* AddMesh(Mesh mesh, long ownerID);
+		Light* AddLight(Light light, long ownerID);
 
 		bool RemoveComponent(Component* component, long ownerID = -1);
 		bool RemoveTransform(long ownerID);
@@ -66,6 +68,7 @@ namespace FlatEngine
 		bool RemoveCharacterController(long ownerID);
 		bool RemoveTileMap(long ownerID);
 		bool RemoveMesh(long ownerID);
+		bool RemoveLight(long ownerID);
 
 		Transform* GetTransformByOwner(long ownerID);
 		Sprite* GetSpriteByOwner(long ownerID);
@@ -81,6 +84,7 @@ namespace FlatEngine
 		CharacterController* GetCharacterControllerByOwner(long ownerID);
 		TileMap* GetTileMapByOwner(long ownerID);
 		Mesh* GetMeshByOwner(long ownerID);
+		Light* GetLightByOwner(long ownerID);
 
 
 		std::map<long, Transform>& GetTransforms();
@@ -99,6 +103,7 @@ namespace FlatEngine
 		std::map<long, TileMap>& GetTileMaps();	
 		std::map<long, Mesh>& GetMeshes();
 		std::map<std::string, std::vector<Mesh>>& GetMeshesByMaterial();
+		std::map<long, Light>& GetLights();
 
 	private:
 		std::map<long, Transform> m_Transforms;
@@ -117,5 +122,6 @@ namespace FlatEngine
 		std::map<long, TileMap> m_TileMaps;		
 		std::map<long, Mesh> m_Meshes;
 		std::map<std::string, std::vector<Mesh>> m_MeshesByMaterial;
+		std::map<long, Light> m_Lights;
 	};
 }

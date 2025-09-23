@@ -451,6 +451,10 @@ namespace FlatGui
 				ImGui::Separator();
 				if (ImGui::BeginMenu("Widgets"))
 				{
+					if (ImGui::MenuItem("Toggle Grid"))
+					{
+						FL::F_VulkanManager->ToggleShowSceneViewGridObjects();
+					}
 					if (ImGui::BeginMenu("Scene View Icon Transparency"))
 					{					
 						FL::RenderSliderInt("##SceneViewIconTransparency", FG_iconTransparency, 1, 0, 255, 300);

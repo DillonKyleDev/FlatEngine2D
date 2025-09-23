@@ -54,8 +54,7 @@ namespace FlatEngine
 		VkPipelineRasterizationStateCreateInfo& GetRasterizerCreateInfos();
 		void SetColorBlendAttachmentCreateInfos(VkPipelineColorBlendAttachmentState colorBlendAttachmentInfos);
 		VkPipelineColorBlendAttachmentState& GetColorBlendAttachmentCreateInfos();
-
-		void RecordDefaultCommandBuffer(uint32_t imageIndex);
+		
 		RenderPass* GetRenderPass();
 
 	private:

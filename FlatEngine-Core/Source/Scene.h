@@ -19,6 +19,7 @@
 #include "Chain.h"
 #include "JointMaker.h"
 #include "Mesh.h"
+#include "Light.h"
 
 #include <vector>
 #include <map>
@@ -81,6 +82,7 @@ namespace FlatEngine
 		CharacterController* AddCharacterController(CharacterController characterController, long ownerID);
 		TileMap* AddTileMap(TileMap tileMap, long ownerID);
 		Mesh* AddMesh(Mesh mesh, long ownerID);
+		Light* AddLight(Light light, long ownerID);
 
 		void RemoveComponent(Component* component, long ownerID = -1);
 
@@ -98,6 +100,7 @@ namespace FlatEngine
 		CharacterController* GetCharacterControllerByOwner(long ownerID);
 		TileMap* GetTileMapByOwner(long ownerID);
 		Mesh* GetMeshByOwner(long ownerID);
+		Light* GetLightByOwner(long ownerID);
 
 		std::map<long, Transform> &GetTransforms();
 		std::map<long, Sprite>& GetSprites();
@@ -114,6 +117,8 @@ namespace FlatEngine
 		std::map<long, CharacterController>& GetCharacterControllers();
 		std::map<long, TileMap>& GetTileMaps();		
 		std::map<long, Mesh>& GetMeshes();
+		std::map<long, Light>& GetLights();
+
 		std::map<std::string, std::vector<Mesh>>& GetMeshesByMaterial();
 		void SetPersistantScene(bool b_persistant);
 		bool IsPersistantScene();

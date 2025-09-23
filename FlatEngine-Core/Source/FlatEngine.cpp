@@ -402,6 +402,11 @@ namespace FlatEngine
 		return GetLoadedScene()->GetMeshes();
 	}
 
+	std::map<long, Light>& GetLights()
+	{
+		return GetLoadedScene()->GetLights();
+	}
+
 	void SetupImGui()
 	{
 		IMGUI_CHECKVERSION();
@@ -3820,6 +3825,18 @@ namespace FlatEngine
 								}
 
 								newMesh->CreateResources();
+							}
+							else if (type == "Light")
+							{
+								Light* newLight = loadedObject->AddLight(id, b_isActive, b_isCollapsed);
+
+								Vector3 lightDirection = Vector3(CheckJsonFloat(componentJson, "directionX", objectName), CheckJsonFloat(componentJson, "directionY", objectName), CheckJsonFloat(componentJson, "directionZ", objectName));
+								Vector4 lightColor = Vector4(CheckJsonFloat(componentJson, "colorX", objectName), CheckJsonFloat(componentJson, "colorY", objectName), CheckJsonFloat(componentJson, "colorZ", objectName), CheckJsonFloat(componentJson, "colorW", objectName));
+								LightType lightType = (LightType)(CheckJsonInt(componentJson, "lightType", objectName));
+
+								newLight->SetDirection(lightDirection);
+								newLight->SetColor(lightColor);
+								newLight->SetLightType(lightType);
 							}
 							else if (type == "TileMap")
 							{

@@ -65,6 +65,7 @@ namespace FlatEngine
         m_gameViewMaterials = std::map<std::string, std::shared_ptr<Material>>();
         m_sceneViewTexture = Texture();
         m_gameViewTexture = Texture();
+        m_b_showGridObjects = true;
 
         F_sceneViewGridObjects.SetIsSceneViewGridScene(true);
     }
@@ -806,6 +807,21 @@ namespace FlatEngine
         return m_sceneViewTexture.GetDescriptorSets();
     }
 
+    bool VulkanManager::ShowSceneViewGridObjects()
+    {
+        return m_b_showGridObjects;
+    }
+
+    void VulkanManager::SetShowSceneViewGridObjects(bool b_showGridObjects)
+    {
+        m_b_showGridObjects = b_showGridObjects;
+    }
+
+    void VulkanManager::ToggleShowSceneViewGridObjects()
+    {
+        m_b_showGridObjects = !m_b_showGridObjects;
+    }
+
     std::vector<VkDescriptorSet>& VulkanManager::GetGameViewDescriptorSets()
     {
         return m_gameViewTexture.GetDescriptorSets();
@@ -842,14 +858,17 @@ namespace FlatEngine
         {
             m_renderToTextureRenderPass.BeginRenderPass(imageIndex);
 
-            for (std::pair<long, Mesh> mesh : F_sceneViewGridObjects.GetMeshes())
+            if (m_b_showGridObjects)
             {
-                std::shared_ptr<Material> material = mesh.second.GetMaterial();
-                if (mesh.second.Initialized() && material != nullptr)
+                for (std::pair<long, Mesh> mesh : F_sceneViewGridObjects.GetMeshes())
                 {
-                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
-                    m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-                    m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                    std::shared_ptr<Material> material = mesh.second.GetMaterial();
+                    if (mesh.second.Initialized() && material != nullptr)
+                    {
+                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
+                        m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
+                        m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                    }
                 }
             }
            

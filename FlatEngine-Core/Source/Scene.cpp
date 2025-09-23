@@ -439,6 +439,12 @@ namespace FlatEngine
 		return m_ECSManager.AddMesh(mesh, ownerID);
 	}
 
+	Light* Scene::AddLight(Light light, long ownerID)
+	{
+		KeepNextComponentIDUpToDate(light.GetID());
+		return m_ECSManager.AddLight(light, ownerID);
+	}
+
 	void Scene::RemoveComponent(Component* component, long ownerID)
 	{
 		if (component != nullptr)
@@ -521,6 +527,11 @@ namespace FlatEngine
 		return m_ECSManager.GetMeshByOwner(ownerID);
 	}
 
+	Light* Scene::GetLightByOwner(long ownerID)
+	{
+		return m_ECSManager.GetLightByOwner(ownerID);
+	}
+
 	std::map<long, Transform> &Scene::GetTransforms()
 	{
 		return m_ECSManager.GetTransforms();
@@ -580,6 +591,10 @@ namespace FlatEngine
 	std::map<long, Mesh>& Scene::GetMeshes()
 	{
 		return m_ECSManager.GetMeshes();
+	}
+	std::map<long, Light>& Scene::GetLights()
+	{
+		return m_ECSManager.GetLights();
 	}
 	std::map<std::string, std::vector<Mesh>>& Scene::GetMeshesByMaterial()
 	{

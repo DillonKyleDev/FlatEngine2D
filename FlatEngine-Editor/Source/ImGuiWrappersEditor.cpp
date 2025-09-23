@@ -2835,6 +2835,59 @@ namespace FlatGui
 		}
 	}
 
+	void RenderLightComponent(Light* light)
+	{
+		bool b_isActive = light->IsActive();
+		long ID = light->GetID();		
+		Vector3 direction = light->GetDirection();
+		float xDir = direction.x;
+		float yDir = direction.y;
+		float zDir = direction.z;
+		Vector4 color = light->GetColor();
+		float colorX = color.x;
+		float colorY = color.y;
+		float colorZ = color.z;
+		float colorW = color.w;
+
+		if (RenderIsActiveCheckbox(b_isActive))
+		{
+			light->SetActive(b_isActive);
+		}
+
+		if (FL::PushTable("##LightProperties" + std::to_string(ID), 2))
+		{
+			if (FL::RenderFloatDragTableRow("##XDirection" + std::to_string(ID), "X Direction", xDir, 0.1f, -FLT_MAX, FLT_MAX))
+			{
+				light->SetDirection(Vector3(xDir, yDir, zDir));
+			}
+			if (FL::RenderFloatDragTableRow("##YDirection" + std::to_string(ID), "Y Direction", yDir, 0.1f, -FLT_MAX, FLT_MAX))
+			{
+				light->SetDirection(Vector3(xDir, yDir, zDir));
+			}
+			if (FL::RenderFloatDragTableRow("##ZDirection" + std::to_string(ID), "Z Direction", zDir, 0.1f, -FLT_MAX, FLT_MAX))
+			{
+				light->SetDirection(Vector3(xDir, yDir, zDir));
+			}
+			if (FL::RenderFloatDragTableRow("##ColorX" + std::to_string(ID), "Red", colorX, 0.001f, 0, 1))
+			{
+				light->SetColor(Vector4(colorX, colorY, colorZ, colorW));
+			}
+			if (FL::RenderFloatDragTableRow("##ColorY" + std::to_string(ID), "Green", colorY, 0.001f, 0, 1))
+			{
+				light->SetColor(Vector4(colorX, colorY, colorZ, colorW));
+			}
+			if (FL::RenderFloatDragTableRow("##ColorZ" + std::to_string(ID), "Blue", colorZ, 0.001f, 0, 1))
+			{
+				light->SetColor(Vector4(colorX, colorY, colorZ, colorW));
+			}
+			if (FL::RenderFloatDragTableRow("##ColorW" + std::to_string(ID), "Alpha", colorW, 0.001f, 0, 1))
+			{
+				light->SetColor(Vector4(colorX, colorY, colorZ, colorW));
+			}
+			FL::PopTable();
+		}
+	}
+
 	void BeginToolTip(std::string title)
 	{		
 		ImGui::BeginTooltip();

@@ -108,6 +108,7 @@ namespace FlatEngine
 	extern std::shared_ptr<VulkanManager> F_VulkanManager;	
 	extern Vector2 AddImageToDrawList(VkDescriptorSet texture, Vector2 positionInGrid, Vector2 relativeCenterPoint, float textureWidthPx, float textureHeightPx, Vector2 offset, Vector2 scale, bool b_scalesWithZoom, float zoomMultiplier, ImDrawList* drawList, float rotation = 0, ImU32 addColor = 1, Vector2 uvStart = Vector2(0, 0), Vector2 uvEnd = Vector2(1, 1));
 	extern std::map<long, Mesh>& GetMeshes();
+	extern std::map<long, Light>& GetLights();
 
 	extern std::shared_ptr<Application> F_Application;
 	extern sol::state F_Lua;

@@ -1,22 +1,39 @@
 #version 450
 
 layout(push_constant, std430) uniform pc {
-    vec4 lightDir;
+    vec4 light1Dir;
+    vec4 light1Color;
+    vec4 light2Dir;
+    vec4 light2Color;
+    vec4 light3Dir;
+    vec4 light3Color;
+    vec4 light4Dir;
+    vec4 light4Color;
 };
 
 layout(location = 0) in vec2 fragTexCoord;
 layout(location = 1) in vec3 normal;
+layout(location = 2) in vec4 viewDirection;
 
 layout(location = 0) out vec4 outColor;
 
 layout(binding = 1) uniform sampler2D texSampler;
 
-void main() {
-    // Textures are sampled using the built-in texture function.
-    // It takes a sampler and coordinate as arguments. 
-    // The sampler automatically takes care of the filtering and transformations in the background
-    vec4 newLightDir = vec4(-1,-1,1,1);
-    outColor = texture(texSampler, fragTexCoord);
-    float intensity = dot(normal, vec3(newLightDir.x, newLightDir.y, newLightDir.z));
-    outColor.xyz *= clamp(intensity, .6, 1.5); 
+void main() {    
+    float smoothness = 1;
+    vec4 specularTint = vec4(.5,.5,.5,1);
+
+    vec4 reflectionDir = reflect(-light1Dir, vec4(normal, 1));    
+    vec4 halfVector = normalize(light1Dir + viewDirection);
+    vec4 albedo = texture(texSampler, fragTexCoord);     
+    albedo *= 1 - max(specularTint.x, max(specularTint.y, specularTint.z)); // energy conservation
+    
+    float phongIntensity = max(0, dot(viewDirection, reflectionDir));    
+    float blinPhongIntensity = max(0.0, dot(halfVector, vec4(normal, 1)));
+
+    vec4 diffuse = albedo * light1Color * clamp(dot(light1Dir, vec4(normal, 1)), 0, 1);
+    diffuse.w = 1;
+    vec4 specular = specularTint * light1Color * vec4(pow(blinPhongIntensity, smoothness * 100));
+    specular *= max(0, dot(light1Dir, viewDirection)); // To remove incorrect highlight when lit from behind, but it's not the best approach, becomes 0 at 90 degrees
+    outColor = diffuse + specular;
 }

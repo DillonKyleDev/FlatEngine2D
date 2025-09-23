@@ -16,6 +16,7 @@
 #include "Component.h"
 #include "TileMap.h"
 #include "Mesh.h"
+#include "Light.h"
 
 #include "imgui.h"
 
@@ -139,6 +140,15 @@ namespace FlatGui
 						if (ImGui::MenuItem("Mesh"))
 						{
 							focusedObject->AddMesh(focusedObject);
+							ImGui::CloseCurrentPopup();
+						}
+					}
+
+					if (!focusedObject->HasComponent("Light"))
+					{
+						if (ImGui::MenuItem("Light"))
+						{
+							focusedObject->AddLight();
 							ImGui::CloseCurrentPopup();
 						}
 					}
@@ -414,6 +424,17 @@ namespace FlatGui
 								RenderMeshComponent(mesh);
 							}
 							EndComponent(mesh);
+						}
+
+						Light* light = focusedObject->GetLight();
+						if (light != nullptr)
+						{
+							BeginComponent(light, queuedForDelete);
+							if (!light->IsCollapsed())
+							{
+								RenderLightComponent(light);
+							}
+							EndComponent(light);
 						}
 
 						JointMaker* jointMaker = focusedObject->GetJointMaker();

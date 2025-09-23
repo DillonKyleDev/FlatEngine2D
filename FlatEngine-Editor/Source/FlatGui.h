@@ -67,6 +67,7 @@ namespace FlatEngine
 	class Mesh;
 	class Model;
 	class Material;
+	class Light;
 }
 
 using Vector2 = FL::Vector2;
@@ -112,6 +113,7 @@ using TileSet = FL::TileSet;
 using Mesh = FL::Mesh;
 using Model = FL::Model;
 using Material = FL::Material;
+using Light = FL::Light;
 
 namespace FlatGui
 {
@@ -269,6 +271,7 @@ namespace FlatGui
 	extern void RenderWheelJointProps(WheelJoint* joint);
 	extern void RenderTileMapComponent(TileMap* tileMap);
 	extern void RenderMeshComponent(Mesh* mesh);
+	extern void RenderLightComponent(Light* light);
 
 	// SceneView
 	extern void RenderSceneViewTooltip();

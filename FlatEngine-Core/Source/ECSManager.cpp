@@ -175,6 +175,12 @@ namespace FlatEngine
 		return &m_Meshes.at(ownerID);		
 	}
 
+	Light* ECSManager::AddLight(Light light, long ownerID)
+	{
+		m_Lights.emplace(ownerID, light);
+		return &m_Lights.at(ownerID);
+	}
+
 	// Get Components
 	Transform* ECSManager::GetTransformByOwner(long ownerID)
 	{
@@ -339,6 +345,18 @@ namespace FlatEngine
 		if (m_Meshes.count(ownerID))
 		{
 			return &m_Meshes.at(ownerID);
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	Light* ECSManager::GetLightByOwner(long ownerID)
+	{
+		if (m_Lights.count(ownerID))
+		{
+			return &m_Lights.at(ownerID);
 		}
 		else
 		{
@@ -583,6 +601,17 @@ namespace FlatEngine
 		return b_success;
 	}
 
+	bool ECSManager::RemoveLight(long ownerID)
+	{
+		bool b_success = false;
+		if (m_Lights.count(ownerID))
+		{			
+			m_Lights.erase(ownerID);
+			b_success = true;
+		}
+		return b_success;
+	}
+
 	std::map<long, Transform> &ECSManager::GetTransforms()
 	{
 		return m_Transforms;
@@ -646,5 +675,9 @@ namespace FlatEngine
 	std::map<std::string, std::vector<Mesh>>& ECSManager::GetMeshesByMaterial()
 	{
 		return m_MeshesByMaterial;
+	}
+	std::map<long, Light>& ECSManager::GetLights()
+	{
+		return m_Lights;
 	}
 }

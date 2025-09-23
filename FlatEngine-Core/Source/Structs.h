@@ -103,7 +103,14 @@ namespace FlatEngine
     };
 
     struct PushConstants {
-        glm::vec4 lightDirection;
+        glm::vec4 light1Direction;
+        glm::vec4 light1Color;
+        glm::vec4 light2Direction;
+        glm::vec4 light2Color;
+        glm::vec4 light3Direction;
+        glm::vec4 light3Color;
+        glm::vec4 light4Direction;
+        glm::vec4 light4Color;
     };
 
     struct SamplerProps {

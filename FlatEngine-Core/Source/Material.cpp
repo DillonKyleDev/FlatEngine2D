@@ -267,21 +267,4 @@ namespace FlatEngine
 	{
 		return m_renderPass;
 	}
-
-	void Material::RecordDefaultCommandBuffer(uint32_t imageIndex)
-	{
-		std::vector<VkCommandBuffer>& commandBuffers = m_renderPass->GetCommandBuffers();
-		VkPipeline& graphicsPipeline = m_graphicsPipeline.GetGraphicsPipeline();
-		VkPipelineLayout& pipelineLayout = m_graphicsPipeline.GetPipelineLayout();
-
-		PushConstants pushConstants;
-		pushConstants.lightDirection = glm::vec4(1);
-
-		uint32_t pushOffset = 0;
-		uint32_t pushSize = sizeof(PushConstants);
-
-		vkCmdPushConstants(commandBuffers[imageIndex], pipelineLayout, VK_SHADER_STAGE_FRAGMENT_BIT, pushOffset, pushSize, &pushConstants);
-
-		vkCmdBindPipeline(commandBuffers[imageIndex], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
-	}
 }

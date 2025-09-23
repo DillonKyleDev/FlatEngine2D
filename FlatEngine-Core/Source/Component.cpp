@@ -117,6 +117,10 @@ namespace FlatEngine
 			return "Mesh";
 			break;
 
+		case T_Light:
+			return "Light";
+			break;
+
 		default:
 			return "Null";
 		}

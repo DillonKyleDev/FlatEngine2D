@@ -12,6 +12,7 @@
 #include "CharacterController.h"
 #include "TileMap.h"
 #include "Mesh.h"
+#include "Light.h"
 #include "Project.h"
 
 
@@ -741,6 +742,50 @@ namespace FlatEngine
 		return meshPtr;
 	}
 
+	Light* GameObject::AddLight(long ID, bool b_active, bool b_collapsed)
+	{
+		long nextID = ID;
+		if (nextID == -1)
+		{
+			if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+			{
+				nextID = GetLoadedProject().GetPersistantGameObjectScene()->GetNextComponentID();
+			}
+			else if (m_b_isSceneViewGridObject)
+			{
+				nextID = F_sceneViewGridObjects.GetNextComponentID();
+			}
+			else if (GetLoadedScene() != nullptr)
+			{
+				nextID = GetLoadedScene()->GetNextComponentID();
+			}
+		}
+
+		Light light = Light(nextID, m_ID);
+		light.SetActive(b_active);
+		light.SetCollapsed(b_collapsed);
+
+		Light* lightPtr = nullptr;
+		if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		{
+			lightPtr = GetLoadedProject().GetPersistantGameObjectScene()->AddLight(light, m_ID);
+		}
+		else if (m_b_isSceneViewGridObject)
+		{
+			lightPtr = F_sceneViewGridObjects.AddLight(light, m_ID);
+		}
+		else if (GetLoadedScene() != nullptr)
+		{
+			lightPtr = GetLoadedScene()->AddLight(light, m_ID);
+		}
+
+		if (lightPtr != nullptr)
+		{
+			m_components.push_back(lightPtr);
+		}
+		return lightPtr;
+	}
+
 	Component* GameObject::GetComponent(ComponentTypes type)
 	{
 		for (int i = 0; i < m_components.size(); i++)
@@ -997,6 +1042,23 @@ namespace FlatEngine
 		else if (GetLoadedScene() != nullptr)
 		{
 			return GetLoadedScene()->GetMeshByOwner(m_ID);
+		}
+		return nullptr;
+	}
+
+	Light* GameObject::GetLight()
+	{
+		if (m_b_isSceneViewGridObject)
+		{
+			return F_sceneViewGridObjects.GetLightByOwner(m_ID);
+		}
+		else if (m_b_persistant && GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		{
+			return GetLoadedProject().GetPersistantGameObjectScene()->GetLightByOwner(m_ID);
+		}
+		else if (GetLoadedScene() != nullptr)
+		{
+			return GetLoadedScene()->GetLightByOwner(m_ID);
 		}
 		return nullptr;
 	}
