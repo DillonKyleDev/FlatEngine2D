@@ -96,7 +96,7 @@ namespace FlatEngine
 			}
 			else
 			{
-				shaderStage = VK_SHADER_STAGE_VERTEX_BIT;
+				shaderStage = VK_SHADER_STAGE_FRAGMENT_BIT; // VK_SHADER_STAGE_VERTEX_BIT
 			}
 
 			VkDescriptorSetLayoutBinding samplerLayoutBinding{};
@@ -263,7 +263,7 @@ namespace FlatEngine
 					VkDescriptorBufferInfo bufferInfo{};
 					bufferInfo.buffer = model.GetUniformBuffers()[i];
 					bufferInfo.offset = 0;
-					bufferInfo.range = sizeof(UniformBufferObject);
+					bufferInfo.range = sizeof(CustomUBO);
 
 					descriptorWrites[descriptorCounter].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 					descriptorWrites[descriptorCounter].dstSet = descriptorSets[i];

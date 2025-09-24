@@ -12,6 +12,8 @@ glslc.exe bump.frag -o compiledShaders/bumpFrag.spv
 glslc.exe water.vert -o compiledShaders/waterVert.spv
 glslc.exe water.frag -o compiledShaders/waterFrag.spv
 
+glslc.exe ubo.vert -o compiledShaders/uboVert.spv
+glslc.exe ubo.frag -o compiledShaders/uboFrag.spv
 
 
 pause

@@ -2719,6 +2719,8 @@ namespace FlatGui
 		std::string modelFileName = FL::GetFilenameFromPath(modelPath, true);
 		std::shared_ptr<Material> material = mesh->GetMaterial();
 		std::string materialName = "";
+		// UBO Data
+		std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
 
 		if (material != nullptr)
 		{
@@ -2831,6 +2833,45 @@ namespace FlatGui
 					}
 				}
 				textureCounter++;
+			}
+
+
+
+			for (std::string vec4Name : material->GetUBOVec4Names())
+			{
+				if (uboVec4s.count(vec4Name))
+				{
+					glm::vec4 uboVec4 = uboVec4s.at(vec4Name);
+					float vec4X = uboVec4.x;
+					float vec4Y = uboVec4.y;
+					float vec4Z = uboVec4.z;
+					float vec4W = uboVec4.w;
+
+					if (FL::RenderDragFloat(vec4Name + " X", 100, vec4X, 0.01f, -FLT_MAX, FLT_MAX))
+					{
+						uboVec4 = uboVec4s.at(vec4Name);
+						uboVec4.x = vec4X;
+						uboVec4s.at(vec4Name) = uboVec4;			
+					}
+					if (FL::RenderDragFloat(vec4Name + " Y", 100, vec4Y, 0.01f, -FLT_MAX, FLT_MAX))
+					{			
+						uboVec4 = uboVec4s.at(vec4Name);
+						uboVec4.y = vec4Y;
+						uboVec4s.at(vec4Name) = uboVec4;						
+					}
+					if (FL::RenderDragFloat(vec4Name + " Z", 100, vec4Z, 0.01f, -FLT_MAX, FLT_MAX))
+					{					
+						uboVec4 = uboVec4s.at(vec4Name);
+						uboVec4.z = vec4Z;
+						uboVec4s.at(vec4Name) = uboVec4;						
+					}
+					if (FL::RenderDragFloat(vec4Name + " W", 100, vec4W, 0.01f, -FLT_MAX, FLT_MAX))
+					{						
+						uboVec4 = uboVec4s.at(vec4Name);
+						uboVec4.w = vec4W;
+						uboVec4s.at(vec4Name) = uboVec4;						
+					}
+				}
 			}
 		}
 	}

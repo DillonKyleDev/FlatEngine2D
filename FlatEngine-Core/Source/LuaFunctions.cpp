@@ -476,7 +476,7 @@ namespace FlatEngine
 		);
 
 		F_Lua.new_usertype<Vector4>("Vector4",
-			sol::constructors<Vector4(), Vector4(float x, float y, float z, float w)>(),
+			sol::constructors<Vector4(), Vector4(float x, float y, float z, float w)>(),		
 			"SetX", &Vector4::SetX,
 			"x", &Vector4::GetX,
 			"SetY", &Vector4::SetY,
@@ -509,6 +509,7 @@ namespace FlatEngine
 			"GetCanvas", &GameObject::GetCanvas,
 			"GetText", &GameObject::GetText,
 			"GetBody", &GameObject::GetBody,
+			"GetMesh", &GameObject::GetMesh,
 			"GetCharacterController", &GameObject::GetCharacterController,		
 			"GetTileMap", &GameObject::GetTileMap,
 			"HasComponent", &GameObject::HasComponentLua,
@@ -723,6 +724,10 @@ namespace FlatEngine
 			"ApplyAngularImpulse", &Body::ApplyAngularImpulse,
 			"GetLinearVelocity", &Body::GetLinearVelocity,
 			"GetAngularVelocity", &Body::GetAngularVelocity
+		);
+
+		F_Lua.new_usertype<Mesh>("Mesh",
+			"SetUBOVec4", &Mesh::SetUBOVec4			
 		);
 
 		F_Lua.new_usertype<CharacterController>("CharacterController",

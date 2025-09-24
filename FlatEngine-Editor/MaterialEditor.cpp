@@ -97,6 +97,7 @@ namespace FlatGui
 				vertexInputText = currentMaterial->GetVertexPath();
 				fragmentInputText = currentMaterial->GetFragmentPath();
 				uint32_t textureCount = currentMaterial->GetTextureCount();
+				std::vector<std::string> uboVec4Names = currentMaterial->GetUBOVec4Names();
 
 				if (FL::RenderInput("##VertexShaderPathInput", "Vertex Shader Path", vertexInputText))
 				{
@@ -116,6 +117,15 @@ namespace FlatGui
 
 				std::string textureCountText = "Textures: " + std::to_string(textureCount);
 				ImGui::Text(textureCountText.c_str());
+
+				// Whenever we add a new property to a materials UBO, we should make sure to recreate the commandBuffers in the Models of the Meshes that use that material, taking into account the new Uniform Buffer Size
+				ImGui::Text("Vec4s");
+				for (std::string vec4Name : uboVec4Names)
+				{
+					// TODO: Add editing of and adding of vec4 names here, then "refresh" the Meshes (emplace new std::pair<std::string, glm::vec4> in their m_uboVec4s members) that use this Material to account for the new vec4, or add a button to refresh it in the Mesh Component in inspector.
+					// Currently the vec4s are global (the same for all Materials) because they and are created in constructor of Material and added to the Meshes m_uboVec4s in Mesh::SetMaterial() method. TODO: Make this dynamic
+					ImGui::Text(vec4Name.c_str());
+				}
 
 				//int textureCounter = 0;
 				//for (Texture& texture : currentMaterial->GetTextures())

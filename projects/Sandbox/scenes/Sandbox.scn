@@ -1257,6 +1257,14 @@
                         }
                     ],
                     "type": "Mesh"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "Alpha (Lua)",
+                    "id": 36,
+                    "scriptParameters": [],
+                    "type": "Script"
                 }
             ],
             "id": 10,
@@ -1731,175 +1739,6 @@
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "id": 30,
-                    "type": "Transform",
-                    "xPosition": -3.0,
-                    "xRotation": 0.0,
-                    "xScale": 1.0,
-                    "yPosition": 0.0,
-                    "yRotation": 0.0,
-                    "yScale": 1.0,
-                    "zPosition": -1.600000023841858,
-                    "zRotation": 0.0,
-                    "zScale": 1.0
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 31,
-                    "materialName": "Bump",
-                    "modelPath": "..\\projects\\Sandbox\\models\\water.obj",
-                    "textures": [
-                        {
-                            "path": "..\\engine\\images\\resources\\marble-heights.png"
-                        },
-                        {
-                            "path": "..\\engine\\images\\resources\\marble-heights.png"
-                        }
-                    ],
-                    "type": "Mesh"
-                }
-            ],
-            "id": 15,
-            "name": "BumpPlane",
-            "parent": -1,
-            "prefabName": "",
-            "spawnLocationX": -3.0,
-            "spawnLocationY": 0.0,
-            "tags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ]
-        },
-        {
-            "_isActive": true,
-            "_isPersistant": false,
-            "_isPrefab": false,
-            "children": [],
-            "collidesTags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ],
-            "components": [
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
                     "id": 32,
                     "type": "Transform",
                     "xPosition": 4.400000095367432,
@@ -2085,16 +1924,16 @@
                     "colorX": 1.0,
                     "colorY": 1.0,
                     "colorZ": 1.0,
-                    "directionX": 0.0,
-                    "directionY": 0.0,
-                    "directionZ": 41.900001525878906,
+                    "directionX": -4.300000190734863,
+                    "directionY": 0.20000000298023224,
+                    "directionZ": 16.299999237060547,
                     "id": 35,
                     "lightType": 2,
                     "type": "Light"
                 }
             ],
             "id": 17,
-            "name": "GameObject(17)",
+            "name": "Light",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,

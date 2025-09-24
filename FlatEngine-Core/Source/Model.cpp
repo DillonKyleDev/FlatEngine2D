@@ -233,7 +233,7 @@ namespace FlatEngine
     {
         // Refer to - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
 
-        VkDeviceSize bufferSize = sizeof(UniformBufferObject);
+        VkDeviceSize bufferSize = sizeof(CustomUBO);
 
         m_uniformBuffers.resize(VM_MAX_FRAMES_IN_FLIGHT);
         m_uniformBuffersMemory.resize(VM_MAX_FRAMES_IN_FLIGHT);
@@ -256,6 +256,7 @@ namespace FlatEngine
         glm::mat4 meshRotation = transform->GetRotationMatrix();
         Camera* primaryCamera = nullptr;
         Vector3 cameraPosition = Vector3();
+        std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
 
         switch (viewport)
         {
@@ -277,6 +278,7 @@ namespace FlatEngine
             break;
         }
                  
+        
         if (primaryCamera != nullptr)
         {
             Vector3 lookDir = primaryCamera->GetLookDirection();
@@ -284,22 +286,39 @@ namespace FlatEngine
             float farClip = primaryCamera->GetFarClippingDistance();
             float perspectiveAngle = primaryCamera->GetPerspectiveAngle();
             glm::vec3 up = glm::vec3(0.0f, 0.0f, 1.0f);
+            
+            static glm::vec4 meshPos;
+            static glm::vec4 viewportCameraPos;
+            static glm::mat4 model;            
+            static glm::vec4 cameraLookDir;
+            static glm::mat4 projection;
+            static glm::float32 time;
 
-            glm::vec4 meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);
-            glm::vec4 viewportCameraPos = glm::vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0);
-            glm::mat4 model = meshRotation * meshScale;
-            glm::vec4 cameraLookDir = glm::vec4(lookDir.x, lookDir.y, lookDir.z, 0);
+            meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);
+            viewportCameraPos = glm::vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0);
+            model = meshRotation * meshScale;
+            cameraLookDir = glm::vec4(lookDir.x, lookDir.y, lookDir.z, 0);
             glm::mat4 view = glm::lookAt(cameraPosition.GetGLMVec3(), glm::vec3(cameraPosition.x + cameraLookDir.x, cameraPosition.y + cameraLookDir.y, cameraPosition.z + cameraLookDir.z), up);
             float aspectRatio = (float)(winSystem.GetExtent().width / winSystem.GetExtent().height);
-            glm::mat4 projection = glm::perspective(glm::radians(perspectiveAngle), aspectRatio, nearClip, farClip);
-            projection[1][1] *= -1;
+            projection = glm::perspective(glm::radians(perspectiveAngle), aspectRatio, nearClip, farClip);
+            projection[1][1] *= -1;            
 
-            UniformBufferObject ubo{};
-            ubo.meshPosition = meshPos;
-            ubo.cameraPosition = viewportCameraPos;
-            ubo.model = model;
-            ubo.viewAndProjection = projection * view;
-            ubo.time = (glm::float32)((glm::float32)GetEngineTime() / 1000.0f);
+            CustomUBO ubo{};
+
+            BaseUBO base{};
+            base.meshPosition = meshPos;
+            base.cameraPosition = viewportCameraPos;
+            base.model = model;
+            base.viewAndProjection = projection * view;            
+            ubo.BaseUBO = base;
+
+            int vec4Counter = 0;
+            for (std::map<std::string, glm::vec4>::iterator uboVec4 = uboVec4s.begin(); uboVec4 != uboVec4s.end(); uboVec4++)
+            {               
+                ubo.vec4s[vec4Counter] = uboVec4->second;
+                vec4Counter++;
+            }                              
+
             memcpy(m_uniformBuffersMapped[VM_currentFrame], &ubo, sizeof(ubo));
         }
     }

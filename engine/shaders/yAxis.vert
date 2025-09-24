@@ -4,8 +4,8 @@ layout(set = 0, binding = 0) uniform UniformBufferObject {
     vec4 meshPosition;
     vec4 cameraPosition;
     mat4 model;
-    mat4 viewAndProjection;    
-    float time;
+    mat4 viewAndProjection;        
+    vec4 vec4s[32];
 } ubo;
 
 layout(location = 0) in vec3 inPosition;

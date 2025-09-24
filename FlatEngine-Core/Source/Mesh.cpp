@@ -22,6 +22,8 @@ namespace FlatEngine
 		m_allocationPoolIndex = -1;
 		m_b_initialized = false;
 
+		m_uboVec4s = std::map<std::string, glm::vec4>();
+
 		// handles		
 		m_parent = parent;
 		m_logicalDevice = &F_VulkanManager->GetLogicalDevice();
@@ -142,6 +144,8 @@ namespace FlatEngine
 		{
 			m_materialName = m_material->GetName();
 			m_textures.resize(m_material->GetTextureCount());
+
+			m_uboVec4s.emplace("Alpha", 1.0f);
 		}
 	}
 
@@ -153,6 +157,8 @@ namespace FlatEngine
 		if (m_material != nullptr)
 		{
 			m_textures.resize(m_material->GetTextureCount());
+
+			m_uboVec4s.emplace("Alpha", 1.0f);
 		}
 	}
 
@@ -247,4 +253,47 @@ namespace FlatEngine
 	{
 		return m_descriptorSets;
 	}
+
+	//std::map<std::string, glm::float32>& Mesh::GetUBOFloats()
+	//{
+	//	return m_uboFloats;
+	//}
+	//std::map<std::string, glm::vec2>& Mesh::GetUBOVec2s()
+	//{
+	//	return m_uboVec2s;
+	//}
+	//std::map<std::string, glm::vec3>& Mesh::GetUBOVec3s()
+	//{
+	//	return m_uboVec3s;
+	//}
+	std::map<std::string, glm::vec4>& Mesh::GetUBOVec4s()
+	{
+		return m_uboVec4s;
+	}
+	//void Mesh::SetUBOVec4(std::string name, glm::vec4 value)
+	//{
+	//	if (m_uboVec4s.count(name))
+	//	{
+	//		m_uboVec4s.at(name) = value;
+	//	}
+	//	else
+	//	{
+	//		m_uboVec4s.emplace(name, value);
+	//	}
+	//}
+	void Mesh::SetUBOVec4(std::string name, Vector4 value)
+	{
+		if (m_uboVec4s.count(name))
+		{
+			m_uboVec4s.at(name) = glm::vec4(value.x, value.y, value.z, value.w);
+		}
+		else
+		{
+			m_uboVec4s.emplace(name, glm::vec4(value.x, value.y, value.z, value.w));
+		}
+	}
+	//std::map<std::string, glm::mat4>& Mesh::GetUBOMat4s()
+	//{
+	//	return m_uboMat4s;
+	//}
 }

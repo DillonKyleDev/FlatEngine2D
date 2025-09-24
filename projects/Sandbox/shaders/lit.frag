@@ -32,8 +32,10 @@ void main() {
     float blinPhongIntensity = max(0.0, dot(halfVector, vec4(normal, 1)));
 
     vec4 diffuse = albedo * light1Color * clamp(dot(light1Dir, vec4(normal, 1)), 0, 1);
-    diffuse.w = 1;
     vec4 specular = specularTint * light1Color * vec4(pow(blinPhongIntensity, smoothness * 100));
     specular *= max(0, dot(light1Dir, viewDirection)); // To remove incorrect highlight when lit from behind, but it's not the best approach, becomes 0 at 90 degrees
     outColor = diffuse + specular;
+    outColor.w = 1;
+
+    
 }

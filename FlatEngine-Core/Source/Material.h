@@ -57,6 +57,12 @@ namespace FlatEngine
 		
 		RenderPass* GetRenderPass();
 
+		//std::vector<std::string>& GetUBOFloatNames();
+		//std::vector<std::string>& GetUBOVec2Names();
+		//std::vector<std::string>& GetUBOVec3Names();
+		std::vector<std::string>& GetUBOVec4Names();
+		//std::vector<std::string>& GetUBOMat4Names();
+
 	private:
 		void SetDefaultValues();
 
@@ -78,6 +84,13 @@ namespace FlatEngine
 		std::vector<uint32_t> m_pushConstOffsets;
 		std::vector<uint32_t> m_pushConstSizes;
 		std::vector<const void*> m_pushValues;
+
+		// Uniform Buffer Data
+		//std::vector<std::string> m_uboFloatNames;
+		//std::vector<std::string> m_uboVec2Names;
+		//std::vector<std::string> m_uboVec3Names;
+		std::vector<std::string> m_uboVec4Names;
+		//std::vector<std::string> m_uboMat4Names;
 
 		// GraphicsPipeline Configuration structs
 		VkPipelineRasterizationStateCreateInfo m_rasterizer{};

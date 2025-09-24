@@ -92,7 +92,7 @@
                     "colorZ": 1.0,
                     "directionX": 0.0,
                     "directionY": 0.0,
-                    "directionZ": 43.400001525878906,
+                    "directionZ": 32.599998474121094,
                     "id": 1,
                     "lightType": 2,
                     "type": "Light"
@@ -100,175 +100,6 @@
             ],
             "id": 0,
             "name": "Light",
-            "parent": -1,
-            "prefabName": "",
-            "spawnLocationX": 0.0,
-            "spawnLocationY": 0.0,
-            "tags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ]
-        },
-        {
-            "_isActive": true,
-            "_isPersistant": false,
-            "_isPrefab": false,
-            "children": [],
-            "collidesTags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ],
-            "components": [
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 2,
-                    "type": "Transform",
-                    "xPosition": 0.0,
-                    "xRotation": 0.0,
-                    "xScale": 1.0,
-                    "yPosition": 0.0,
-                    "yRotation": 0.0,
-                    "yScale": 1.0,
-                    "zPosition": -19.399999618530273,
-                    "zRotation": 0.0,
-                    "zScale": 1.0
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 3,
-                    "materialName": "Bump",
-                    "modelPath": "..\\projects\\Sandbox\\models\\water.obj",
-                    "textures": [
-                        {
-                            "path": "..\\engine\\images\\resources\\marble-heights.png"
-                        },
-                        {
-                            "path": "..\\engine\\images\\resources\\marble-heights.png"
-                        }
-                    ],
-                    "type": "Mesh"
-                }
-            ],
-            "id": 1,
-            "name": "Plane",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,
@@ -423,7 +254,7 @@
                     "_isActive": true,
                     "_isCollapsed": false,
                     "id": 5,
-                    "materialName": "Lit",
+                    "materialName": "UBO",
                     "modelPath": "..\\projects\\Sandbox\\models\\uvSphereSmooth.obj",
                     "textures": [
                         {
@@ -431,6 +262,14 @@
                         }
                     ],
                     "type": "Mesh"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "Alpha (Lua)",
+                    "id": 6,
+                    "scriptParameters": [],
+                    "type": "Script"
                 }
             ],
             "id": 2,

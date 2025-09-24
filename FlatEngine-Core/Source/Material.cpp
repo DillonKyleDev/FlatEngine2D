@@ -43,6 +43,14 @@ namespace FlatEngine
 		m_logicalDevice = nullptr;
 		m_b_initialized = false;		
 		m_renderPass = nullptr;
+
+		//m_uboFloatNames = std::vector<std::string>();
+		//m_uboVec2Names = std::vector<std::string>();
+		//m_uboVec3Names = std::vector<std::string>();
+		m_uboVec4Names = std::vector<std::string>();
+		//m_uboMat4Names = std::vector<std::string>();
+
+		m_uboVec4Names.push_back("Alpha");
 		
 		// Default Graphics Pipeline configuration (Filled in with saved values when LoadMaterial() is called
 		m_inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -267,4 +275,30 @@ namespace FlatEngine
 	{
 		return m_renderPass;
 	}
+
+	//std::vector<std::string>& Material::GetUBOFloatNames()
+	//{
+	//	return m_uboFloatNames;
+	//}
+
+	//std::vector<std::string>& Material::GetUBOVec2Names()
+	//{
+	//	return m_uboVec2Names;
+	//}
+
+	//std::vector<std::string>& Material::GetUBOVec3Names()
+	//{
+	//	return m_uboVec3Names;
+	//}
+
+	std::vector<std::string>& Material::GetUBOVec4Names()
+	{
+		return m_uboVec4Names;
+	}
+
+	//std::vector<std::string>& Material::GetUBOMat4Names()
+	//{
+	//	return m_uboMat4Names;
+	//}
+
 }

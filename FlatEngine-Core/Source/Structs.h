@@ -94,12 +94,16 @@ namespace FlatEngine
         }
     };
 
-    struct UniformBufferObject {
-        glm::vec4 meshPosition;
-        glm::vec4 cameraPosition;
-        glm::mat4 model;
-        glm::mat4 viewAndProjection;             
-        glm::float32 time;
+    struct BaseUBO {
+        alignas(16) glm::vec4 meshPosition;
+        alignas(16) glm::vec4 cameraPosition;
+        alignas(16) glm::mat4 model;
+        alignas(16) glm::mat4 viewAndProjection;        
+    };
+
+    struct CustomUBO {
+        BaseUBO BaseUBO;
+        alignas(16) glm::vec4 vec4s[32];
     };
 
     struct PushConstants {

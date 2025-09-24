@@ -363,9 +363,7 @@ namespace FlatEngine
             CreateDepthResources();
         }
         
-        CreateFrameBuffers();   
-
-        //CreateCommandBuffers(commandPool);
+        CreateFrameBuffers();
     }
 
     std::vector<VkFramebuffer>& RenderPass::GetFrameBuffers()
@@ -381,7 +379,7 @@ namespace FlatEngine
 
     void RenderPass::EnableDepthBuffering()
     {
-        CreateDepthResources(); // Should be CreateColorResources()?? Check later
+        CreateDepthResources();
         m_b_depthBuffersEnabled = true;
     }
 
