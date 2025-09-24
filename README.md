@@ -1,16 +1,21 @@
 # FlatEngine - 2D and 3D Game Engine
 
-
-<img width="1920" height="1032" alt="2025-09-16" src="https://github.com/user-attachments/assets/b0734af2-d8b2-4c20-9668-05149ea2aded" />
-
+<img width="1920" height="1032" alt="2025-09-24" src="https://github.com/user-attachments/assets/16dd7a27-44be-43e2-b296-e241f37bd874" />
 
 
-<img width="1920" height="1032" alt="2025-09-16_2" src="https://github.com/user-attachments/assets/0de62b3f-a0b9-45d6-8bcb-432b4dd74540" />
-
+<img width="1920" height="1032" alt="2025-09-24_2" src="https://github.com/user-attachments/assets/84cf7181-fcff-4fee-9412-97854235aac9" />
 
 
 
 <a href="https://github.com/DillonKyleDev/FlatEngine2D?tab=readme-ov-file#documentation">Jump to documentation</a>
+
+## Update - Sept. 24th, 2025 - Custom Material UBOs
+
+Unfortunately, there is a chance that if you download and build the engine in it's current state that you will get a compilation/linking error.  I haven't had the time to sort out what the problem is yet but I am having that issue on my second desktop PC when compiling, so I apologize if that's a problem anyone else is facing.
+
+I've added a Light Component and I've just begun to implement per-material Uniform Buffer Objects using preset sized arrays of glm::vec4s so they can be edited using scripts within the engine at runtime.  I got it working in it's most basic form but quite a bit still needs to be done to flesh it out.  At the moment, all Materials are initialized with the same glm::vec4s for testing purposes.
+
+Tomorrow is my first day back to school so unfortunately progress will be slow, if not stopped completely, until I have a handle on my coursework.  Wish me luck!
 
 ## Update - Sept. 18th, 2025 - Fixes
 
