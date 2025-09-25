@@ -6,8 +6,32 @@
 <img width="1920" height="1032" alt="Screenshot 2025-09-24 142314" src="https://github.com/user-attachments/assets/a92cb5d8-e4c2-4dcc-9b01-8b97c8c0d91f" />
 
 
-
 <a href="https://github.com/DillonKyleDev/FlatEngine2D?tab=readme-ov-file#documentation">Jump to documentation</a>
+
+### Building From Source
+
+There currently is not a stable release for building from source, but if you are okay with crashes and wish to proceed anyway, here's how to get setup:
+
+1. Clone the repo. ~~Download the .zip and extract~~
+2. Run the Premake batch file by double clicking it located at `Premake/Setup-Windows.bat` to generate the Visual Studio solution file.
+3. Open the solution file that was created in the root directory. In Visual Studio, click Build -> Build Solution.
+4. Run the app.
+
+You're now set up to use the engine and edit it's source code as you wish. ~~From here, building a final game project is the same as it is with the main Release.~~
+
+~~When you are finished editing the source code, you need to build the Editor project and the Runtime project in Release mode again. If you've made changes to the Core library, the Runtime project needs to know about those changes.~~
+
+~~Now you should be able to go into the build location and open the FlatEngine-Runtime.exe with all of your source code changes present in the build.~~ << (Not applicable in the engines current state.)
+
+### Disclaimer
+
+- This project is in active development.
+- This is a hobby project. It is not currently in a production state and won't be for a while.  FlatEngine is likely more useful to you in it's current state as a code reference than a game development tool, though I am far from an expert in this field so use your own judgement when using FlatEngine as a reference.</br>
+- Things will change with updates.</br>
+- Key systems are not optimized.</br>
+- The engine will likely crash eventually so save often. There is no autosave function. However, when loading into a new scene, or when starting the game loop, FlatEngine2D saves a temporary copy of your scene in `engine/tempFiles`. The engine will then load this copy once you stop the game loop, preserving changes made after last save but before starting the game loop.</br>
+- The Box2D implementation is only partly complete and the components section has yet to be updated to reflect the changes. Expect ReadMe documentation changes to accompany the next major release of FlatEngine2D.</br>
+- The ReadMe's Documentation section in general should be considered mostly out of date.
 
 ## Update - Sept. 24th, 2025 - Custom Material UBOs
 
@@ -53,32 +77,6 @@ I've included a sample project inside FlatEngine2D called FlatSpace.  With it, h
 As a note, FlatSpace was made before the implementation of persistant GameObjects which enable you to have some GameObjects stick around even when changing scenes.  Creation of new persistant GameObjects is located in the Assets dropdown menu.  Persistant objects are tied to the Project, so make sure to save your Scenes AND your Projects often to keep your progress saved!
 
 ## Documentation
-
-### Building and using FlatEngine from source
-
-If you are using the Release build of FlatEngine found in Releases you can safely ignore this section.  There currently is not a stable release for building from source so it is not recommended to do so at this time.  But if you wish to proceed anyway, here's how to get setup:
-
-1. Clone the repo. ~~Download the .zip and extract~~
-2. Run the Premake batch file by double clicking it located at `Premake/Setup-Windows.bat` to generate the Visual Studio solution file.
-3. Open the solution file that was created in the root directory. In Visual Studio, click Build -> Build Solution.
-4. Run the app.
-
-You're now set up to use the engine and edit it's source code as you wish.  From here, building a final game project is the same as it is with the main Release.
-
-When you are finished editing the source code, you need to build the Editor project and the Runtime project in Release mode again. If you've made changes to the Core library, the Runtime project needs to know about those changes.
-
-Now you should be able to go into the build location and open the FlatEngine-Runtime.exe with all of your source code changes present in the build.</br>
-
-### Disclaimer
-
-This project is in active development.
-
-This is a hobby project.
-It will likely crash eventually so save often. THERE IS NO AUTOSAVE. However, when loading into a new scene, or when starting the game loop, FlatEngine2D saves a temporary copy of your scene in `engine/tempFiles`. The engine will then load this copy once you stop the game loop, preserving changes made after last save but before starting the game loop.
-Things will change with updates.
-Your results and the usefulness of FlatEngine may vary.
-Some key systems are not optimized.
-The Box2D implementation is only partly complete and the components section has yet to be updated to reflect the changes. Expect ReadMe documentation changes to accompany the next major release of FlatEngine2D.
 
 --------------------------------------------------------------------------------------
 Quick links:
