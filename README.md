@@ -11,7 +11,9 @@
 
 ## Update - Sept. 24th, 2025 - Custom Material UBOs
 
-Unfortunately, there is a chance that if you download and build the engine in it's current state that you will get a compilation/linking error.  I haven't had the time to sort out what the problem is yet but I am having that issue on my second desktop PC when compiling, so I apologize if that's a problem anyone else is facing.
+~~Unfortunately, there is a chance that if you download and build the engine in it's current state that you will get a compilation/linking error.  I haven't had the time to sort out what the problem is yet but I am having that issue on my second desktop PC when compiling, so I apologize if that's a problem anyone else is facing.~~
+
+Because I am using GitHub LFS (Large File Storage) to push changes to this repository, you MUST clone the repository instead of downloading it directly.  This is because when you download it directly, the large files only contain pointers to the full large files and will cause compilation errors stating there are corrupt files present in the build.  If you clone the repository using your preferred method you shouldn't have any issues compiling and running the current build so long as you have the VulkanSDK installed on your PC.
 
 I've added a Light Component and I've just begun to implement per-material Uniform Buffer Objects using preset sized arrays of glm::vec4s so they can be edited using scripts within the engine at runtime.  I got it working in it's most basic form but quite a bit still needs to be done to flesh it out.  At the moment, all Materials are initialized with the same glm::vec4s for testing purposes.
 
@@ -56,9 +58,10 @@ As a note, FlatSpace was made before the implementation of persistant GameObject
 
 If you are using the Release build of FlatEngine found in Releases you can safely ignore this section.  There currently is not a stable release for building from source so it is not recommended to do so at this time.  But if you wish to proceed anyway, here's how to get setup:
 
-1. Download the .zip and extract
+1. Clone the repo. ~~Download the .zip and extract~~
 2. Run the Premake batch file by double clicking it located at `Premake/Setup-Windows.bat` to generate the Visual Studio solution file.
-3. Open the solution file that was created in the root directory. Right click and build each project in the solution, (`Core/FlatEngine-Core`, `FlatEngine-Editor`, and `FlatEngine-Runtime`) in Debug configuration for debugging, and when you're ready for release, do the same in the Release configuration.
+3. Open the solution file that was created in the root directory. In Visual Studio, click Build -> Build Solution.
+4. Run the app.
 
 You're now set up to use the engine and edit it's source code as you wish.  From here, building a final game project is the same as it is with the main Release.
 
