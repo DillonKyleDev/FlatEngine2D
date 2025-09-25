@@ -23,11 +23,11 @@
             "currentFileDirectory": "..\\projects\\Sandbox\\scenes",
             "daysSinceSave": 24,
             "effectsVolume": 10,
-            "focusedGameObjectID": 16,
-            "hoursSinceSave": 17,
+            "focusedGameObjectID": 2,
+            "hoursSinceSave": 18,
             "loadedAnimationPath": "",
             "loadedScenePath": "..\\projects\\Sandbox\\scenes\\Sandbox.scn",
-            "minutesSinceSave": 49,
+            "minutesSinceSave": 20,
             "monthsSinceSave": 8,
             "musicVolume": 10,
             "path": "..\\projects\\Sandbox\\Sandbox.prj",
@@ -47,7 +47,7 @@
             "sceneViewPerspectiveAngle": 90.0,
             "sceneViewScrollingX": 3805.0,
             "sceneViewScrollingY": 836.0,
-            "secondsSinceSave": 52,
+            "secondsSinceSave": 27,
             "yearsSinceSave": 125
         }
     ]

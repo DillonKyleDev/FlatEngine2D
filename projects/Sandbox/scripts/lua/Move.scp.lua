@@ -20,7 +20,7 @@ function Update()
      local data = GetInstanceData("Move", my_id)
 
      if (data.mappingContext:ActionPressed("Move")) then
-          LogString("Moved")
+          LogString("Jumped")
           data.body:ApplyForceToCenter(Vector2:new(100,1000))
      end
 
