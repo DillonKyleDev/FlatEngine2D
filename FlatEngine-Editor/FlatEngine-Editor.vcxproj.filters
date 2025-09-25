@@ -77,7 +77,7 @@
     <ClCompile Include="Source\Toolbar.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialEditor.cpp">
+    <ClCompile Include="Source\MaterialEditor.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

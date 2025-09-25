@@ -14,9 +14,11 @@ layout(location = 2) in vec2 inTexCoord;
 layout(location = 3) in vec3 inNormal;
 
 layout(location = 0) out vec2 fragTexCoord;
+layout(location = 1) out float disturbance;
 
 
 void main() {    
     gl_Position = ubo.viewAndProjection * (ubo.model * vec4(inPosition.x, inPosition.y, inPosition.z, 1) + ubo.meshPosition);        
     fragTexCoord = inTexCoord;
+    disturbance = ubo.vec4s[0].x;
 }

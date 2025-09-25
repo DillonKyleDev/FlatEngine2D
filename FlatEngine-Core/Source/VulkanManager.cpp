@@ -5,8 +5,6 @@
 #include "Project.h"
 #include "FlatEngine.h"
 
-#include "Scene.h" // delete later
-
 #include "SDL_vulkan.h"
 #include <glm.hpp>
 
@@ -66,8 +64,6 @@ namespace FlatEngine
         m_sceneViewTexture = Texture();
         m_gameViewTexture = Texture();
         m_b_showGridObjects = true;
-
-        F_sceneViewGridObjects.SetIsSceneViewGridScene(true);
     }
 
     VulkanManager::~VulkanManager()
@@ -760,6 +756,8 @@ namespace FlatEngine
 
     void VulkanManager::CreateSceneViewGridObjects()
     {
+        F_sceneViewGridObjects.SetIsSceneViewGridScene(true);
+
         F_sceneViewCameraObject = F_sceneViewGridObjects.CreateGameObject();
         F_sceneViewCameraObject->SetIsSceneViewGridObject(true);
         F_sceneViewCameraObject->SetName("SceneViewCamera");

@@ -18,6 +18,7 @@ layout(location = 3) in vec3 inNormal;
 layout(location = 0) out vec2 fragTexCoord;
 layout(location = 1) out vec3 normal;
 layout(location = 2) out vec4 viewDirection;
+layout(location = 3) out float smoothness;
 
 void main() {    
     // vec4 bumpHeight = texture(bumpSampler, inTexCoord);    
@@ -28,4 +29,6 @@ void main() {
     vec4 rotatedNormal = ubo.model * vec4(inNormal.x, inNormal.y, inNormal.z, 1);
     normal = normalize(vec3(rotatedNormal.x, rotatedNormal.y, rotatedNormal.z));
     viewDirection = normalize(ubo.cameraPosition - ubo.meshPosition);
+
+    smoothness = ubo.vec4s[0].x;
 }

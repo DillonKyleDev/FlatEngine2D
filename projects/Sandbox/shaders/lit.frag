@@ -14,13 +14,13 @@ layout(push_constant, std430) uniform pc {
 layout(location = 0) in vec2 fragTexCoord;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec4 viewDirection;
+layout(location = 3) in float smoothness;
 
 layout(location = 0) out vec4 outColor;
 
 layout(binding = 1) uniform sampler2D texSampler;
 
 void main() {    
-    float smoothness = 1;
     vec4 specularTint = vec4(.5,.5,.5,1);
 
     vec4 reflectionDir = reflect(-light1Dir, vec4(normal, 1));    

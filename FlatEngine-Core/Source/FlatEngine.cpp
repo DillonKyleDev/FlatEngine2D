@@ -589,7 +589,7 @@ namespace FlatEngine
 
 	Uint32 GetEngineTime()
 	{
-		return SDL_GetTicks64();
+		return SDL_GetTicks(); // Should be SDL_GetTicks64();
 	}
 
 

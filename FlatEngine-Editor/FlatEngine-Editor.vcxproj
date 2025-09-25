@@ -153,7 +153,7 @@
     <ClInclude Include="Source\FlatGui.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MaterialEditor.cpp" />
+    <ClCompile Include="Source\MaterialEditor.cpp" />
     <ClCompile Include="Source\Animator.cpp" />
     <ClCompile Include="Source\FileExplorer.cpp" />
     <ClCompile Include="Source\FlatEngine-Editor.cpp" />

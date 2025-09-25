@@ -142,6 +142,7 @@ namespace FlatEngine
 		std::vector<std::string> tileSetNames;
 		std::map<std::string, std::vector<std::pair<Vector2, Vector2>>> collisionAreas;
 	};
+	// TODO: Body and Mesh
 
 	struct Prefab {
 		std::string name;
