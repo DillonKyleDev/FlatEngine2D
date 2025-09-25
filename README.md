@@ -10,7 +10,7 @@
 
 ### Building From Source
 
-There currently is not a stable release for building from source, but if you are okay with crashes and wish to proceed anyway, here's how to get setup:
+There currently is not a stable release for building from source, but if you are okay with some crashes and wish to proceed anyway, here's how to get setup:
 
 1. Clone the repo. ~~Download the .zip and extract~~
 2. Run the Premake batch file by double clicking it located at `Premake/Setup-Windows.bat` to generate the Visual Studio solution file.
