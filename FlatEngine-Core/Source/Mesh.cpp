@@ -21,7 +21,7 @@ namespace FlatEngine
 		m_textures = std::vector<Texture>();
 		m_allocationPoolIndex = -1;
 		m_b_initialized = false;
-
+		
 		m_uboVec4s = std::map<std::string, glm::vec4>();
 
 		// handles		
@@ -53,6 +53,25 @@ namespace FlatEngine
 			texturesArray.push_back(textureData);
 		}
 
+		std::vector<std::string> vec4Names = m_material->GetUBOVec4Names();
+		json uboVec4s = json::object();
+		for (std::string uboVec4Name : vec4Names)
+		{
+			if (m_uboVec4s.count(uboVec4Name))
+			{
+				glm::vec4 data = m_uboVec4s.at(uboVec4Name);
+
+				json vec4Data = {
+					{ "x", data.x },
+					{ "y", data.y },
+					{ "z", data.z },
+					{ "w", data.w }
+				};		
+
+				uboVec4s.emplace(uboVec4Name, vec4Data);
+			}
+		}
+
 		json jsonData = {
 			{ "type", "Mesh"},
 			{ "id", GetID() },
@@ -60,7 +79,8 @@ namespace FlatEngine
 			{ "_isActive", IsActive() },
 			{ "textures", texturesArray },
 			{ "materialName", materialName },
-			{ "modelPath", m_model.GetModelPath() }
+			{ "modelPath", m_model.GetModelPath() },
+			{ "uboVec4s", uboVec4s }
 		};
 
 		std::string data = jsonData.dump();
@@ -145,7 +165,10 @@ namespace FlatEngine
 			m_materialName = m_material->GetName();
 			m_textures.resize(m_material->GetTextureCount());
 
-			m_uboVec4s.emplace("Alpha", 1.0f);
+			for (std::string uboVec4Name : material->GetUBOVec4Names())
+			{
+				SetUBOVec4(uboVec4Name, Vector4());
+			}
 		}
 	}
 
@@ -154,12 +177,7 @@ namespace FlatEngine
 		m_material = F_VulkanManager->GetMaterial(materialName);
 		m_materialName = materialName;
 
-		if (m_material != nullptr)
-		{
-			m_textures.resize(m_material->GetTextureCount());
-
-			m_uboVec4s.emplace("Alpha", 1.0f);
-		}
+		SetMaterial(m_material);
 	}
 
 	std::shared_ptr<Material> Mesh::GetMaterial()

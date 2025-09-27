@@ -40,7 +40,7 @@ namespace FlatEngine
     struct Vertex
     {
         glm::vec3 pos;
-        glm::vec3 color;
+        glm::vec3 color; // Waste of resources for per-vertex color that's just set to white when loading model?
         glm::vec2 texCoord;
         glm::vec3 normal;
 

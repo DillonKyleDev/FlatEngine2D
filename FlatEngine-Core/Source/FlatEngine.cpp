@@ -161,6 +161,11 @@ namespace FlatEngine
 		}
 	}
 
+	GameObject* GetSceneViewCameraObject()
+	{
+		return F_sceneViewCameraObject;
+	}
+
 	bool LoadFonts()
 	{
 		bool b_success = true;
@@ -2103,6 +2108,16 @@ namespace FlatEngine
 		F_Logger.LogVector2(vector, line, from);
 	}
 
+	void LogVector3(Vector3 vector, std::string line, std::string from)
+	{
+		F_Logger.LogVector3(vector, line, from);
+	}
+
+	void LogVector4(Vector4 vector, std::string line, std::string from)
+	{
+		F_Logger.LogVector4(vector, line, from);
+	}
+
 	void LogSeparator()
 	{
 		F_Logger.LogSeparator();
@@ -3821,6 +3836,28 @@ namespace FlatEngine
 										{
 											LogError(e.what());
 										}
+									}
+								}
+
+								std::shared_ptr<Material> material = F_VulkanManager->GetMaterial(materialName);
+
+								if (material != nullptr)
+								{
+									if (JsonContains(componentJson, "uboVec4s", objectName))
+									{
+										for (std::string uboVec4Name : material->GetUBOVec4Names())
+										{
+											try
+											{
+												json uboVec4Data = componentJson["uboVec4s"][uboVec4Name];
+												Vector4 uboVec4 = Vector4(CheckJsonFloat(uboVec4Data, "x", objectName), CheckJsonFloat(uboVec4Data, "y", objectName), CheckJsonFloat(uboVec4Data, "z", objectName), CheckJsonFloat(uboVec4Data, "w", objectName));
+												newMesh->SetUBOVec4(uboVec4Name, uboVec4);
+											}
+											catch (const json::out_of_range& e)
+											{
+												LogError(e.what());
+											}
+										}										
 									}
 								}
 

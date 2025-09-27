@@ -15,10 +15,14 @@ layout(location = 3) in vec3 inNormal;
 
 layout(location = 0) out vec2 fragTexCoord;
 layout(location = 1) out float disturbance;
+layout(location = 2) out vec4 baseColor;
+layout(location = 3) out vec4 secondaryColor;
 
 
 void main() {    
     gl_Position = ubo.viewAndProjection * (ubo.model * vec4(inPosition.x, inPosition.y, inPosition.z, 1) + ubo.meshPosition);        
     fragTexCoord = inTexCoord;
-    disturbance = ubo.vec4s[0].x;
+    disturbance = ubo.vec4s[1].x;
+    baseColor = ubo.vec4s[0];
+    secondaryColor = ubo.vec4s[2];
 }

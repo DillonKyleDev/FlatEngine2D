@@ -15,6 +15,8 @@ namespace FlatEngine
 		Vector3(const Vector3& toCopy);
 		~Vector3();
 
+		static Vector3 Normalize(Vector3 vec);
+
 		void _xyz(float newX, float newY, float newZ);
 		float GetX();
 		float GetY();
@@ -24,6 +26,7 @@ namespace FlatEngine
 		void SetZ(float newZ);
 		glm::vec3 GetGLMVec3();
 		Vector3 Cross(Vector3 with);
+		float GetMagnitude();
 		Vector3 operator=(Vector3 toCopy);
 		Vector3 operator=(Vector2 toCopy);
 		Vector3 operator*(Vector3 right);

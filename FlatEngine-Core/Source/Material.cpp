@@ -49,8 +49,6 @@ namespace FlatEngine
 		//m_uboVec3Names = std::vector<std::string>();
 		m_uboVec4Names = std::vector<std::string>();
 		//m_uboMat4Names = std::vector<std::string>();
-
-		m_uboVec4Names.push_back("Alpha");
 		
 		// Default Graphics Pipeline configuration (Filled in with saved values when LoadMaterial() is called
 		m_inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -100,6 +98,12 @@ namespace FlatEngine
 			{ "alphaBlendOp", (int)m_colorBlendAttachment.alphaBlendOp }
 		};
 
+		json uboVec4Names = json::array();		
+		for (std::string vec4Name : m_uboVec4Names)
+		{
+			uboVec4Names.push_back(vec4Name);
+		}
+
 		json jsonData = {
 			{ "name", m_name },
 			{ "vertexShaderPath", m_graphicsPipeline.GetVertexPath() },
@@ -107,7 +111,8 @@ namespace FlatEngine
 			{ "textureCount", m_textureCount },
 			{ "rasterizerData", rasterizerData },
 			{ "inputAssemblyData", inputAssemblyData },
-			{ "colorBlendAttachmentData", colorBlendAttachmentData }
+			{ "colorBlendAttachmentData", colorBlendAttachmentData },
+			{ "uboVec4Names", uboVec4Names }
 		};
 
 		std::string data = jsonData.dump(4);
@@ -294,6 +299,29 @@ namespace FlatEngine
 	std::vector<std::string>& Material::GetUBOVec4Names()
 	{
 		return m_uboVec4Names;
+	}
+
+	bool CompareStrings(std::string a, std::string b) 
+	{ 
+		return a < b; 
+	}
+
+	bool Material::AddUBOVec4(std::string name)
+	{
+		for (std::string vec4Name : m_uboVec4Names)
+		{
+			if (vec4Name == name)
+			{
+				LogError("Vec4 name already taken.");
+				return false;
+			}
+		}
+
+		m_uboVec4Names.push_back(name);
+
+		std::sort(m_uboVec4Names.begin(), m_uboVec4Names.end(), CompareStrings);
+
+		return true;
 	}
 
 	//std::vector<std::string>& Material::GetUBOMat4Names()

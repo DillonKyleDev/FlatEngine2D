@@ -99,22 +99,26 @@ namespace FlatEngine
 
 	Vector4 Vector4::operator*(ImVec4& right)
 	{
-		x *= right.x;
-		y *= right.y;
-		z *= right.z;
-		w *= right.w;
+		Vector4 result = Vector4(x, y, z, w);
 
-		return *this;
+		result.x *= right.x;
+		result.y *= right.y;
+		result.z *= right.z;
+		result.w *= right.w;
+
+		return result;
 	}
 
 	Vector4 Vector4::operator*(Vector4& right)
 	{
-		x *= right.x;
-		y *= right.y;
-		z *= right.z;
-		w *= right.w;
+		Vector4 result = Vector4(x, y, z, w);
 
-		return *this;
+		result.x *= right.x;
+		result.y *= right.y;
+		result.z *= right.z;
+		result.w *= right.w;
+
+		return result;
 	}
 
 	bool Vector4::operator==(const Vector4& right)

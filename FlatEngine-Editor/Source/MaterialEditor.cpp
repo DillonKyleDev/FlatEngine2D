@@ -120,6 +120,26 @@ namespace FlatGui
 
 				// Whenever we add a new property to a materials UBO, we should make sure to recreate the commandBuffers in the Models of the Meshes that use that material, taking into account the new Uniform Buffer Size
 				ImGui::Text("Vec4s");
+
+				static std::string vec4Name = "";
+
+				FL::RenderInput("##NewVec4Name", "Name", vec4Name);
+			
+				if (FL::RenderButton("Add Vec4") && vec4Name != "")
+				{
+					if (currentMaterial->AddUBOVec4(vec4Name))
+					{
+						vec4Name = "";
+						for (std::pair<long, Mesh> mesh : FL::GetMeshes())
+						{
+							if (mesh.second.GetMaterialName() == FL::F_selectedMaterialName)
+							{
+								mesh.second.SetUBOVec4(vec4Name, Vector4());
+							}
+						}
+					}
+				}
+
 				for (std::string vec4Name : uboVec4Names)
 				{
 					// TODO: Add editing of and adding of vec4 names here, then "refresh" the Meshes (emplace new std::pair<std::string, glm::vec4> in their m_uboVec4s members) that use this Material to account for the new vec4, or add a button to refresh it in the Mesh Component in inspector.

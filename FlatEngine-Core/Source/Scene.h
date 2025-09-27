@@ -117,9 +117,10 @@ namespace FlatEngine
 		std::map<long, CharacterController>& GetCharacterControllers();
 		std::map<long, TileMap>& GetTileMaps();		
 		std::map<long, Mesh>& GetMeshes();
+		std::map<std::string, std::vector<Mesh>>& GetMeshesByMaterial();
 		std::map<long, Light>& GetLights();
 
-		std::map<std::string, std::vector<Mesh>>& GetMeshesByMaterial();
+
 		void SetPersistantScene(bool b_persistant);
 		bool IsPersistantScene();
 		void SetIsSceneViewGridScene(bool b_isSceneViewGridScene);

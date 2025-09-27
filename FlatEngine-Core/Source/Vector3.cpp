@@ -36,6 +36,25 @@ namespace FlatEngine
 	{
 	}
 
+	Vector3 Vector3::Normalize(Vector3 vec)
+	{
+		Vector3 temp = Vector3(0);
+
+		if (vec.x == 0 && vec.y == 0 && vec.z == 0)
+		{
+			return Vector3(0);
+		}
+
+		float magnitude = vec.GetMagnitude();
+
+		if (magnitude != 0)
+		{
+			temp = vec * (1 / magnitude);
+		}
+
+		return temp;
+	}
+
 	void Vector3::_xyz(float newX, float newY, float newZ)
 	{
 		x = newX;
@@ -90,6 +109,11 @@ namespace FlatEngine
 		return Vector3(newX, newY, newZ);
 	}
 
+	float Vector3::GetMagnitude()
+	{
+		return std::sqrt((x * x) + (y * y) + (z * z));
+	}
+
 	Vector3 Vector3::operator=(Vector3 toCopy)
 	{
 		x = toCopy.x;
@@ -124,38 +148,46 @@ namespace FlatEngine
 
 	Vector3 Vector3::operator/(Vector3 right)
 	{
-		x /= right.x;
-		y /= right.y;
-		z /= right.z;
+		Vector3 result = Vector3(x, y, z);
 
-		return *this;
+		result.x /= right.x;
+		result.y /= right.y;
+		result.z /= right.z;
+
+		return result;
 	}
 
 	Vector3 Vector3::operator/(float scalar)
 	{
-		x /= scalar;
-		y /= scalar;
-		z /= scalar;
+		Vector3 result = Vector3(x, y, z);
 
-		return *this;
+		result.x /= scalar;
+		result.y /= scalar;
+		result.z /= scalar;
+
+		return result;
 	}
 
 	Vector3 Vector3::operator+(Vector3 right)
 	{
-		x += right.x;
-		y += right.y;
-		z += right.z;
+		Vector3 result = Vector3(x, y, z);
 
-		return *this;
+		result.x += right.x;
+		result.y += right.y;
+		result.z += right.z;
+
+		return result;
 	}
 
 	Vector3 Vector3::operator-(Vector3 right)
 	{
-		x -= right.x;
-		y -= right.y;
-		z -= right.z;
+		Vector3 result = Vector3(x, y, z);
 
-		return *this;
+		result.x -= right.x;
+		result.y -= right.y;
+		result.z -= right.z;
+
+		return result;
 	}
 
 	bool Vector3::operator==(Vector3 right)

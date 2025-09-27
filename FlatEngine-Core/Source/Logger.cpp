@@ -1,5 +1,4 @@
 #include "Logger.h"
-#include "Vector4.h"
 
 
 namespace FlatEngine
@@ -46,6 +45,18 @@ namespace FlatEngine
 	void Logger::LogVector2(Vector2 vector, std::string line, std::string from)
 	{
 		line = from + " " + line + " x: " + std::to_string(vector.x) + " y: " + std::to_string(vector.y) + "\n";
+		log.appendf(line.c_str());
+	}
+
+	void Logger::LogVector3(Vector3 vector, std::string line, std::string from)
+	{
+		line = from + " " + line + " x: " + std::to_string(vector.x) + " y: " + std::to_string(vector.y) + " z: " + std::to_string(vector.z) + "\n";
+		log.appendf(line.c_str());
+	}
+
+	void Logger::LogVector4(Vector4 vector, std::string line, std::string from)
+	{
+		line = from + " " + line + " x: " + std::to_string(vector.x) + " y: " + std::to_string(vector.y) + " z: " + std::to_string(vector.z) + " w: " + std::to_string(vector.w) + "\n";
 		log.appendf(line.c_str());
 	}
 

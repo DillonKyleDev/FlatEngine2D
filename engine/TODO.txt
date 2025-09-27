@@ -80,3 +80,36 @@ Grid is rendering over scene objects
 Other objects rendering through other objects
 
 Handle non-consumed vertex and fragment data in shaders, probably by leaving them in the shader files and not using them or by creating separate pipelines
+
+Add separate files for vertex and fragment shaders that users code in and parse them in the engine, grabbing keywords for variables and using those keywords and the following variables to create the dynamic uniform buffer object data.  Then, after parsing, write the actual shader code to real shader files and compile them into sprv files for the engine to read.
+
+uniform vec4 inputVariable;
+uniform float nextVariable;
+
+layout(.. = 0) out vec4 outputVariable // for fragment shader
+layout(.. = 0) out float outputFloat // for fragment shader
+
+main {
+	outputVariable = inputVariable;
+	outFloat = nextVariable;
+}
+
+
+Translates to .vert file as:
+
+
+........ uniformBufferObject {
+	vec4s[32];
+	floats[32];
+} ubo;
+
+layout(.. = 0) out vec4 outputVariable // for fragment shader
+layout(.. = 0) out float outputFloat // for fragment shader
+
+main {
+	outputVariable = vec4s[0];
+	outputFloat = floats[0];
+}
+
+instead of vector<std::string> that we need to sort, 
+std::map<int index, std::string> maybe?

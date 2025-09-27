@@ -51,6 +51,7 @@ namespace FlatEngine
 		//void SetUBOVec4(std::string name, glm::vec4 value);
 		void SetUBOVec4(std::string name, Vector4 value);
 
+
 	private:
 		Model m_model;
 		std::string m_materialName;

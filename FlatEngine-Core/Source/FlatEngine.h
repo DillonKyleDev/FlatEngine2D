@@ -199,6 +199,7 @@ namespace FlatEngine
 	extern Vector2 F_sceneViewDimensions;
 
 	extern void UpdateSceneViewCamera();
+	extern GameObject* GetSceneViewCameraObject();
 
 	// Collision Detection
 	extern b2CastOutput CastRay(Vector2 initialPos, Vector2 direction, float increment, TagList tagList, Body& hit, bool b_visible = false);
@@ -349,6 +350,8 @@ namespace FlatEngine
 	extern void LogLong(long var, std::string line = "", std::string from = "[C++]");
 	extern void LogInt(int var, std::string line = "", std::string from = "[C++]");
 	extern void LogVector2(Vector2 vector, std::string line = "", std::string from = "[C++]");
+	extern void LogVector3(Vector3 vector, std::string line = "", std::string from = "[C++]");
+	extern void LogVector4(Vector4 vector, std::string line = "", std::string from = "[C++]");
 	extern void LogSeparator();
 	extern void AddLineToScene(Vector2 startingPoint, Vector2 endingPoint, Vector4 color, float thickness);
 	extern void RenderSceneLines();

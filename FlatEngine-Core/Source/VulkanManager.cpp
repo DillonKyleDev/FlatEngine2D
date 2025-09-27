@@ -590,6 +590,18 @@ namespace FlatEngine
                 newMaterial->SetTextureCount((uint32_t)textureCount);
             }
 
+            if (JsonContains(materialData, "uboVec4Names", name))
+            {
+                for (int i = 0; i < materialData["uboVec4Names"].size(); i++)
+                {
+                    std::string vec4Name = materialData["uboVec4Names"][i];
+                    if (vec4Name != "")
+                    {
+                        newMaterial->AddUBOVec4(vec4Name);
+                    }
+                }
+            }
+
             // Graphics Pipeline configuration
             if (JsonContains(materialData, "inputAssemblyData", name))
             {

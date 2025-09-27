@@ -1,5 +1,7 @@
 #include "FlatEngine.h"
 #include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "Transform.h"
@@ -343,12 +345,26 @@ namespace FlatEngine
 			std::string prefix = "[LUA] " + truncatedName + " :";
 			LogLong(value, "", prefix);
 		};
-		F_Lua["LogVector2"] = [](Vector2 value)
+		F_Lua["LogVector2"] = [](Vector2 value, std::string line)
 			{
 				std::string scriptName = F_Lua["calling_script_name"].get_or<std::string>("Script (Lua)");
 				std::string truncatedName = scriptName.substr(0, scriptName.size() - 6);
-				std::string prefix = "[LUA] " + truncatedName + " :";
+				std::string prefix = "[LUA] " + truncatedName + " :" + line;
 				LogVector2(value, "", prefix);
+			};
+		F_Lua["LogVector3"] = [](Vector3 value, std::string line)
+			{
+				std::string scriptName = F_Lua["calling_script_name"].get_or<std::string>("Script (Lua)");
+				std::string truncatedName = scriptName.substr(0, scriptName.size() - 6);
+				std::string prefix = "[LUA] " + truncatedName + " :" + line;
+				LogVector3(value, "", prefix);
+			};
+		F_Lua["LogVector4"] = [](Vector4 value, std::string line)
+			{
+				std::string scriptName = F_Lua["calling_script_name"].get_or<std::string>("Script (Lua)");
+				std::string truncatedName = scriptName.substr(0, scriptName.size() - 6);
+				std::string prefix = "[LUA] " + truncatedName + " :" + line;
+				LogVector4(value, "", prefix);
 			};
 		F_Lua["GetMappingContext"] = [](std::string contextName)
 		{
@@ -439,13 +455,17 @@ namespace FlatEngine
 				return vector1 + vector2;
 			};
 		F_Lua["ToInt"] = [](float value)
-			{
-				return (int)value;
-			};
+		{
+			return (int)value;
+		};
 		F_Lua["ToFloat"] = [](int value)
-			{
-				return (float)value;
-			};
+		{
+			return (float)value;
+		};
+		F_Lua["GetSceneViewCameraObject"] = []()
+		{
+			return GetSceneViewCameraObject();
+		};
 	}
 
 	// Map C++ types to Lua "Types" -- https://sol2.readthedocs.io/en/latest/api/usertype.html
@@ -473,6 +493,16 @@ namespace FlatEngine
 			"Dot", &Vector2::Dot,
 			"+", &Vector2::operator+,
 			"-", &Vector2::operator-
+		);
+
+		F_Lua.new_usertype<Vector3>("Vector3",
+			sol::constructors<Vector3(), Vector3(float x, float y, float z)>(),
+			"SetX", &Vector3::SetX,
+			"x", sol::readonly(&Vector3::x),
+			"SetY", &Vector3::SetY,
+			"y", sol::readonly(&Vector3::y),
+			"SetZ", &Vector3::SetZ,
+			"z", sol::readonly(&Vector3::z)
 		);
 
 		F_Lua.new_usertype<Vector4>("Vector4",

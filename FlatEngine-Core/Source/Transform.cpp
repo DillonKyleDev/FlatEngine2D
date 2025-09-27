@@ -164,7 +164,7 @@ namespace FlatEngine
 
 		if (m_parent != nullptr && m_parent->GetBody() != nullptr)
 		{
-			m_parent->GetBody()->SetRotation(-m_rotation.y);
+			m_parent->GetBody()->SetRotation(m_rotation.y);
 		}
 	}
 
@@ -189,7 +189,7 @@ namespace FlatEngine
 
 		if (body != nullptr)
 		{
-			m_rotation.y = -body->GetRotation();
+			m_rotation.y = body->GetRotation();
 		}
 
 		return m_rotation.y;
@@ -201,7 +201,7 @@ namespace FlatEngine
 
 		if (body != nullptr)
 		{
-			m_rotation.y = -body->GetRotation();
+			m_rotation.y = body->GetRotation();
 		}
 
 		return m_rotation;
@@ -210,7 +210,7 @@ namespace FlatEngine
 	glm::mat4 Transform::GetRotationMatrix()
 	{
 		glm::mat4 xRotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		glm::mat4 yRotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 yRotation = glm::rotate(glm::mat4(1.0f), glm::radians(-m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 zRotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		return (xRotation * yRotation * zRotation);
@@ -242,10 +242,23 @@ namespace FlatEngine
 	}
 
 	void Transform::LookAt(Vector3 lookAt)
-	{
-		//Vector3 slope = lookAt - GetAbsolutePosition();
-		//float angle = atan(slope.y / slope.x) * 180.0f / (float)M_PI;
-		//m_rotation = angle;
+	{		
+		Vector2 xyDirection = Vector2::Normalize(Vector2(lookAt.x, lookAt.y) - Vector2(m_position.x, m_position.y));
+		Vector2 xzDirection = Vector2::Normalize(Vector2(lookAt.x, lookAt.z) - Vector2(m_position.x, m_position.z));
+
+		// TODO
+		//m_rotation.x = 0;
+		//m_rotation.y = ClampRotation(glm::degrees(glm::atan(xzDirection.y / xzDirection.x))); // arctan(z / x) components of the xz direction
+		//if (xzDirection.x < 0)
+		//{
+		//	m_rotation.y += 180;
+		//}
+		//m_rotation.z = ClampRotation(glm::degrees(glm::atan(xyDirection.y / xyDirection.x)));
+		//if (xyDirection.x < 0)
+		//{
+		//	m_rotation.z += 180;
+		//}
+
 	}
 
 	void Transform::Move(Vector3 moveBy)

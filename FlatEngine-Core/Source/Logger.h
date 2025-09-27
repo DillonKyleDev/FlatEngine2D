@@ -2,6 +2,7 @@
 #include <string>
 #include <imgui.h>
 #include "Vector2.h"
+#include "Vector3.h"
 #include "Vector4.h"
 
 
@@ -19,6 +20,8 @@ namespace FlatEngine
 		void LogLong(long variable, std::string line = "", std::string from = "[C++]");
 		void LogInt(int variable, std::string line = "", std::string from = "[C++]");
 		void LogVector2(Vector2 vector, std::string line = "", std::string from = "[C++]");
+		void LogVector3(Vector3 vector, std::string line = "", std::string from = "[C++]");
+		void LogVector4(Vector4 vector, std::string line = "", std::string from = "[C++]");
 		void LogSeparator();
 		void DrawRectangle(Vector2 startingPoint, Vector2 endingPoint, Vector4 color, float thickness, ImDrawList* drawList);
 		void DrawLine(Vector2 startingPoint, Vector2 endingPoint, Vector4 color, float thickness, ImDrawList* drawList);
