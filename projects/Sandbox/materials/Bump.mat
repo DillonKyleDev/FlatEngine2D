@@ -14,5 +14,6 @@
         "polygonMode": 0
     },
     "textureCount": 2,
+    "uboVec4Names": [],
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/bumpVert.spv"
 }

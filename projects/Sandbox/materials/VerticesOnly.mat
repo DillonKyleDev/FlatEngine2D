@@ -14,5 +14,6 @@
         "polygonMode": 1
     },
     "textureCount": 1,
+    "uboVec4Names": [],
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/verticesOnlyVert.spv"
 }

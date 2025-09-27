@@ -461,7 +461,7 @@ namespace FlatEngine
 
         if (!pixels)
         {
-            throw std::runtime_error("failed to load texture image: " + path);
+            throw std::runtime_error("failed to load texture image: " + path);            
         }
 
         mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;

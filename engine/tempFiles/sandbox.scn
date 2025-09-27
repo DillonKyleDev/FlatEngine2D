@@ -94,7 +94,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 1,
@@ -257,10 +258,11 @@
                     "modelPath": "..\\projects\\Sandbox\\models\\monkey.obj",
                     "textures": [
                         {
-                            "path": "..\\projects\\Sandbox\\images\\marble-heights.png"
+                            "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 2,
@@ -426,7 +428,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 3,
@@ -592,7 +595,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 },
                 {
                     "_isActive": true,
@@ -766,7 +770,8 @@
                             "path": "..\\projects\\Sandbox\\images\\textures\\viking_room.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 6,
@@ -932,7 +937,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\rose.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 7,
@@ -1098,7 +1104,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\orange.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 9,
@@ -1264,7 +1271,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\stream.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 },
                 {
                     "_isActive": true,
@@ -1438,7 +1446,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\green.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 12,
@@ -1604,7 +1613,8 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\green.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 14,
@@ -1770,11 +1780,12 @@
                             "path": "..\\projects\\Sandbox\\images\\marble-heights.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 16,
-            "name": "SmoothSphere Lit Shiny",
+            "name": "SmoothSphere Lit",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 4.400000095367432,
@@ -2103,11 +2114,12 @@
                             "path": "..\\projects\\Sandbox\\images\\colors\\green.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 18,
-            "name": "SmoothSphere Lit Matte",
+            "name": "SmoothSphere Lit",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 4.400000095367432,

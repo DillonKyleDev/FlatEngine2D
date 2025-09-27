@@ -75,13 +75,13 @@
                     "type": "Transform",
                     "xPosition": 0.0,
                     "xRotation": 0.0,
-                    "xScale": 1.0,
+                    "xScale": 5.0,
                     "yPosition": 0.0,
                     "yRotation": 0.0,
-                    "yScale": 1.0,
+                    "yScale": 5.0,
                     "zPosition": 0.0,
-                    "zRotation": 0.0,
-                    "zScale": 1.0
+                    "zRotation": 180.0,
+                    "zScale": 5.0
                 },
                 {
                     "_isActive": true,

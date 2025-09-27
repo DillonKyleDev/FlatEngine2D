@@ -14,5 +14,8 @@
         "polygonMode": 0
     },
     "textureCount": 1,
+    "uboVec4Names": [
+        "Smoothness"
+    ],
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/litVert.spv"
 }
