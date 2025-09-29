@@ -14,6 +14,9 @@ layout(push_constant, std430) uniform pc {
 layout(location = 0) in vec2 fragTexCoord;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec4 viewDirection;
+layout(location = 3) in vec4 noiseAtPoint;
+layout(location = 4) in float time;
+layout(location = 5) in vec4 color;
 
 layout(location = 0) out vec4 outColor;
 
@@ -25,8 +28,10 @@ void main() {
 
     vec4 reflectionDir = reflect(-light1Dir, vec4(normal, 1));    
     vec4 halfVector = normalize(light1Dir + viewDirection);
-    vec4 albedo = texture(texSampler, fragTexCoord);     
-    albedo *= 1 - max(specularTint.x, max(specularTint.y, specularTint.z)); // energy conservation
+    vec2 newTexCoord = fragTexCoord;
+    newTexCoord.x += time;
+    vec4 albedo = texture(texSampler, newTexCoord);     
+    // albedo *= 1 - max(specularTint.x, max(specularTint.y, specularTint.z)); // energy conservation
     
     float phongIntensity = max(0, dot(viewDirection, reflectionDir));    
     float blinPhongIntensity = max(0.0, dot(halfVector, vec4(normal, 1)));
@@ -35,5 +40,5 @@ void main() {
     diffuse.w = 1;
     vec4 specular = specularTint * light1Color * vec4(pow(blinPhongIntensity, smoothness * 100));
 
-    outColor = diffuse + specular;
+    outColor = albedo * color;
 }

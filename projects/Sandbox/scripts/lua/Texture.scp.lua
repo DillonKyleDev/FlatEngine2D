@@ -22,7 +22,11 @@ function Update()
 
      data.mesh:SetUBOVec4("Disturbance",  Vector4:new(GetTime() / 5000, 0.0, 0.0, 0.0))
      lookAt = data.sceneViewCameraObject:GetTransform():GetPosition()
-     data.transform:LookAt(lookAt)
+     -- data.transform:LookAt(lookAt)
+     -- local scale = data.transform:GetScale()
+     -- scale:SetX(scale.x + 0.001)
+     -- scale:SetY(scale.y + 0.001)
+     -- data.transform:SetScale(scale)
 end
 
 -- each of these functions must be present in each Lua script file otherwise other script's implementations will be used with this object instead

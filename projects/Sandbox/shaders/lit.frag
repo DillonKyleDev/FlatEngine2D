@@ -36,6 +36,4 @@ void main() {
     specular *= max(0, dot(light1Dir, viewDirection)); // To remove incorrect highlight when lit from behind, but it's not the best approach, becomes 0 at 90 degrees
     outColor = diffuse + specular;
     outColor.w = 1;
-
-    
 }

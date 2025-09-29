@@ -1,0 +1,22 @@
+{
+    "colorBlendAttachmentData": {
+        "alphaBlendOp": 0
+    },
+    "fragmentShaderPath": "../projects/Sandbox/shaders/compiledShaders/pbrFrag.spv",
+    "inputAssemblyData": {
+        "_primitiveRestartEnable": false,
+        "topology": 3
+    },
+    "name": "Strip",
+    "rasterizerData": {
+        "cullMode": 0,
+        "lineWidth": 1.0,
+        "polygonMode": 0
+    },
+    "textureCount": 2,
+    "uboVec4Names": [
+        "Color",
+        "Time"
+    ],
+    "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/pbrVert.spv"
+}

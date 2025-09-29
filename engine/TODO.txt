@@ -113,3 +113,8 @@ main {
 
 instead of vector<std::string> that we need to sort, 
 std::map<int index, std::string> maybe?
+
+To use the depth information of a rendered scene image, try creating a separate renderpass like we did to render to imgui texture, but instead of color resources, create depth resources, then create an additional subpass dependency step in the sceneviewrendertexture renderpass setup that uses that depth image? (half baked thought)
+
+Render order independant algorithm for transparent materials:
+https://docs.vulkan.org/samples/latest/samples/api/oit_linked_lists/README.html

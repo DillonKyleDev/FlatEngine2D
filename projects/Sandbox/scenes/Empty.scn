@@ -73,14 +73,14 @@
                     "_isCollapsed": false,
                     "id": 4,
                     "type": "Transform",
-                    "xPosition": 0.10000000149011612,
+                    "xPosition": 0.0,
                     "xRotation": 0.0,
                     "xScale": 1.0,
                     "yPosition": 0.0,
-                    "yRotation": 0.0010157461510971189,
+                    "yRotation": 0.0,
                     "yScale": 1.0,
-                    "zPosition": 2.9000000953674316,
-                    "zRotation": 0.0,
+                    "zPosition": 2.0,
+                    "zRotation": 90.0,
                     "zScale": 1.0
                 },
                 {
@@ -94,7 +94,8 @@
                             "path": "..\\projects\\Sandbox\\images\\textures\\link.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 },
                 {
                     "_isActive": true,
@@ -147,7 +148,7 @@
             "name": "Link",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": 0.10000000149011612,
+            "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
             "tags": [
                 {
@@ -216,7 +217,9 @@
             "_isActive": true,
             "_isPersistant": false,
             "_isPrefab": false,
-            "children": [],
+            "children": [
+                5
+            ],
             "collidesTags": [
                 {
                     "Ball": true
@@ -288,10 +291,10 @@
                     "xPosition": 0.0,
                     "xRotation": 0.0,
                     "xScale": 1.0,
-                    "yPosition": 0.0,
-                    "yRotation": -0.0,
+                    "yPosition": -2.0999999046325684,
+                    "yRotation": 0.0,
                     "yScale": 1.0,
-                    "zPosition": 0.0,
+                    "zPosition": -2.0999999046325684,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
@@ -332,19 +335,6 @@
                         }
                     ],
                     "type": "Body"
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 22,
-                    "materialName": "Unlit",
-                    "modelPath": "..\\projects\\Sandbox\\models\\quad.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\orange.png"
-                        }
-                    ],
-                    "type": "Mesh"
                 }
             ],
             "id": 3,
@@ -352,7 +342,7 @@
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,
-            "spawnLocationY": 0.0,
+            "spawnLocationY": -2.0999999046325684,
             "tags": [
                 {
                     "Ball": false
@@ -495,7 +485,7 @@
                     "yPosition": 0.0,
                     "yRotation": 0.0,
                     "yScale": 1.0,
-                    "zPosition": 0.0,
+                    "zPosition": -2.0,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
@@ -510,11 +500,561 @@
                             "path": "..\\projects\\Sandbox\\images\\marble-heights.png"
                         }
                     ],
-                    "type": "Mesh"
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 5,
             "name": "Cube",
+            "parent": 3,
+            "prefabName": "",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 0.0,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 27,
+                    "type": "Transform",
+                    "xPosition": 0.0,
+                    "xRotation": 0.0,
+                    "xScale": 1.2000000476837158,
+                    "yPosition": 0.0,
+                    "yRotation": 0.0,
+                    "yScale": 1.2000000476837158,
+                    "zPosition": -0.699999988079071,
+                    "zRotation": 0.0,
+                    "zScale": 0.30000001192092896
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 28,
+                    "materialName": "Strip",
+                    "modelPath": "..\\projects\\Sandbox\\models\\cylinderTube.obj",
+                    "textures": [
+                        {
+                            "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
+                        },
+                        {
+                            "path": "..\\projects\\Sandbox\\images\\voronoi_3.png"
+                        }
+                    ],
+                    "type": "Mesh",
+                    "uboVec4s": {
+                        "Color": {
+                            "w": 1.0199999809265137,
+                            "x": 0.0,
+                            "y": 1.100000023841858,
+                            "z": 3.359999895095825
+                        },
+                        "Time": {
+                            "w": -1.0,
+                            "x": 0.25999999046325684,
+                            "y": -1.0,
+                            "z": -1.0
+                        }
+                    }
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "Texture (Lua)",
+                    "id": 29,
+                    "scriptParameters": [],
+                    "type": "Script"
+                }
+            ],
+            "id": 6,
+            "name": "Orbit1",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 0.0,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 30,
+                    "type": "Transform",
+                    "xPosition": 0.0,
+                    "xRotation": 0.0,
+                    "xScale": 1.399999976158142,
+                    "yPosition": 0.0,
+                    "yRotation": 180.0,
+                    "yScale": 1.399999976158142,
+                    "zPosition": 0.10000000149011612,
+                    "zRotation": 0.0,
+                    "zScale": 0.20000000298023224
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 31,
+                    "materialName": "Strip",
+                    "modelPath": "..\\projects\\Sandbox\\models\\cylinderTube.obj",
+                    "textures": [
+                        {
+                            "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
+                        },
+                        {
+                            "path": "..\\projects\\Sandbox\\images\\voronoi_3.png"
+                        }
+                    ],
+                    "type": "Mesh",
+                    "uboVec4s": {
+                        "Color": {
+                            "w": 1.0,
+                            "x": 0.23000000417232513,
+                            "y": 1.850000023841858,
+                            "z": 0.8799999952316284
+                        },
+                        "Time": {
+                            "w": 0.0,
+                            "x": 0.03999999910593033,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "Texture (Lua)",
+                    "id": 32,
+                    "scriptParameters": [],
+                    "type": "Script"
+                }
+            ],
+            "id": 7,
+            "name": "Orbit2",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 0.0,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 36,
+                    "type": "Transform",
+                    "xPosition": 0.0,
+                    "xRotation": 0.0,
+                    "xScale": 1.0,
+                    "yPosition": 0.0,
+                    "yRotation": 0.0,
+                    "yScale": 1.0,
+                    "zPosition": 0.0,
+                    "zRotation": 0.0,
+                    "zScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "colorW": 1.0,
+                    "colorX": 1.0,
+                    "colorY": 1.0,
+                    "colorZ": 1.0,
+                    "directionX": 0.0,
+                    "directionY": 0.0,
+                    "directionZ": 4.0,
+                    "id": 37,
+                    "lightType": 2,
+                    "type": "Light"
+                }
+            ],
+            "id": 9,
+            "name": "Light",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,

@@ -308,7 +308,7 @@ namespace FlatEngine
         VkAttachmentDescription colorAttachmentResolve{};
         colorAttachmentResolve.format = colorFormat;
         colorAttachmentResolve.samples = msaaSamples;
-        colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+        colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
         colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
         colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
         colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
@@ -628,7 +628,7 @@ namespace FlatEngine
 
                 VkPipelineColorBlendAttachmentState colorBlendAttachmentInfos = newMaterial->GetColorBlendAttachmentCreateInfos();
                 colorBlendAttachmentInfos.alphaBlendOp = (VkBlendOp)CheckJsonInt(colorBlendAttachmentData, "alphaBlendOp", name);
-                newMaterial->SetColorBlendAttachmentCreateInfos(colorBlendAttachmentInfos);
+                newMaterial->SetColorBlendAttachmentCreateInfos(colorBlendAttachmentInfos);                
             }
 
             if (renderToTexture != nullptr)
