@@ -76,7 +76,7 @@
                     "xPosition": 0.0,
                     "xRotation": 0.0,
                     "xScale": 1.0,
-                    "yPosition": 0.0,
+                    "yPosition": -6.0,
                     "yRotation": 0.0,
                     "yScale": 1.0,
                     "zPosition": 0.0,
@@ -103,7 +103,7 @@
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,
-            "spawnLocationY": 0.0,
+            "spawnLocationY": -6.0,
             "tags": [
                 {
                     "Ball": false
@@ -414,7 +414,7 @@
                     "_isCollapsed": false,
                     "id": 6,
                     "type": "Transform",
-                    "xPosition": 1.600000023841858,
+                    "xPosition": 0.0,
                     "xRotation": 0.0,
                     "xScale": 1.0,
                     "yPosition": 0.0,
@@ -443,7 +443,7 @@
             "name": "Monkey UV",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": 1.600000023841858,
+            "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
             "tags": [
                 {
@@ -581,10 +581,10 @@
                     "_isCollapsed": false,
                     "id": 8,
                     "type": "Transform",
-                    "xPosition": 1.600000023841858,
+                    "xPosition": 0.0,
                     "xRotation": 0.0,
                     "xScale": 1.0,
-                    "yPosition": 1.5,
+                    "yPosition": 3.0,
                     "yRotation": 0.0,
                     "yScale": 1.0,
                     "zPosition": 0.0,
@@ -608,7 +608,7 @@
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "attachedScript": "Alpha (Lua)",
+                    "attachedScript": "Texture (Lua)",
                     "id": 43,
                     "scriptParameters": [],
                     "type": "Script"
@@ -618,8 +618,8 @@
             "name": "Monkey Sin Wave",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": 1.600000023841858,
-            "spawnLocationY": 1.5,
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 3.0,
             "tags": [
                 {
                     "Ball": false
@@ -1297,8 +1297,8 @@
                 },
                 {
                     "_isActive": true,
-                    "_isCollapsed": true,
-                    "attachedScript": "Alpha (Lua)",
+                    "_isCollapsed": false,
+                    "attachedScript": "Texture (Lua)",
                     "id": 36,
                     "scriptParameters": [],
                     "type": "Script"

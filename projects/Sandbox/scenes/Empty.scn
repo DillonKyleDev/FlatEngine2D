@@ -654,35 +654,35 @@
                     "yScale": 1.2000000476837158,
                     "zPosition": -0.699999988079071,
                     "zRotation": 0.0,
-                    "zScale": 0.30000001192092896
+                    "zScale": 0.4000000059604645
                 },
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
                     "id": 28,
                     "materialName": "Strip",
-                    "modelPath": "..\\projects\\Sandbox\\models\\cylinderTube.obj",
+                    "modelPath": "..\\projects\\Sandbox\\models\\tubeTriangulated.obj",
                     "textures": [
                         {
                             "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
                         },
                         {
-                            "path": "..\\projects\\Sandbox\\images\\voronoi_3.png"
+                            "path": "..\\projects\\Sandbox\\images\\perlin_1.png"
                         }
                     ],
                     "type": "Mesh",
                     "uboVec4s": {
                         "Color": {
-                            "w": 1.0199999809265137,
+                            "w": 1.0299999713897705,
                             "x": 0.0,
                             "y": 1.100000023841858,
                             "z": 3.359999895095825
                         },
                         "Time": {
-                            "w": -1.0,
-                            "x": 0.0,
-                            "y": -1.0,
-                            "z": -1.0
+                            "w": 0.0,
+                            "x": 2.009999990463257,
+                            "y": 0.0,
+                            "z": 0.0
                         }
                     }
                 },
@@ -852,7 +852,7 @@
                     "_isCollapsed": false,
                     "id": 31,
                     "materialName": "Strip",
-                    "modelPath": "..\\projects\\Sandbox\\models\\cylinderTube.obj",
+                    "modelPath": "..\\projects\\Sandbox\\models\\tubeTriangulated.obj",
                     "textures": [
                         {
                             "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"

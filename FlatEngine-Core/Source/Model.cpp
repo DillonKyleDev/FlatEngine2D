@@ -129,6 +129,9 @@ namespace FlatEngine
                     }
 
                     m_indices.push_back(uniqueVertices[vertex]);
+
+                    //m_indices.push_back(static_cast<uint32_t>(m_vertices.size()));
+                    //m_vertices.push_back(vertex);
                 }
             }
             // For line inputs.. TODO: Should query topology member in PipelineManager and switch

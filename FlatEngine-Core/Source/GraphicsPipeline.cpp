@@ -64,7 +64,7 @@ namespace FlatEngine
         m_multisampling.sampleShadingEnable = VK_TRUE;
         m_multisampling.minSampleShading = 0.2f;
         m_multisampling.pSampleMask = nullptr;
-        m_multisampling.alphaToCoverageEnable = VK_FALSE;
+        m_multisampling.alphaToCoverageEnable = VK_TRUE;
         m_multisampling.alphaToOneEnable = VK_FALSE;
 
         // Color blending - After a fragment shader has returned a color, it needs to be combined with the color that is already in the framebuffer.

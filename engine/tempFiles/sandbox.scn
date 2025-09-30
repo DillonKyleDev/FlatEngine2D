@@ -608,7 +608,7 @@
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "attachedScript": "Alpha (Lua)",
+                    "attachedScript": "Texture (Lua)",
                     "id": 43,
                     "scriptParameters": [],
                     "type": "Script"
@@ -1297,8 +1297,8 @@
                 },
                 {
                     "_isActive": true,
-                    "_isCollapsed": true,
-                    "attachedScript": "Alpha (Lua)",
+                    "_isCollapsed": false,
+                    "attachedScript": "Texture (Lua)",
                     "id": 36,
                     "scriptParameters": [],
                     "type": "Script"
