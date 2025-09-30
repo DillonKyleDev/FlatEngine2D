@@ -449,6 +449,10 @@ namespace FlatGui
 					FL::F_VulkanManager->ReloadShaders();
 				}
 				ImGui::Separator();
+				if (ImGui::MenuItem("Orthographic Viewport"))
+				{
+					FL::F_VulkanManager->ToggleOrthographic();
+				}
 				if (ImGui::BeginMenu("Widgets"))
 				{
 					if (ImGui::MenuItem("Toggle Grid"))

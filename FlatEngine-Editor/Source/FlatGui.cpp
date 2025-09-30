@@ -2079,6 +2079,7 @@ namespace FlatGui
 			{
 				lastMousePos = mousePos;
 				FL::F_b_sceneViewRightClicked = true;
+				SDL_ShowCursor(SDL_DISABLE);
 			}
 			if (b_isActive && ImGui::IsMouseDragging(ImGuiMouseButton_Right, mouse_threshold_for_pan))
 			{
@@ -2088,10 +2089,33 @@ namespace FlatGui
 				lastMousePos = mousePos;	
 				FL::F_sceneViewCameraObject->GetCamera()->AddToHorizontalViewAngle(-mouseDelta.x * 0.25f);
 				FL::F_sceneViewCameraObject->GetCamera()->AddToVerticalViewAngle(mouseDelta.y * 0.25f);
+
+				Vector2 extent = Vector2((float)FL::F_VulkanManager->GetWinSystem().GetExtent().width, (float)FL::F_VulkanManager->GetWinSystem().GetExtent().height);
+				if (mousePos.x > extent.x)
+				{
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), 0, (int)mousePos.y);
+					lastMousePos = Vector2(0, mousePos.y);
+				}
+				else if (mousePos.x < 0)
+				{
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)extent.x, (int)mousePos.y);
+					lastMousePos = Vector2(extent.x, mousePos.y);
+				}
+				if (mousePos.y > extent.y)
+				{
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)mousePos.x, 0);
+					lastMousePos = Vector2(mousePos.x, 0);
+				}
+				else if (mousePos.y < 0)
+				{
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)mousePos.x, (int)extent.y);
+					lastMousePos = Vector2(mousePos.x, extent.y);
+				}
 			}
 			if (ImGui::IsItemDeactivated())
 			{				
 				FL::F_b_sceneViewRightClicked = false;
+				SDL_ShowCursor(SDL_ENABLE);
 			}
 
 			// Show cursor position in scene view when pressing Alt

@@ -26,8 +26,8 @@ namespace FlatEngine
 		m_b_shouldFollow = false;
 		m_toFollowID = -1;
 		m_followSmoothing = 0.1f;
-		m_horizontalViewAngle = 0;
-		m_verticalViewAngle = 0;
+		m_horizontalViewAngle = 0.0f;
+		m_verticalViewAngle = 0.0f;
 	}
 
 	Camera::~Camera()
@@ -218,7 +218,18 @@ namespace FlatEngine
 
 	void Camera::AddToVerticalViewAngle(float toAdd)
 	{
-		m_verticalViewAngle += toAdd;
+		if (m_verticalViewAngle + toAdd >= 90)
+		{
+			m_verticalViewAngle = 89.99f;
+		}
+		else if (m_verticalViewAngle + toAdd <= -90)
+		{
+			m_verticalViewAngle = -89.99f;
+		}
+		else
+		{
+			m_verticalViewAngle += toAdd;
+		}
 	}
 
 	void Camera::SetDimensions(float newWidth, float newHeight)

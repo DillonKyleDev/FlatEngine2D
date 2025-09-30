@@ -91,6 +91,7 @@ namespace FlatEngine
         bool ShowSceneViewGridObjects();
         void SetShowSceneViewGridObjects(bool b_showGridObjects);
         void ToggleShowSceneViewGridObjects();
+        void ToggleOrthographic();
         // Game View
         std::vector<VkDescriptorSet>& GetGameViewDescriptorSets();
 
@@ -116,6 +117,7 @@ namespace FlatEngine
         Texture m_gameViewTexture;        
 
         bool m_b_showGridObjects;
+        bool m_b_orthographic;
 
         VkInstance m_instance;
         WinSys m_winSystem;

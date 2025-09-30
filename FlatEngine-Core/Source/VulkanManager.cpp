@@ -64,6 +64,7 @@ namespace FlatEngine
         m_sceneViewTexture = Texture();
         m_gameViewTexture = Texture();
         m_b_showGridObjects = true;
+        m_b_orthographic = false;
     }
 
     VulkanManager::~VulkanManager()
@@ -832,6 +833,11 @@ namespace FlatEngine
         m_b_showGridObjects = !m_b_showGridObjects;
     }
 
+    void VulkanManager::ToggleOrthographic()
+    {
+        m_b_orthographic = !m_b_orthographic;
+    }
+
     std::vector<VkDescriptorSet>& VulkanManager::GetGameViewDescriptorSets()
     {
         return m_gameViewTexture.GetDescriptorSets();
@@ -875,7 +881,7 @@ namespace FlatEngine
                     std::shared_ptr<Material> material = mesh.second.GetMaterial();
                     if (mesh.second.Initialized() && material != nullptr)
                     {
-                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
+                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
                         m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
                         m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                     }
@@ -887,7 +893,7 @@ namespace FlatEngine
                 std::shared_ptr<Material> material = mesh.second.GetMaterial();
                 if (mesh.second.Initialized() && material != nullptr)
                 {
-                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView);
+                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
                     m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
                     m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                 }

@@ -247,7 +247,7 @@ namespace FlatEngine
         }
     }
 
-    void Model::UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewport)
+    void Model::UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewport, bool b_orthographic)
     {        
         GameObject* parent = mesh->GetParentPtr();
         Transform* transform = parent->GetTransform();
@@ -282,26 +282,29 @@ namespace FlatEngine
         if (primaryCamera != nullptr)
         {
             Vector3 lookDir = primaryCamera->GetLookDirection();
-            float nearClip = primaryCamera->GetNearClippingDistance();
-            float farClip = primaryCamera->GetFarClippingDistance();
-            float perspectiveAngle = primaryCamera->GetPerspectiveAngle();
-            glm::vec3 up = glm::vec3(0.0f, 0.0f, 1.0f);
-            
-            static glm::vec4 meshPos;
-            static glm::vec4 viewportCameraPos;
-            static glm::mat4 model;            
-            static glm::vec4 cameraLookDir;
-            static glm::mat4 projection;
-            static glm::float32 time;
-
-            meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);
-            viewportCameraPos = glm::vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0);
-            model = meshRotation * meshScale;
-            cameraLookDir = glm::vec4(lookDir.x, lookDir.y, lookDir.z, 0);
+            //Vector3 lookDir = Vector3(0, 1, 0);
+            glm::vec3 up = glm::vec3(0.0f, 0.0f, 1.0f);           
+            glm::vec4 meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);
+            glm::vec4 viewportCameraPos = glm::vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0);
+            glm::mat4 model = meshRotation * meshScale;
+            glm::vec4 cameraLookDir = glm::vec4(lookDir.x, lookDir.y, lookDir.z, 0);
             glm::mat4 view = glm::lookAt(cameraPosition.GetGLMVec3(), glm::vec3(cameraPosition.x + cameraLookDir.x, cameraPosition.y + cameraLookDir.y, cameraPosition.z + cameraLookDir.z), up);
-            float aspectRatio = (float)(winSystem.GetExtent().width / winSystem.GetExtent().height);
-            projection = glm::perspective(glm::radians(perspectiveAngle), aspectRatio, nearClip, farClip);
-            projection[1][1] *= -1;            
+            //glm::mat4 view = glm::lookAt(glm::vec3(0.f, 0.f, 10.0f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+            glm::mat4 projection;
+            if (b_orthographic)
+            {
+                projection = glm::ortho(0.0f, 1.0f, 1.0f, 0.0f, 10.0f, 100000.0f);
+            }
+            else
+            {
+                float nearClip = primaryCamera->GetNearClippingDistance();
+                float farClip = primaryCamera->GetFarClippingDistance();
+                float perspectiveAngle = primaryCamera->GetPerspectiveAngle();
+                float aspectRatio = (float)(winSystem.GetExtent().width / winSystem.GetExtent().height);
+                projection = glm::perspective(glm::radians(perspectiveAngle), aspectRatio, nearClip, farClip);
+                projection[1][1] *= -1;
+            }
 
             CustomUBO ubo{};
 
@@ -309,7 +312,8 @@ namespace FlatEngine
             base.meshPosition = meshPos;
             base.cameraPosition = viewportCameraPos;
             base.model = model;
-            base.viewAndProjection = projection * view;            
+            base.view = view;            
+            base.projection = projection;
             ubo.BaseUBO = base;
 
             int vec4Counter = 0;

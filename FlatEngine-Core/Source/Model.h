@@ -27,7 +27,7 @@ namespace FlatEngine
 		void CreateVertexBuffer(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
 		void CreateIndexBuffer(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
 		void CreateUniformBuffers(PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
-		void UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewport);
+		void UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewport, bool b_orthographic);
 		std::vector<VkBuffer>& GetUniformBuffers();
 		VkBuffer& GetVertexBuffer();
 		VkBuffer& GetIndexBuffer();

@@ -64,7 +64,6 @@ namespace FlatEngine
         {
             std::array<VkVertexInputAttributeDescription, 4> attributeDescriptions{};
 
-            // 
             // float: VK_FORMAT_R32_SFLOAT
             // vec2 : VK_FORMAT_R32G32_SFLOAT
             // vec3 : VK_FORMAT_R32G32B32_SFLOAT
@@ -98,7 +97,8 @@ namespace FlatEngine
         alignas(16) glm::vec4 meshPosition;
         alignas(16) glm::vec4 cameraPosition;
         alignas(16) glm::mat4 model;
-        alignas(16) glm::mat4 viewAndProjection;        
+        alignas(16) glm::mat4 view;   
+        alignas(16) glm::mat4 projection;
     };
 
     struct CustomUBO {
