@@ -35,8 +35,8 @@ namespace FlatEngine
 	}
 
 	void Material::SetDefaultValues()
-	{
-		m_textureCount = 0;
+	{		
+		m_texturesStageFlags = std::map<uint32_t, VkShaderStageFlags>();
 		m_allocator = Allocator();
 		// handles
 		m_winSystem = nullptr;
@@ -44,11 +44,7 @@ namespace FlatEngine
 		m_b_initialized = false;		
 		m_renderPass = nullptr;
 
-		//m_uboFloatNames = std::vector<std::string>();
-		//m_uboVec2Names = std::vector<std::string>();
-		//m_uboVec3Names = std::vector<std::string>();
-		m_uboVec4Names = std::vector<std::string>();
-		//m_uboMat4Names = std::vector<std::string>();
+		m_uboVec4Names = std::map<uint32_t, std::string>();
 		
 		// Default Graphics Pipeline configuration (Filled in with saved values when LoadMaterial() is called
 		m_inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -98,21 +94,27 @@ namespace FlatEngine
 			{ "alphaBlendOp", (int)m_colorBlendAttachment.alphaBlendOp }
 		};
 
-		json uboVec4Names = json::array();		
-		for (std::string vec4Name : m_uboVec4Names)
+		json uboVec4Names = json::object();		
+		for (std::map<uint32_t, std::string>::iterator iter = m_uboVec4Names.begin(); iter != m_uboVec4Names.end(); iter++)
 		{
-			uboVec4Names.push_back(vec4Name);
+			uboVec4Names.emplace(std::to_string(iter->first), iter->second);
+		}
+
+		json texturesShaderData = json::object();
+		for (std::map<uint32_t, VkShaderStageFlags>::iterator textureData = m_texturesStageFlags.begin(); textureData != m_texturesStageFlags.end(); textureData++)
+		{
+			texturesShaderData.emplace(std::to_string(textureData->first), (int)textureData->second);
 		}
 
 		json jsonData = {
 			{ "name", m_name },
 			{ "vertexShaderPath", m_graphicsPipeline.GetVertexPath() },
-			{ "fragmentShaderPath", m_graphicsPipeline.GetFragmentPath() },
-			{ "textureCount", m_textureCount },
+			{ "fragmentShaderPath", m_graphicsPipeline.GetFragmentPath() },			
 			{ "rasterizerData", rasterizerData },
 			{ "inputAssemblyData", inputAssemblyData },
 			{ "colorBlendAttachmentData", colorBlendAttachmentData },
-			{ "uboVec4Names", uboVec4Names }
+			{ "uboVec4Names", uboVec4Names },
+			{ "texturesShaderStageData", texturesShaderData }
 		};
 
 		std::string data = jsonData.dump(4);
@@ -126,7 +128,7 @@ namespace FlatEngine
 		{			
 			if (m_name != "imgui")
 			{
-				m_allocator.Init(AllocatorType::DescriptorPool, m_textureCount, *m_logicalDevice);
+				m_allocator.Init(AllocatorType::DescriptorPool, &m_texturesStageFlags, *m_logicalDevice);
 				m_graphicsPipeline.CreatePushConstantRanges();
 			}			
 			m_graphicsPipeline.CreateGraphicsPipeline(*m_logicalDevice, *m_winSystem, *m_renderPass, m_allocator.GetDescriptorSetLayout());
@@ -219,7 +221,7 @@ namespace FlatEngine
 		return m_allocator.CreateDescriptorPool();
 	}
 
-	void Material::CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::vector<Texture>& textures)
+	void Material::CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& textures)
 	{
 		m_allocator.AllocateDescriptorSets(descriptorSets, model, textures);
 	}
@@ -229,14 +231,40 @@ namespace FlatEngine
 		return m_allocator;
 	}
 
-	void Material::SetTextureCount(uint32_t textureCount)
+	std::map<uint32_t, VkShaderStageFlags>* Material::GetTexturesShaderStages()
 	{
-		m_textureCount = textureCount;
+		return &m_texturesStageFlags;
 	}
 
 	uint32_t Material::GetTextureCount()
 	{
-		return m_textureCount;
+		return (uint32_t)m_texturesStageFlags.size();
+	}
+
+	void Material::AddTexture(uint32_t index, VkShaderStageFlags shaderStage)
+	{
+		if (m_texturesStageFlags.count(index))
+		{
+			m_texturesStageFlags.at(index) = shaderStage;
+		}
+		else
+		{
+			m_texturesStageFlags.emplace(index, shaderStage);
+		}
+	}
+
+	void Material::RemoveTexture(int index)
+	{
+		if (index == -1 && m_texturesStageFlags.size())
+		{			
+			std::map<uint32_t, VkShaderStageFlags>::iterator last = m_texturesStageFlags.end();
+			last--;
+			m_texturesStageFlags.erase(last);
+		}
+		else if (m_texturesStageFlags.count((uint32_t)index))
+		{
+			m_texturesStageFlags.erase((uint32_t)index);
+		}
 	}
 
 	void Material::OnWindowResized()
@@ -281,22 +309,7 @@ namespace FlatEngine
 		return m_renderPass;
 	}
 
-	//std::vector<std::string>& Material::GetUBOFloatNames()
-	//{
-	//	return m_uboFloatNames;
-	//}
-
-	//std::vector<std::string>& Material::GetUBOVec2Names()
-	//{
-	//	return m_uboVec2Names;
-	//}
-
-	//std::vector<std::string>& Material::GetUBOVec3Names()
-	//{
-	//	return m_uboVec3Names;
-	//}
-
-	std::vector<std::string>& Material::GetUBOVec4Names()
+	std::map<uint32_t, std::string>& Material::GetUBOVec4Names()
 	{
 		return m_uboVec4Names;
 	}
@@ -306,27 +319,26 @@ namespace FlatEngine
 		return a < b; 
 	}
 
-	bool Material::AddUBOVec4(std::string name)
+	bool Material::AddUBOVec4(std::string name, int index)
 	{
-		for (std::string vec4Name : m_uboVec4Names)
+		for (std::map<uint32_t, std::string>::iterator iter = m_uboVec4Names.begin(); iter != m_uboVec4Names.end(); iter++)
 		{
-			if (vec4Name == name)
+			if (iter->second == name)
 			{
 				LogError("Vec4 name already taken.");
 				return false;
 			}
 		}
 
-		m_uboVec4Names.push_back(name);
-
-		std::sort(m_uboVec4Names.begin(), m_uboVec4Names.end(), CompareStrings);
+		if (index != -1)
+		{
+			m_uboVec4Names.emplace((uint32_t)index, name);
+		}
+		else
+		{
+			m_uboVec4Names.emplace((uint32_t)m_uboVec4Names.size(), name);
+		}
 
 		return true;
 	}
-
-	//std::vector<std::string>& Material::GetUBOMat4Names()
-	//{
-	//	return m_uboMat4Names;
-	//}
-
 }

@@ -97,7 +97,8 @@ namespace FlatGui
 				vertexInputText = currentMaterial->GetVertexPath();
 				fragmentInputText = currentMaterial->GetFragmentPath();
 				uint32_t textureCount = currentMaterial->GetTextureCount();
-				std::vector<std::string> uboVec4Names = currentMaterial->GetUBOVec4Names();
+				std::map<uint32_t, VkShaderStageFlags>* texturesShaderData = currentMaterial->GetTexturesShaderStages();
+				std::map<uint32_t, std::string> uboVec4Names = currentMaterial->GetUBOVec4Names();
 
 				if (FL::RenderInput("##VertexShaderPathInput", "Vertex Shader Path", vertexInputText))
 				{
@@ -109,14 +110,41 @@ namespace FlatGui
 					currentMaterial->SetFragmentPath(fragmentInputText);
 				}
 
-				if (FL::RenderButton("Add Texture"))
+				if (FL::RenderButton("Add Vertex Texture Sampler"))
 				{
-					Texture newTexture = Texture();
-					currentMaterial->SetTextureCount(textureCount + 1);
+					currentMaterial->AddTexture(textureCount, VK_SHADER_STAGE_VERTEX_BIT);
+				}
+				ImGui::SameLine();
+				if (FL::RenderButton("Add Fragment Texture Sampler"))
+				{
+					currentMaterial->AddTexture(textureCount, VK_SHADER_STAGE_FRAGMENT_BIT);
 				}
 
-				std::string textureCountText = "Textures: " + std::to_string(textureCount);
-				ImGui::Text(textureCountText.c_str());
+				for (std::map<uint32_t, VkShaderStageFlags>::iterator iterator = texturesShaderData->begin(); iterator != texturesShaderData->end(); iterator++)
+				{
+					switch (iterator->second)
+					{
+					case VK_SHADER_STAGE_VERTEX_BIT:
+					{
+						std::string vertexString = "Vertex Sampler : layout(binding = " + std::to_string(iterator->first + 1) + ") uniform sampler2D [name])";
+						ImGui::Text(vertexString.c_str());
+						break;
+					}
+
+					case VK_SHADER_STAGE_FRAGMENT_BIT:
+					{
+						std::string fragmentString = "Fragment Sampler : layout(binding = " + std::to_string(iterator->first + 1) + ") uniform sampler2D [name])";
+						ImGui::Text(fragmentString.c_str());
+						break;
+					}
+					default:
+						break;
+					}
+				}
+				if (FL::RenderButton("Remove Last Texture"))
+				{
+					currentMaterial->RemoveTexture();
+				}
 
 				// Whenever we add a new property to a materials UBO, we should make sure to recreate the commandBuffers in the Models of the Meshes that use that material, taking into account the new Uniform Buffer Size
 				ImGui::Text("Vec4s");
@@ -140,11 +168,12 @@ namespace FlatGui
 					}
 				}
 
-				for (std::string vec4Name : uboVec4Names)
+				for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
 				{
 					// TODO: Add editing of and adding of vec4 names here, then "refresh" the Meshes (emplace new std::pair<std::string, glm::vec4> in their m_uboVec4s members) that use this Material to account for the new vec4, or add a button to refresh it in the Mesh Component in inspector.
 					// Currently the vec4s are global (the same for all Materials) because they and are created in constructor of Material and added to the Meshes m_uboVec4s in Mesh::SetMaterial() method. TODO: Make this dynamic
-					ImGui::Text(vec4Name.c_str());
+					std::string text = "vec4 vec4s[" + std::to_string(iter->first) + "]    Name: " + iter->second;
+					ImGui::Text(text.c_str());
 				}
 
 				//int textureCounter = 0;

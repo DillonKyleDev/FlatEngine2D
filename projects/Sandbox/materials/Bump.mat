@@ -13,7 +13,11 @@
         "lineWidth": 1.0,
         "polygonMode": 0
     },
-    "textureCount": 2,
-    "uboVec4Names": [],
+    "textureCount": 0,
+    "texturesShaderStageData": {
+        "0": 1,
+        "1": 16
+    },
+    "uboVec4Names": {},
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/bumpVert.spv"
 }

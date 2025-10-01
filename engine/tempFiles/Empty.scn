@@ -89,11 +89,9 @@
                     "id": 5,
                     "materialName": "Unlit",
                     "modelPath": "..\\projects\\Sandbox\\models\\quad.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\textures\\link.png"
-                        }
-                    ],
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\textures\\link.png"
+                    },
                     "type": "Mesh",
                     "uboVec4s": {}
                 },
@@ -291,10 +289,10 @@
                     "xPosition": 0.0,
                     "xRotation": 0.0,
                     "xScale": 1.0,
-                    "yPosition": -2.0999999046325684,
+                    "yPosition": -1.0,
                     "yRotation": 0.0,
                     "yScale": 1.0,
-                    "zPosition": -2.0999999046325684,
+                    "zPosition": -1.0,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
@@ -342,7 +340,7 @@
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,
-            "spawnLocationY": -2.0999999046325684,
+            "spawnLocationY": -1.0,
             "tags": [
                 {
                     "Ball": false
@@ -485,7 +483,7 @@
                     "yPosition": 0.0,
                     "yRotation": 0.0,
                     "yScale": 1.0,
-                    "zPosition": -2.0,
+                    "zPosition": -1.0,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
@@ -495,11 +493,9 @@
                     "id": 26,
                     "materialName": "Unlit",
                     "modelPath": "..\\projects\\Sandbox\\models\\cube.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\marble-heights.png"
-                        }
-                    ],
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\marble-heights.png"
+                    },
                     "type": "Mesh",
                     "uboVec4s": {}
                 }
@@ -652,7 +648,7 @@
                     "yPosition": 0.0,
                     "yRotation": 0.0,
                     "yScale": 1.2000000476837158,
-                    "zPosition": -0.699999988079071,
+                    "zPosition": 0.30000001192092896,
                     "zRotation": 0.0,
                     "zScale": 0.4000000059604645
                 },
@@ -662,27 +658,23 @@
                     "id": 28,
                     "materialName": "Strip",
                     "modelPath": "..\\projects\\Sandbox\\models\\tubeTriangulated.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
-                        },
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\perlin_1.png"
-                        }
-                    ],
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png",
+                        "1": "..\\projects\\Sandbox\\images\\perlin_1.png"
+                    },
                     "type": "Mesh",
                     "uboVec4s": {
                         "Color": {
-                            "w": 1.0299999713897705,
-                            "x": 0.0,
-                            "y": 1.100000023841858,
-                            "z": 3.359999895095825
+                            "w": 1.0,
+                            "x": 0.17000000178813934,
+                            "y": 0.8299999833106995,
+                            "z": 1.6399999856948853
                         },
                         "Time": {
                             "w": 0.0,
-                            "x": 2.009999990463257,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": 0.0,
+                            "y": 0.5199999809265137,
+                            "z": 0.44999998807907104
                         }
                     }
                 },
@@ -696,7 +688,7 @@
                 }
             ],
             "id": 6,
-            "name": "Orbit1",
+            "name": "OrbitBlue",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,
@@ -843,7 +835,7 @@
                     "yPosition": 0.0,
                     "yRotation": 180.0,
                     "yScale": 1.399999976158142,
-                    "zPosition": 0.10000000149011612,
+                    "zPosition": 1.100000023841858,
                     "zRotation": 0.0,
                     "zScale": 0.20000000298023224
                 },
@@ -853,19 +845,15 @@
                     "id": 31,
                     "materialName": "Strip",
                     "modelPath": "..\\projects\\Sandbox\\models\\tubeTriangulated.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
-                        },
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\voronoi_3.png"
-                        }
-                    ],
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png",
+                        "1": "..\\projects\\Sandbox\\images\\voronoi_3.png"
+                    },
                     "type": "Mesh",
                     "uboVec4s": {
                         "Color": {
                             "w": 1.0,
-                            "x": 0.23000000417232513,
+                            "x": 0.20999999344348907,
                             "y": 1.850000023841858,
                             "z": 0.8799999952316284
                         },
@@ -887,7 +875,7 @@
                 }
             ],
             "id": 7,
-            "name": "Orbit2",
+            "name": "OrbitGreen",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,

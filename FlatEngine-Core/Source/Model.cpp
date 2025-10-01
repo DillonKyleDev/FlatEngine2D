@@ -345,8 +345,23 @@ namespace FlatEngine
         return m_indexBuffer;
     }
 
-    std::vector<uint32_t>& Model::GetIndices()
+    std::vector<Vertex> Model::GetVertices()
+    {
+        return m_vertices;
+    }
+
+    void Model::SetVertices(std::vector<Vertex> vertices)
+    {
+        m_vertices = vertices;
+    }
+
+    std::vector<uint32_t> Model::GetIndices()
     {
         return m_indices;
+    }
+
+    void Model::SetIndices(std::vector<uint32_t> indices)
+    {
+        m_indices = indices;
     }
 }

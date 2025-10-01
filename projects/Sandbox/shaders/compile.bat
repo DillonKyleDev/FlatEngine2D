@@ -5,8 +5,8 @@ glslc.exe lit.vert -o compiledShaders/litVert.spv
 glslc.exe lit.frag -o compiledShaders/litFrag.spv
 glslc.exe unlit.vert -o compiledShaders/unlitVert.spv
 glslc.exe unlit.frag -o compiledShaders/unlitFrag.spv
-glslc.exe pbr.vert -o compiledShaders/pbrVert.spv
-glslc.exe pbr.frag -o compiledShaders/pbrFrag.spv
+glslc.exe strip.vert -o compiledShaders/stripVert.spv
+glslc.exe strip.frag -o compiledShaders/stripFrag.spv
 glslc.exe bump.vert -o compiledShaders/bumpVert.spv
 glslc.exe bump.frag -o compiledShaders/bumpFrag.spv
 glslc.exe water.vert -o compiledShaders/waterVert.spv

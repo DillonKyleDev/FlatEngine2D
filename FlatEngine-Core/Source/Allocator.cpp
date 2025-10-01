@@ -11,8 +11,7 @@ namespace FlatEngine
 	{
 		m_type = AllocatorType::Null;
 		m_sizePerPool = 0;
-		m_startingPools = 1;
-		m_textureCount = 0;
+		m_startingPools = 1;		
 		m_currentPoolIndex = 0;
 		m_descriptorSetLayout = VK_NULL_HANDLE;
 		m_bindings = {};
@@ -45,10 +44,10 @@ namespace FlatEngine
 		}
 	}
 
-	void Allocator::Init(AllocatorType type, uint32_t textureCount, LogicalDevice& logicalDevice, uint32_t perPool)
+	void Allocator::Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool)
 	{
 		m_type = type;
-		m_textureCount = textureCount;
+		m_texturesShaderStages = texturesShaderStages;		
 		m_deviceHandle = &logicalDevice;
 		if (m_poolSizes.size() == 0)
 		{
@@ -83,21 +82,13 @@ namespace FlatEngine
 		uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		uboLayoutBinding.descriptorCount = 1;
 		uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-		uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
+		uboLayoutBinding.pImmutableSamplers = nullptr;
 
 		m_bindings.push_back(uboLayoutBinding);
 
-		for (uint32_t i = 0; i < m_textureCount; i++)
+		for (uint32_t i = 0; i < m_texturesShaderStages->size(); i++)
 		{
-			VkShaderStageFlags shaderStage;
-			if (i == 0)
-			{
-				shaderStage = VK_SHADER_STAGE_FRAGMENT_BIT;
-			}
-			else
-			{
-				shaderStage = VK_SHADER_STAGE_VERTEX_BIT; // VK_SHADER_STAGE_VERTEX_BIT
-			}
+			VkShaderStageFlags shaderStage = m_texturesShaderStages->at(i);
 
 			VkDescriptorSetLayoutBinding samplerLayoutBinding{};
 			samplerLayoutBinding.binding = i + 1;
@@ -188,10 +179,10 @@ namespace FlatEngine
 	void Allocator::SetDefaultDescriptorPoolConfig()
 	{
 		// Default Descriptor Pool Settings	
-		m_poolSizes = std::vector<VkDescriptorPoolSize>(m_textureCount + 1, {});
+		m_poolSizes = std::vector<VkDescriptorPoolSize>(m_texturesShaderStages->size() + 1, {});
 		m_poolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		m_poolSizes[0].descriptorCount = static_cast<uint32_t>(m_sizePerPool);
-		for (uint32_t j = 1; j < m_textureCount + 1; j++)
+		for (uint32_t j = 1; j < m_texturesShaderStages->size() + 1; j++)
 		{
 			m_poolSizes[j].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			m_poolSizes[j].descriptorCount = static_cast<uint32_t>(m_sizePerPool);
@@ -228,7 +219,7 @@ namespace FlatEngine
 		}
 	}
 
-	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::vector<Texture>& textures)
+	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& textures)
 	{
 		if (m_type != AllocatorType::Null)
 		{
@@ -277,13 +268,14 @@ namespace FlatEngine
 				}
 
 				std::vector<VkDescriptorImageInfo> imageInfos{};
-				imageInfos.resize(m_textureCount);
-
-				for (size_t j = 0; j < textures.size(); j++)
+				imageInfos.resize(m_texturesShaderStages->size());
+				
+				int imageIndex = 0;
+				for (std::map<uint32_t, Texture>::iterator iter = textures.begin(); iter != textures.end(); iter++)
 				{									
-					imageInfos[j].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-					imageInfos[j].imageView = textures[j].GetImageViews()[i];
-					imageInfos[j].sampler = textures[j].GetSampler();
+					imageInfos[imageIndex].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+					imageInfos[imageIndex].imageView = iter->second.GetImageViews()[i];
+					imageInfos[imageIndex].sampler = iter->second.GetSampler();
 
 					descriptorWrites[descriptorCounter].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 					descriptorWrites[descriptorCounter].dstSet = descriptorSets[i];
@@ -291,10 +283,11 @@ namespace FlatEngine
 					descriptorWrites[descriptorCounter].dstArrayElement = 0;
 					descriptorWrites[descriptorCounter].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 					descriptorWrites[descriptorCounter].descriptorCount = 1;
-					descriptorWrites[descriptorCounter].pImageInfo = &imageInfos[j];
+					descriptorWrites[descriptorCounter].pImageInfo = &imageInfos[imageIndex];
 
-					textures[j].SetAllocationIndex((int)m_currentPoolIndex);
+					iter->second.SetAllocationIndex((int)m_currentPoolIndex);
 					descriptorCounter++;
+					imageIndex++;
 				}
 
 				vkUpdateDescriptorSets(m_deviceHandle->GetDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
@@ -303,10 +296,11 @@ namespace FlatEngine
 		}
 		else
 		{			
-			for (size_t j = 0; j < m_textureCount; j++)
+			for (std::map<uint32_t, Texture>::iterator iter = textures.begin(); iter != textures.end(); iter++)
 			{
-				textures[j].SetAllocationIndex(-1);
+				iter->second.SetAllocationIndex(-1);
 			}
+
 			FlatEngine::LogError("Allocator has not been initialized yet is trying to allocate DescriptorSets!");
 		}
 	}

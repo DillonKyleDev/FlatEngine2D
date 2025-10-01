@@ -554,7 +554,7 @@ namespace FlatEngine
         VkDescriptorSet& descriptorSet = mesh.GetDescriptorSets()[VM_currentFrame]; // Use Mesh descriptor sets to draw the objects to the VkImage that will THEN be used with imgui material and the descriptor sets created using the imgui material
         VkBuffer& vertexBuffer = mesh.GetModel().GetVertexBuffer();
         VkBuffer& indexBuffer = mesh.GetModel().GetIndexBuffer();
-        std::vector<uint32_t>& indices = mesh.GetModel().GetIndices();
+        std::vector<uint32_t> indices = mesh.GetModel().GetIndices();
 
         VkBuffer vertexBuffers[] = { vertexBuffer };
         VkDeviceSize offsets[] = { 0 };

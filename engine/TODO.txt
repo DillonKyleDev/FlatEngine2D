@@ -118,3 +118,7 @@ To use the depth information of a rendered scene image, try creating a separate 
 
 Render order independant algorithm for transparent materials:
 https://docs.vulkan.org/samples/latest/samples/api/oit_linked_lists/README.html
+
+Still a bug with transparent textures showing artifacts through models when viewing the other side of the model through transparent texture.
+
+Fix scene files with textures and ubo json saved wrong.

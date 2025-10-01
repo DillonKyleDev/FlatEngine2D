@@ -63,6 +63,8 @@ namespace FlatEngine
         m_gameViewMaterials = std::map<std::string, std::shared_ptr<Material>>();
         m_sceneViewTexture = Texture();
         m_gameViewTexture = Texture();
+        m_models = std::map<std::string, std::shared_ptr<Model>>();
+
         m_b_showGridObjects = true;
         m_b_orthographic = false;
     }
@@ -458,7 +460,8 @@ namespace FlatEngine
 
         m_imGuiMaterial->GetAllocator().ConfigureDescriptorSetLayout(bindings, layoutInfo);
         m_imGuiMaterial->GetAllocator().ConfigureDescriptorPools(poolSizes, poolInfo);
-        m_imGuiMaterial->GetAllocator().Init(AllocatorType::DescriptorPool, 1, m_logicalDevice);
+        m_imGuiMaterial->AddTexture(0, VK_SHADER_STAGE_FRAGMENT_BIT);
+        m_imGuiMaterial->GetAllocator().Init(AllocatorType::DescriptorPool, m_imGuiMaterial->GetTexturesShaderStages(), m_logicalDevice);
 
         ImGui_ImplSDL2_InitForVulkan(m_winSystem.GetWindow());
 
@@ -488,7 +491,8 @@ namespace FlatEngine
     {
         texture.CreateTextureImage();
         Model emptyModel = Model();
-        std::vector<Texture> textures = std::vector<Texture>(1, texture);
+        std::map<uint32_t, Texture> textures = std::map<uint32_t, Texture>();
+        textures.emplace(0, texture);
         m_imGuiMaterial->CreateDescriptorSets(descriptorSets, emptyModel, textures);
     }
 
@@ -585,20 +589,43 @@ namespace FlatEngine
             {
                 newMaterial->SetFragmentPath(fragmentShaderPath);
             }
-            int textureCount = CheckJsonInt(materialData, "textureCount", name);
-            if (textureCount >= 0)
-            {
-                newMaterial->SetTextureCount((uint32_t)textureCount);
-            }
 
             if (JsonContains(materialData, "uboVec4Names", name))
             {
-                for (int i = 0; i < materialData["uboVec4Names"].size(); i++)
+                json uboVec4Data = materialData["uboVec4Names"];
+
+                if (uboVec4Data.size())
                 {
-                    std::string vec4Name = materialData["uboVec4Names"][i];
-                    if (vec4Name != "")
+                    for (auto item = uboVec4Data.begin(); item != uboVec4Data.end(); ++item)
                     {
-                        newMaterial->AddUBOVec4(vec4Name);
+                        try
+                        {
+                            newMaterial->AddUBOVec4(item.value(), (uint32_t)std::stoi(item.key()));
+                        }
+                        catch (const json::out_of_range& e)
+                        {
+                            LogError(e.what());
+                        }
+                    }
+                }
+            }
+
+            if (JsonContains(materialData, "texturesShaderStageData", name))
+            {
+                json texturesShaderData = materialData["texturesShaderStageData"];
+
+                if (texturesShaderData.size())
+                {
+                    for (auto item = texturesShaderData.begin(); item != texturesShaderData.end(); ++item)
+                    {
+                        try
+                        {
+                            newMaterial->AddTexture((uint32_t)std::stoi(item.key()), (VkShaderStageFlags)item.value());
+                        }
+                        catch (const json::out_of_range& e)
+                        {
+                            LogError(e.what());
+                        }
                     }
                 }
             }
@@ -740,6 +767,28 @@ namespace FlatEngine
                 material->second->RecreateGraphicsPipeline();
             }
         }
+    }
+
+    std::shared_ptr<Model> VulkanManager::GetModel(std::string modelPath)
+    {
+        if (m_models.count(modelPath))
+        {
+            return m_models.at(modelPath);
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+
+    std::shared_ptr<Model> VulkanManager::LoadModel(std::string modelPath)
+    {
+        std::shared_ptr<Model> newModel = std::make_shared<Model>();
+        newModel->SetModelPath(modelPath);
+        newModel->LoadModel();
+        m_models.emplace(modelPath, newModel);
+
+        return newModel;
     }
 
     void VulkanManager::CreateSyncObjects()
@@ -903,7 +952,8 @@ namespace FlatEngine
 
             // Once VkImage has been written to from m_renderToTextureRenderPass, that image can be used as a texture to render to using a different material and desired descriptorSets, so we'd need to create descriptor sets for it using that material's configuration           
             Model emptyModel = Model();
-            std::vector<Texture> textures = std::vector<Texture>(1, m_sceneViewTexture); // m_sceneViewTexture was given to m_renderToTextureRenderPass in each material and it was written to in m_renderToTextureRenderPass.DrawIndexed()
+            std::map<uint32_t, Texture> textures = std::map<uint32_t, Texture>();
+            textures.emplace(0, m_sceneViewTexture); // m_sceneViewTexture was given to m_renderToTextureRenderPass in each material and it was written to in m_renderToTextureRenderPass.DrawIndexed()
             m_imGuiMaterial->GetAllocator().AllocateDescriptorSets(m_sceneViewTexture.GetDescriptorSets(), emptyModel, textures);
             commandBuffers.push_back(m_renderToTextureRenderPass.GetCommandBuffers()[VM_currentFrame]);            
         }

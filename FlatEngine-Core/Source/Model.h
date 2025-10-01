@@ -31,7 +31,10 @@ namespace FlatEngine
 		std::vector<VkBuffer>& GetUniformBuffers();
 		VkBuffer& GetVertexBuffer();
 		VkBuffer& GetIndexBuffer();
-		std::vector<uint32_t>& GetIndices();
+		std::vector<Vertex> GetVertices();
+		void SetVertices(std::vector<Vertex> vertices);
+		std::vector<uint32_t> GetIndices();
+		void SetIndices(std::vector<uint32_t> indices);
 
 	private:
 		std::string m_modelPath;

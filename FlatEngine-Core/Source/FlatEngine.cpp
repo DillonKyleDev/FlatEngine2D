@@ -3825,16 +3825,20 @@ namespace FlatEngine
 
 								if (JsonContains(componentJson, "textures", objectName))
 								{
-									for (int i = 0; i < componentJson.at("textures").size(); i++)
+									json texturesShaderData = componentJson["textures"];
+
+									if (texturesShaderData.size())
 									{
-										try
+										for (auto item = texturesShaderData.begin(); item != texturesShaderData.end(); ++item)
 										{
-											json texture = componentJson.at("textures").at(i);
-											newMesh->AddTexture(CheckJsonString(texture, "path", objectName), i);
-										}
-										catch (const json::out_of_range& e)
-										{
-											LogError(e.what());
+											try
+											{
+												newMesh->AddTexture(item.value(), (uint32_t)std::stoi(item.key()));
+											}
+											catch (const json::out_of_range& e)
+											{
+												LogError(e.what());
+											}
 										}
 									}
 								}
@@ -3845,13 +3849,14 @@ namespace FlatEngine
 								{
 									if (JsonContains(componentJson, "uboVec4s", objectName))
 									{
-										for (std::string uboVec4Name : material->GetUBOVec4Names())
+										std::map<uint32_t, std::string> uboVec4Names = material->GetUBOVec4Names();
+										for (std::map<uint32_t, std::string>::iterator uboVec4Name = uboVec4Names.begin(); uboVec4Name != uboVec4Names.end(); uboVec4Name++)
 										{
 											try
 											{
-												json uboVec4Data = componentJson["uboVec4s"][uboVec4Name];
+												json uboVec4Data = componentJson["uboVec4s"][uboVec4Name->second];
 												Vector4 uboVec4 = Vector4(CheckJsonFloat(uboVec4Data, "x", objectName), CheckJsonFloat(uboVec4Data, "y", objectName), CheckJsonFloat(uboVec4Data, "z", objectName), CheckJsonFloat(uboVec4Data, "w", objectName));
-												newMesh->SetUBOVec4(uboVec4Name, uboVec4);
+												newMesh->SetUBOVec4(uboVec4Name->second, uboVec4);
 											}
 											catch (const json::out_of_range& e)
 											{

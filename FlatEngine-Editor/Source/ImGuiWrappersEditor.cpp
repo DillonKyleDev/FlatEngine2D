@@ -2722,6 +2722,7 @@ namespace FlatGui
 		// UBO Data
 		std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
 
+
 		if (material != nullptr)
 		{
 			materialName = material->GetName();					
@@ -2797,23 +2798,35 @@ namespace FlatGui
 
 		if (material != nullptr)
 		{
-			std::vector<Texture>& meshTextures = mesh->GetTextures();
-			meshTextures.resize(material->GetTextureCount());
+			// Samper2Ds
+			std::map<uint32_t, VkShaderStageFlags>* texturesShaderData = material->GetTexturesShaderStages();
+			//std::vector<Texture>& meshTextures = mesh->GetTextures();
+			std::map<uint32_t, Texture>& meshTextures = mesh->GetTextures();			
 
 			int textureCounter = 0;
-			for (int i = 0; i < meshTextures.size(); i++)
+			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = texturesShaderData->begin(); iter != texturesShaderData->end(); iter++)
 			{
 				int droppedTextureValue = -1;
 				std::string openedTexturePath = "";
-				std::string textureName = FL::GetFilenameFromPath(meshTextures[i].GetTexturePath());
-				if (FL::DropInputCanOpenFiles("##InputMaterialTextureFilePath" + std::to_string(textureCounter), "Texture", textureName, FL::F_fileExplorerTarget, droppedTextureValue, openedTexturePath, "Drop image files here from File Explorer"))
+				std::string textureName = "";
+				if (meshTextures.count(iter->first))
+				{
+					textureName = FL::GetFilenameFromPath(meshTextures.at(iter->first).GetTexturePath());
+				}
+				else
+				{
+					Texture newTexture = Texture();
+					meshTextures.emplace(iter->first, newTexture);
+				}
+
+				if (FL::DropInputCanOpenFiles("Binding " + std::to_string(iter->first) + "##InputMaterialTextureFilePath" + std::to_string(textureCounter), "Texture", textureName, FL::F_fileExplorerTarget, droppedTextureValue, openedTexturePath, "Drop image files here from File Explorer"))
 				{
 					if (droppedTextureValue >= 0)
 					{
 						std::filesystem::path fsPath(FL::F_selectedFiles[droppedTextureValue - 1]);
 						if (fsPath.extension() == ".png")
 						{							
-							meshTextures[i].LoadFromFile(fsPath.string());
+							meshTextures.at(iter->first).LoadFromFile(fsPath.string());
 							mesh->CreateResources(); // Creates descriptor sets using new texture path
 						}
 						else
@@ -2828,17 +2841,18 @@ namespace FlatGui
 					else if (openedTexturePath != "")
 					{
 						FL::LogString(openedTexturePath);
-						meshTextures[i].LoadFromFile(openedTexturePath);
+						meshTextures.at(iter->first).LoadFromFile(openedTexturePath);
 						mesh->CreateResources(); // Creates descriptor sets using new texture path
 					}
 				}
 				textureCounter++;
 			}
 
+			std::map<uint32_t, std::string> vec4Names = material->GetUBOVec4Names();
 
-
-			for (std::string vec4Name : material->GetUBOVec4Names())
+			for (std::map<uint32_t, std::string>::iterator iter = vec4Names.begin(); iter != vec4Names.end(); iter++)
 			{
+				std::string vec4Name = iter->second;
 				if (uboVec4s.count(vec4Name))
 				{
 					glm::vec4 uboVec4 = uboVec4s.at(vec4Name);

@@ -41,10 +41,12 @@ namespace FlatEngine
 		GraphicsPipeline& GetGraphicsPipeline();
 		VkPipelineLayout& GetPipelineLayout();
 		VkDescriptorPool CreateDescriptorPool();
-		void CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::vector<Texture>& textures);
+		void CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& textures);
 		Allocator& GetAllocator();
-		void SetTextureCount(uint32_t textureCount);
-		uint32_t GetTextureCount();		
+		std::map<uint32_t, VkShaderStageFlags>* GetTexturesShaderStages();
+		uint32_t GetTextureCount();	
+		void AddTexture(uint32_t index, VkShaderStageFlags shaderStage);
+		void RemoveTexture(int index = -1);
 		void OnWindowResized();
 
 		// Configure GraphicsPipeline
@@ -60,8 +62,8 @@ namespace FlatEngine
 		//std::vector<std::string>& GetUBOFloatNames();
 		//std::vector<std::string>& GetUBOVec2Names();
 		//std::vector<std::string>& GetUBOVec3Names();
-		std::vector<std::string>& GetUBOVec4Names();
-		bool AddUBOVec4(std::string name);
+		std::map<uint32_t, std::string>& GetUBOVec4Names();
+		bool AddUBOVec4(std::string name, int index = -1);
 		//std::vector<std::string>& GetUBOMat4Names();
 
 	private:
@@ -72,7 +74,7 @@ namespace FlatEngine
 		GraphicsPipeline m_graphicsPipeline;
 		RenderPass* m_renderPass;
 		Allocator m_allocator;
-		uint32_t m_textureCount;
+		std::map<uint32_t, VkShaderStageFlags> m_texturesStageFlags;		
 
 		// handles
 		VkInstance* m_instance;
@@ -87,11 +89,7 @@ namespace FlatEngine
 		std::vector<const void*> m_pushValues;
 
 		// Uniform Buffer Data
-		//std::vector<std::string> m_uboFloatNames;
-		//std::vector<std::string> m_uboVec2Names;
-		//std::vector<std::string> m_uboVec3Names;
-		std::vector<std::string> m_uboVec4Names;
-		//std::vector<std::string> m_uboMat4Names;
+		std::map<uint32_t, std::string> m_uboVec4Names;
 
 		// GraphicsPipeline Configuration structs
 		VkPipelineRasterizationStateCreateInfo m_rasterizer{};

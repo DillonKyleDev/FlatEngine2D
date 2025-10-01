@@ -13,6 +13,10 @@
         "lineWidth": 1.0,
         "polygonMode": 1
     },
-    "textureCount": 1,
+    "textureCount": 0,
+    "texturesShaderStageData": {
+        "0": 16
+    },
+    "uboVec4Names": {},
     "vertexShaderPath": "../engine/shaders/compiledShaders/gridVert.spv"
 }

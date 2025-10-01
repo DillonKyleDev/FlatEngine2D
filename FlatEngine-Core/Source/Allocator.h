@@ -4,6 +4,7 @@
 #include "Texture.h"
 
 #include <vector>
+#include <map>
 
 
 namespace FlatEngine
@@ -20,9 +21,9 @@ namespace FlatEngine
 		Allocator();
 		~Allocator();
 
-		void Init(AllocatorType type, uint32_t textureCount, LogicalDevice& logicalDevice, uint32_t perPool = 50);
+		void Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool = 50);
 		void SetFreed(uint32_t freedFrom);
-		void AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::vector<Texture>& textures);
+		void AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& textures);
 		void ConfigureDescriptorSetLayout(std::vector<VkDescriptorSetLayoutBinding> bindings, VkDescriptorSetLayoutCreateInfo layoutInfo);
 		void CreateDescriptorSetLayout();
 		void CleanupDescriptorSetLayout();
@@ -46,7 +47,7 @@ namespace FlatEngine
 		AllocatorType m_type;
 		uint32_t m_sizePerPool;
 		uint32_t m_startingPools;
-		uint32_t m_textureCount;
+		std::map<uint32_t, VkShaderStageFlags>* m_texturesShaderStages;
 		uint32_t m_currentPoolIndex;
 		std::vector<uint32_t> m_allocationsRemainingByPool;
 		std::vector<uint32_t> m_setsFreedByPool;

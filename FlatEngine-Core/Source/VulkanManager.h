@@ -81,6 +81,8 @@ namespace FlatEngine
         std::shared_ptr<Material> GetMaterial(std::string materialName);
         std::map<std::string, std::shared_ptr<Material>>& GetMaterials();
         void ReloadShaders();
+        std::shared_ptr<Model> GetModel(std::string modelPath);
+        std::shared_ptr<Model> LoadModel(std::string modelPath);
 
         // ImGui
         void CreateImGuiTexture(Texture& texture, std::vector<VkDescriptorSet>& descriptorSets);
@@ -113,6 +115,7 @@ namespace FlatEngine
         std::map<std::string, std::shared_ptr<Material>> m_engineMaterials;
         std::map<std::string, std::shared_ptr<Material>> m_sceneViewMaterials;
         std::map<std::string, std::shared_ptr<Material>> m_gameViewMaterials;
+        std::map<std::string, std::shared_ptr<Model>> m_models; // so we don't have to reload model indices and vertices for every object that uses it
         Texture m_sceneViewTexture;
         Texture m_gameViewTexture;        
 
