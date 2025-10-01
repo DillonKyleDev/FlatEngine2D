@@ -64,6 +64,7 @@ namespace FlatEngine
 		//std::vector<std::string>& GetUBOVec3Names();
 		std::map<uint32_t, std::string>& GetUBOVec4Names();
 		bool AddUBOVec4(std::string name, int index = -1);
+		void RemoveUBOVec4(int index = -1);
 		//std::vector<std::string>& GetUBOMat4Names();
 
 	private:

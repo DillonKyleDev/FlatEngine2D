@@ -13,10 +13,15 @@
         "lineWidth": 1.0,
         "polygonMode": 0
     },
-    "textureCount": 0,
     "texturesShaderStageData": {
-        "0": 16
+        "0": 16,
+        "1": 16,
+        "2": 16
     },
-    "uboVec4Names": {},
+    "uboVec4Names": {
+        "0": "BaseColor",
+        "1": "Disturbance",
+        "2": "SecondaryColor"
+    },
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/textureWarpVert.spv"
 }

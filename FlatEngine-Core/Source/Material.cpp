@@ -221,9 +221,9 @@ namespace FlatEngine
 		return m_allocator.CreateDescriptorPool();
 	}
 
-	void Material::CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& textures)
+	void Material::CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& meshTextures)
 	{
-		m_allocator.AllocateDescriptorSets(descriptorSets, model, textures);
+		m_allocator.AllocateDescriptorSets(descriptorSets, model, m_texturesStageFlags, meshTextures);
 	}
 
 	Allocator& Material::GetAllocator()
@@ -340,5 +340,17 @@ namespace FlatEngine
 		}
 
 		return true;
+	}
+
+	void Material::RemoveUBOVec4(int index)
+	{
+		if (index != -1 && m_uboVec4Names.size() >= index)
+		{
+			m_uboVec4Names.erase(index);
+		}
+		else if (m_uboVec4Names.size())
+		{
+			m_uboVec4Names.erase(--m_uboVec4Names.end());
+		}
 	}
 }

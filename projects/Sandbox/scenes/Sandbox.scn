@@ -89,11 +89,9 @@
                     "id": 3,
                     "materialName": "VerticesOnly",
                     "modelPath": "..\\projects\\Sandbox\\models\\monkey.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\light.png"                        
+                    },
                     "type": "Mesh",
                     "uboVec4s": {}
                 }
@@ -256,11 +254,9 @@
                     "id": 5,
                     "materialName": "Lit",
                     "modelPath": "..\\projects\\Sandbox\\models\\monkey.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\light.png"                        
+                    },                
                     "type": "Mesh",
                     "uboVec4s": {
                         "Smoothness": {
@@ -430,11 +426,9 @@
                     "id": 7,
                     "materialName": "engineMaterial_UV",
                     "modelPath": "..\\projects\\Sandbox\\models\\monkey.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\light.png"                        
+                    },
                     "type": "Mesh",
                     "uboVec4s": {}
                 }
@@ -597,11 +591,9 @@
                     "id": 9,
                     "materialName": "Water",
                     "modelPath": "..\\projects\\Sandbox\\models\\monkey.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\light.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\light.png"                        
+                    },
                     "type": "Mesh",
                     "uboVec4s": {}
                 },
@@ -772,11 +764,9 @@
                     "id": 13,
                     "materialName": "engineMaterial_Unlit",
                     "modelPath": "..\\projects\\Sandbox\\models\\viking_room.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\textures\\viking_room.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\textures\\viking_room.png"                      
+                    },                
                     "type": "Mesh",
                     "uboVec4s": {}
                 }
@@ -939,11 +929,9 @@
                     "id": 15,
                     "materialName": "Lit",
                     "modelPath": "..\\projects\\Sandbox\\models\\uvSphere.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\rose.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\rose.png"                      
+                    }, 
                     "type": "Mesh",
                     "uboVec4s": {
                         "Smoothness": {
@@ -1113,11 +1101,9 @@
                     "id": 19,
                     "materialName": "Lit",
                     "modelPath": "..\\projects\\Sandbox\\models\\icoSphere.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\orange.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\orange.png"                      
+                    }, 
                     "type": "Mesh",
                     "uboVec4s": {
                         "Smoothness": {
@@ -1287,11 +1273,9 @@
                     "id": 21,
                     "materialName": "Water",
                     "modelPath": "..\\projects\\Sandbox\\models\\water.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\stream.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\stream.png"                      
+                    }, 
                     "type": "Mesh",
                     "uboVec4s": {}
                 },
@@ -1462,11 +1446,9 @@
                     "id": 25,
                     "materialName": "Lit",
                     "modelPath": "..\\projects\\Sandbox\\models\\torus.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\green.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\green.png"                      
+                    }, 
                     "type": "Mesh",
                     "uboVec4s": {
                         "Smoothness": {
@@ -1636,11 +1618,9 @@
                     "id": 29,
                     "materialName": "engineMaterial_EmptyMaterial",
                     "modelPath": "..\\projects\\Sandbox\\models\\torus.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\green.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\green.png"                      
+                    }, 
                     "type": "Mesh",
                     "uboVec4s": {}
                 }
@@ -1803,11 +1783,9 @@
                     "id": 33,
                     "materialName": "Lit",
                     "modelPath": "..\\projects\\Sandbox\\models\\uvSphereSmooth.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\marble-heights.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\marble-heights.png"                      
+                    },                 
                     "type": "Mesh",
                     "uboVec4s": {
                         "Smoothness": {
@@ -2144,11 +2122,9 @@
                     "id": 42,
                     "materialName": "Lit",
                     "modelPath": "..\\projects\\Sandbox\\models\\uvSphereSmooth.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\colors\\green.png"
-                        }
-                    ],
+                    "textures": {                        
+                          "0": "..\\projects\\Sandbox\\images\\colors\\green.png"                      
+                    },   
                     "type": "Mesh",
                     "uboVec4s": {
                         "Smoothness": {

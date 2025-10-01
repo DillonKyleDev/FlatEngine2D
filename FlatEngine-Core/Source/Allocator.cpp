@@ -219,7 +219,7 @@ namespace FlatEngine
 		}
 	}
 
-	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& textures)
+	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures)
 	{
 		if (m_type != AllocatorType::Null)
 		{
@@ -243,7 +243,7 @@ namespace FlatEngine
 			for (int i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
 			{
 				int descriptorCounter = 0;
-				size_t newSize = textures.size();
+				size_t newSize = materialTextures.size();
 				std::vector<VkWriteDescriptorSet> descriptorWrites{};
 				descriptorWrites.resize(newSize);
 	
@@ -271,23 +271,26 @@ namespace FlatEngine
 				imageInfos.resize(m_texturesShaderStages->size());
 				
 				int imageIndex = 0;
-				for (std::map<uint32_t, Texture>::iterator iter = textures.begin(); iter != textures.end(); iter++)
+				for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = materialTextures.begin(); iter != materialTextures.end(); iter++)
 				{									
-					imageInfos[imageIndex].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-					imageInfos[imageIndex].imageView = iter->second.GetImageViews()[i];
-					imageInfos[imageIndex].sampler = iter->second.GetSampler();
+					if (meshTextures.count(iter->first))
+					{
+						imageInfos[imageIndex].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+						imageInfos[imageIndex].imageView = meshTextures.at(iter->first).GetImageViews()[i];
+						imageInfos[imageIndex].sampler = meshTextures.at(iter->first).GetSampler();
 
-					descriptorWrites[descriptorCounter].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-					descriptorWrites[descriptorCounter].dstSet = descriptorSets[i];
-					descriptorWrites[descriptorCounter].dstBinding = descriptorCounter;
-					descriptorWrites[descriptorCounter].dstArrayElement = 0;
-					descriptorWrites[descriptorCounter].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-					descriptorWrites[descriptorCounter].descriptorCount = 1;
-					descriptorWrites[descriptorCounter].pImageInfo = &imageInfos[imageIndex];
+						descriptorWrites[descriptorCounter].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+						descriptorWrites[descriptorCounter].dstSet = descriptorSets[i];
+						descriptorWrites[descriptorCounter].dstBinding = descriptorCounter;
+						descriptorWrites[descriptorCounter].dstArrayElement = 0;
+						descriptorWrites[descriptorCounter].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+						descriptorWrites[descriptorCounter].descriptorCount = 1;
+						descriptorWrites[descriptorCounter].pImageInfo = &imageInfos[imageIndex];
 
-					iter->second.SetAllocationIndex((int)m_currentPoolIndex);
-					descriptorCounter++;
-					imageIndex++;
+						meshTextures.at(iter->first).SetAllocationIndex((int)m_currentPoolIndex);
+						descriptorCounter++;
+						imageIndex++;
+					}
 				}
 
 				vkUpdateDescriptorSets(m_deviceHandle->GetDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
@@ -296,9 +299,12 @@ namespace FlatEngine
 		}
 		else
 		{			
-			for (std::map<uint32_t, Texture>::iterator iter = textures.begin(); iter != textures.end(); iter++)
+			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = materialTextures.begin(); iter != materialTextures.end(); iter++)
 			{
-				iter->second.SetAllocationIndex(-1);
+				if (meshTextures.count(iter->first))
+				{
+					meshTextures.at(iter->first).SetAllocationIndex(-1);
+				}
 			}
 
 			FlatEngine::LogError("Allocator has not been initialized yet is trying to allocate DescriptorSets!");

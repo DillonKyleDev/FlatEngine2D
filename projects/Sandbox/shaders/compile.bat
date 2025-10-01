@@ -7,14 +7,10 @@ glslc.exe unlit.vert -o compiledShaders/unlitVert.spv
 glslc.exe unlit.frag -o compiledShaders/unlitFrag.spv
 glslc.exe strip.vert -o compiledShaders/stripVert.spv
 glslc.exe strip.frag -o compiledShaders/stripFrag.spv
-glslc.exe bump.vert -o compiledShaders/bumpVert.spv
-glslc.exe bump.frag -o compiledShaders/bumpFrag.spv
 glslc.exe water.vert -o compiledShaders/waterVert.spv
 glslc.exe water.frag -o compiledShaders/waterFrag.spv
 glslc.exe textureWarp.vert -o compiledShaders/textureWarpVert.spv
 glslc.exe textureWarp.frag -o compiledShaders/textureWarpFrag.spv
-glslc.exe ubo.vert -o compiledShaders/uboVert.spv
-glslc.exe ubo.frag -o compiledShaders/uboFrag.spv
 
 
 pause

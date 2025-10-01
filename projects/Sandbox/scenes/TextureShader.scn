@@ -80,7 +80,7 @@
                     "yRotation": 0.0,
                     "yScale": 5.0,
                     "zPosition": 0.0,
-                    "zRotation": 180.0,
+                    "zRotation": 0.0,
                     "zScale": 5.0
                 },
                 {
@@ -89,46 +89,32 @@
                     "id": 1,
                     "materialName": "warpTexture",
                     "modelPath": "..\\projects\\Sandbox\\models\\quad.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
-                        },
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\marble-heights.png"
-                        },
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\ball.png"
-                        }
-                    ],
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png",
+                        "1": "..\\projects\\Sandbox\\images\\perlin_1.png",
+                        "2": "..\\projects\\Sandbox\\images\\transparent.png"
+                    },
                     "type": "Mesh",
                     "uboVec4s": {
                         "BaseColor": {
-                            "w": 0.5400000214576721,
-                            "x": 0.27000001072883606,
-                            "y": 0.07999999821186066,
-                            "z": 0.0
+                            "w": 1.0,
+                            "x": 0.5400000214576721,
+                            "y": 0.10999999940395355,
+                            "z": 0.550000011920929
                         },
                         "Disturbance": {
-                            "w": 0.5299999713897705,
-                            "x": 1.25,
-                            "y": 0.8899999856948853,
-                            "z": 0.9900000095367432
+                            "w": 0.8500000238418579,
+                            "x": 0.5299999713897705,
+                            "y": 0.17000000178813934,
+                            "z": 0.4000000059604645
                         },
                         "SecondaryColor": {
                             "w": 1.0,
-                            "x": 0.7099999785423279,
-                            "y": 0.11999999731779099,
-                            "z": 0.27000001072883606
+                            "x": 0.3700000047683716,
+                            "y": 0.4699999988079071,
+                            "z": 0.44999998807907104
                         }
                     }
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "attachedScript": "Texture (Lua)",
-                    "id": 2,
-                    "scriptParameters": [],
-                    "type": "Script"
                 }
             ],
             "id": 0,
@@ -137,6 +123,186 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 3,
+                    "type": "Transform",
+                    "xPosition": 0.10000000149011612,
+                    "xRotation": 0.0,
+                    "xScale": 1.0,
+                    "yPosition": -0.30000001192092896,
+                    "yRotation": 0.0,
+                    "yScale": 1.0,
+                    "zPosition": 0.0,
+                    "zRotation": 0.0,
+                    "zScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 4,
+                    "materialName": "Strip",
+                    "modelPath": "..\\projects\\Sandbox\\models\\quad.obj",
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\marble-heights.png",
+                        "1": "..\\projects\\Sandbox\\images\\marble-heights.png",
+                        "2": "..\\projects\\Sandbox\\images\\marble-heights.png"
+                    },
+                    "type": "Mesh",
+                    "uboVec4s": {
+                        "Color": {
+                            "w": 1.7999999523162842,
+                            "x": 0.5899999737739563,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "Time": {
+                            "w": 1.340000033378601,
+                            "x": 0.20999999344348907,
+                            "y": 0.15000000596046448,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ],
+            "id": 1,
+            "name": "Mesh(1)",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 0.10000000149011612,
+            "spawnLocationY": -0.30000001192092896,
             "tags": [
                 {
                     "Ball": false

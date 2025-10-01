@@ -248,6 +248,14 @@ namespace FlatEngine
 					m_material->CreateDescriptorSets(m_descriptorSets, m_model, m_texturesByIndex);
 				}
 			}
+			else
+			{
+				m_b_initialized = false;
+			}
+		}
+		else
+		{
+			m_b_initialized = false;
 		}
 	}
 

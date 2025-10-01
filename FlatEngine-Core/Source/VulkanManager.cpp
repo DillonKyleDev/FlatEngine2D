@@ -311,7 +311,7 @@ namespace FlatEngine
         VkAttachmentDescription colorAttachmentResolve{};
         colorAttachmentResolve.format = colorFormat;
         colorAttachmentResolve.samples = msaaSamples;
-        colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
+        colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
         colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
         colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
         colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
@@ -953,8 +953,9 @@ namespace FlatEngine
             // Once VkImage has been written to from m_renderToTextureRenderPass, that image can be used as a texture to render to using a different material and desired descriptorSets, so we'd need to create descriptor sets for it using that material's configuration           
             Model emptyModel = Model();
             std::map<uint32_t, Texture> textures = std::map<uint32_t, Texture>();
-            textures.emplace(0, m_sceneViewTexture); // m_sceneViewTexture was given to m_renderToTextureRenderPass in each material and it was written to in m_renderToTextureRenderPass.DrawIndexed()
-            m_imGuiMaterial->GetAllocator().AllocateDescriptorSets(m_sceneViewTexture.GetDescriptorSets(), emptyModel, textures);
+            // m_sceneViewTexture was given to m_renderToTextureRenderPass in each material and it was written to in m_renderToTextureRenderPass.DrawIndexed()
+            textures.emplace(0, m_sceneViewTexture);
+            m_imGuiMaterial->GetAllocator().AllocateDescriptorSets(m_sceneViewTexture.GetDescriptorSets(), emptyModel, *m_imGuiMaterial->GetTexturesShaderStages(), textures);
             commandBuffers.push_back(m_renderToTextureRenderPass.GetCommandBuffers()[VM_currentFrame]);            
         }
  

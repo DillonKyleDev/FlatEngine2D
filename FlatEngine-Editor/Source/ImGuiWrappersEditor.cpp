@@ -2819,7 +2819,23 @@ namespace FlatGui
 					meshTextures.emplace(iter->first, newTexture);
 				}
 
-				if (FL::DropInputCanOpenFiles("Binding " + std::to_string(iter->first) + "##InputMaterialTextureFilePath" + std::to_string(textureCounter), "Texture", textureName, FL::F_fileExplorerTarget, droppedTextureValue, openedTexturePath, "Drop image files here from File Explorer"))
+				std::string shaderStageString = "";
+				switch (iter->second)
+				{
+				case VK_SHADER_STAGE_VERTEX_BIT:
+					shaderStageString = "Vertex Sampled Tex binding = " + std::to_string(iter->first);
+					break;
+
+				case VK_SHADER_STAGE_FRAGMENT_BIT:
+					shaderStageString = "Fragment Sampled Tex binding = " + std::to_string(iter->first);
+					break;
+
+				default:
+					break;
+				}
+
+				ImGui::Text(shaderStageString.c_str());
+				if (FL::DropInputCanOpenFiles("##InputMaterialTextureFilePath" + std::to_string(textureCounter), "", textureName, FL::F_fileExplorerTarget, droppedTextureValue, openedTexturePath, "Drop image files here from File Explorer"))
 				{
 					if (droppedTextureValue >= 0)
 					{
@@ -2885,6 +2901,10 @@ namespace FlatGui
 						uboVec4.w = vec4W;
 						uboVec4s.at(vec4Name) = uboVec4;						
 					}
+				}
+				else
+				{
+					uboVec4s.emplace(vec4Name, glm::vec4()); // Maybe redundant
 				}
 			}
 		}

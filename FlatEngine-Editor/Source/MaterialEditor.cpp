@@ -157,7 +157,6 @@ namespace FlatGui
 				{
 					if (currentMaterial->AddUBOVec4(vec4Name))
 					{
-						vec4Name = "";
 						for (std::pair<long, Mesh> mesh : FL::GetMeshes())
 						{
 							if (mesh.second.GetMaterialName() == FL::F_selectedMaterialName)
@@ -165,7 +164,13 @@ namespace FlatGui
 								mesh.second.SetUBOVec4(vec4Name, Vector4());
 							}
 						}
+						vec4Name = "";
 					}
+				}
+
+				if (FL::RenderButton("Remove Last Vec4"))
+				{
+					currentMaterial->RemoveUBOVec4();					
 				}
 
 				for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)

@@ -48,4 +48,6 @@ void main() {
         outColor = secondaryColor;
         outColor.w = 1;
     }
+
+    outColor = fragColor;
 }

@@ -22,7 +22,7 @@ layout(location = 3) out vec4 secondaryColor;
 void main() {    
     gl_Position = ubo.viewAndProjection * (ubo.model * vec4(inPosition.x, inPosition.y, inPosition.z, 1) + ubo.meshPosition);        
     fragTexCoord = inTexCoord;
-    disturbance = ubo.vec4s[1].x;
     baseColor = ubo.vec4s[0];
+    disturbance = ubo.vec4s[1].x;
     secondaryColor = ubo.vec4s[2];
 }

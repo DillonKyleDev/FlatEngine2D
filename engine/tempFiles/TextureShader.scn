@@ -80,7 +80,7 @@
                     "yRotation": 0.0,
                     "yScale": 5.0,
                     "zPosition": 0.0,
-                    "zRotation": 180.0,
+                    "zRotation": 0.0,
                     "zScale": 5.0
                 },
                 {
@@ -89,46 +89,30 @@
                     "id": 1,
                     "materialName": "warpTexture",
                     "modelPath": "..\\projects\\Sandbox\\models\\quad.obj",
-                    "textures": [
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
-                        },
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\marble-heights.png"
-                        },
-                        {
-                            "path": "..\\projects\\Sandbox\\images\\ball.png"
-                        }
-                    ],
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png"
+                    },
                     "type": "Mesh",
                     "uboVec4s": {
                         "BaseColor": {
-                            "w": 0.5400000214576721,
-                            "x": 0.27000001072883606,
-                            "y": 0.07999999821186066,
-                            "z": 0.0
+                            "w": 1.0,
+                            "x": 0.5400000214576721,
+                            "y": 0.10999999940395355,
+                            "z": 0.46000000834465027
                         },
                         "Disturbance": {
-                            "w": 0.5299999713897705,
-                            "x": 1.25,
-                            "y": 0.8899999856948853,
-                            "z": 0.9900000095367432
+                            "w": 0.8500000238418579,
+                            "x": 0.5299999713897705,
+                            "y": 0.10999999940395355,
+                            "z": 0.4000000059604645
                         },
                         "SecondaryColor": {
                             "w": 1.0,
-                            "x": 0.7099999785423279,
-                            "y": 0.11999999731779099,
-                            "z": 0.27000001072883606
+                            "x": 0.3199999928474426,
+                            "y": 0.4399999976158142,
+                            "z": 0.44999998807907104
                         }
                     }
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "attachedScript": "Texture (Lua)",
-                    "id": 2,
-                    "scriptParameters": [],
-                    "type": "Script"
                 }
             ],
             "id": 0,
