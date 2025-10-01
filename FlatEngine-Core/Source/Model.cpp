@@ -260,6 +260,7 @@ namespace FlatEngine
         Camera* primaryCamera = nullptr;
         Vector3 cameraPosition = Vector3();
         std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
+        std::map<uint32_t, std::string> materialVec4s = mesh->GetMaterial()->GetUBOVec4Names();
 
         switch (viewport)
         {
@@ -320,10 +321,13 @@ namespace FlatEngine
             ubo.BaseUBO = base;
 
             int vec4Counter = 0;
-            for (std::map<std::string, glm::vec4>::iterator uboVec4 = uboVec4s.begin(); uboVec4 != uboVec4s.end(); uboVec4++)
+            for (std::map<uint32_t, std::string>::iterator materialVec4 = materialVec4s.begin(); materialVec4 != materialVec4s.end(); materialVec4++)
             {               
-                ubo.vec4s[vec4Counter] = uboVec4->second;
-                vec4Counter++;
+                if (materialVec4->first <= 32 && uboVec4s.count(materialVec4->second)) // FIX ME: 32 is the size of the uboVec4s array passed to the shaders
+                {
+                    ubo.vec4s[materialVec4->first] = uboVec4s.at(materialVec4->second);
+                    vec4Counter++;
+                }
             }                              
 
             memcpy(m_uniformBuffersMapped[VM_currentFrame], &ubo, sizeof(ubo));

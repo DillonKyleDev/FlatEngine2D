@@ -19,7 +19,7 @@
     },
     "uboVec4Names": {
         "0": "Color",
-        "1": "Time"
+        "1": "Disturbance"
     },
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/stripVert.spv"
 }

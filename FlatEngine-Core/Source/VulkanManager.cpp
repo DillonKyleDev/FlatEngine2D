@@ -561,6 +561,15 @@ namespace FlatEngine
 
         fileObject << data.c_str() << std::endl;
         fileObject.close();
+
+        std::map<long, Mesh>& meshes = GetMeshes();
+        for (std::map<long, Mesh>::iterator iter = meshes.begin(); iter != meshes.end(); iter++)
+        {
+            if (iter->second.GetMaterialName() == material->GetName())
+            {
+                iter->second.CreateResources();
+            }
+        }
     }
 
     std::shared_ptr<Material> VulkanManager::LoadMaterial(std::string path, Texture* renderToTexture)

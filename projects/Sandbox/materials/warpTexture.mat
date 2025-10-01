@@ -20,8 +20,8 @@
     },
     "uboVec4Names": {
         "0": "BaseColor",
-        "1": "Disturbance",
-        "2": "SecondaryColor"
+        "1": "SecondaryColor",
+        "2": "Disturbance"
     },
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/textureWarpVert.spv"
 }

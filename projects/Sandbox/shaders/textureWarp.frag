@@ -3,15 +3,15 @@
 
 
 layout(location = 0) in vec2 fragTexCoord;
-layout(location = 1) in float disturbance;
-layout(location = 2) in vec4 baseColor;
-layout(location = 3) in vec4 secondaryColor;
+layout(location = 1) in vec4 baseColor;
+layout(location = 2) in vec4 secondaryColor;
+layout(location = 3) in float disturbance;
 
 layout(location = 0) out vec4 outColor;
 
-layout(binding = 1) uniform sampler2D colorSampler;
-layout(binding = 2) uniform sampler2D texSampler;
-layout(binding = 3) uniform sampler2D texSampler2;
+layout(binding = 1) uniform sampler2D innerShapeSampler;
+layout(binding = 2) uniform sampler2D outerShapeSampler;
+layout(binding = 3) uniform sampler2D noiseSampler;
 
 float clamp(float toClamp) {
     if  (toClamp < 0.5)
@@ -25,19 +25,17 @@ float clamp(float toClamp) {
 }
 
 void main() {
-    vec2 textureDimensions = textureSize(colorSampler, 0);
-    float delta = 1 / textureDimensions.x;
-    vec4 fragColor = texture(colorSampler, fragTexCoord);
-
+    vec4 baseColorFrag = texture(innerShapeSampler, fragTexCoord);
+    vec4 secondaryColorFrag = texture(outerShapeSampler, fragTexCoord);
+    baseColorFrag *= baseColor;
+    secondaryColorFrag *= secondaryColor;
     vec2 movingTexCoord = fragTexCoord;
     movingTexCoord *= .2;
     movingTexCoord.y += disturbance;
-    vec4 texNoise = texture(texSampler, movingTexCoord);
+    vec4 noiseSample = texture(noiseSampler, movingTexCoord);
 
-    vec4 smallBallColor = texture(texSampler2, fragTexCoord);
-
-    outColor = baseColor * texNoise.x;
-    outColor += smallBallColor;
+    outColor = baseColorFrag * noiseSample.x;
+    outColor += secondaryColorFrag;
     
     if (outColor.w < 0.5)
     {
@@ -45,9 +43,7 @@ void main() {
     }
     else
     {
-        outColor = secondaryColor;
-        outColor.w = 1;
+        //outColor = secondaryColorFrag;
+        //outColor.w = 1;
     }
-
-    outColor = fragColor;
 }

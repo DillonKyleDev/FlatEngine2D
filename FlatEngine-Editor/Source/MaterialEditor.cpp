@@ -68,7 +68,7 @@ namespace FlatGui
 					{
 						FL::F_VulkanManager->SaveMaterial(currentMaterial);
 						//currentMaterial->Init();
-						FL::F_VulkanManager->InitializeMaterials();
+						//FL::F_VulkanManager->InitializeMaterials();
 					}
 				}
 				ImGui::SameLine(0, 5);
@@ -113,11 +113,15 @@ namespace FlatGui
 				if (FL::RenderButton("Add Vertex Texture Sampler"))
 				{
 					currentMaterial->AddTexture(textureCount, VK_SHADER_STAGE_VERTEX_BIT);
+
+					FL::F_VulkanManager->SaveMaterial(currentMaterial);
 				}
 				ImGui::SameLine();
 				if (FL::RenderButton("Add Fragment Texture Sampler"))
 				{
 					currentMaterial->AddTexture(textureCount, VK_SHADER_STAGE_FRAGMENT_BIT);
+
+					FL::F_VulkanManager->SaveMaterial(currentMaterial);
 				}
 
 				for (std::map<uint32_t, VkShaderStageFlags>::iterator iterator = texturesShaderData->begin(); iterator != texturesShaderData->end(); iterator++)
@@ -144,6 +148,8 @@ namespace FlatGui
 				if (FL::RenderButton("Remove Last Texture"))
 				{
 					currentMaterial->RemoveTexture();
+
+					FL::F_VulkanManager->SaveMaterial(currentMaterial);
 				}
 
 				// Whenever we add a new property to a materials UBO, we should make sure to recreate the commandBuffers in the Models of the Meshes that use that material, taking into account the new Uniform Buffer Size
@@ -165,12 +171,16 @@ namespace FlatGui
 							}
 						}
 						vec4Name = "";
+
+						FL::F_VulkanManager->SaveMaterial(currentMaterial);
 					}
 				}
 
 				if (FL::RenderButton("Remove Last Vec4"))
 				{
-					currentMaterial->RemoveUBOVec4();					
+					currentMaterial->RemoveUBOVec4();	
+
+					FL::F_VulkanManager->SaveMaterial(currentMaterial);
 				}
 
 				for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
@@ -180,18 +190,6 @@ namespace FlatGui
 					std::string text = "vec4 vec4s[" + std::to_string(iter->first) + "]    Name: " + iter->second;
 					ImGui::Text(text.c_str());
 				}
-
-				//int textureCounter = 0;
-				//for (Texture& texture : currentMaterial->GetTextures())
-				//{
-				//	std::string texturePath = texture.GetTexturePath();
-
-				//	if (FL::RenderInput("##TexturePathInput" + std::to_string(textureCounter), "Texture Path", texturePath))
-				//	{
-				//		texture.SetTexturePath(texturePath);
-				//	}
-				//	textureCounter++;
-				//}
 			}
 
 			// }
