@@ -172,7 +172,7 @@ namespace FlatGui
 						}
 						vec4Name = "";
 
-						FL::F_VulkanManager->SaveMaterial(currentMaterial);
+						//FL::F_VulkanManager->SaveMaterial(currentMaterial);
 					}
 				}
 
@@ -180,7 +180,7 @@ namespace FlatGui
 				{
 					currentMaterial->RemoveUBOVec4();	
 
-					FL::F_VulkanManager->SaveMaterial(currentMaterial);
+					//FL::F_VulkanManager->SaveMaterial(currentMaterial);
 				}
 
 				for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)

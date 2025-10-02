@@ -73,14 +73,14 @@
                     "_isCollapsed": false,
                     "id": 4,
                     "type": "Transform",
-                    "xPosition": 0.0,
+                    "xPosition": 0.004527406767010689,
                     "xRotation": 0.0,
                     "xScale": 1.0,
                     "yPosition": 0.0,
                     "yRotation": 0.0,
                     "yScale": 1.0,
-                    "zPosition": 2.0,
-                    "zRotation": 90.0,
+                    "zPosition": 0.9999110698699951,
+                    "zRotation": 0.0,
                     "zScale": 1.0
                 },
                 {
@@ -98,7 +98,7 @@
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "attachedScript": "Move (Lua)",
+                    "attachedScript": "",
                     "id": 15,
                     "scriptParameters": [],
                     "type": "Script"
@@ -146,7 +146,7 @@
             "name": "Link",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": 0.0,
+            "spawnLocationX": 0.004527406767010689,
             "spawnLocationY": 0.0,
             "tags": [
                 {
@@ -672,7 +672,7 @@
                         },
                         "Disturbance": {
                             "w": 0.0,
-                            "x": 0.0,
+                            "x": 15.949600219726563,
                             "y": 0.0,
                             "z": 0.0
                         }
@@ -833,10 +833,10 @@
                     "xRotation": 0.0,
                     "xScale": 1.399999976158142,
                     "yPosition": 0.0,
-                    "yRotation": 180.0,
+                    "yRotation": 0.0,
                     "yScale": 1.399999976158142,
                     "zPosition": 1.100000023841858,
-                    "zRotation": 0.0,
+                    "zRotation": 90.0,
                     "zScale": 0.20000000298023224
                 },
                 {
@@ -858,10 +858,10 @@
                             "z": 0.6200000047683716
                         },
                         "Disturbance": {
-                            "w": -1.0,
-                            "x": -1.0,
-                            "y": -1.0,
-                            "z": -1.0
+                            "w": 0.0,
+                            "x": 15.949600219726563,
+                            "y": 0.0,
+                            "z": 0.0
                         }
                     }
                 },
@@ -1187,11 +1187,11 @@
                     "xRotation": 0.0,
                     "xScale": 1.0,
                     "yPosition": 0.0,
-                    "yRotation": 0.0,
+                    "yRotation": 180.0,
                     "yScale": 1.0,
-                    "zPosition": 1.100000023841858,
+                    "zPosition": 1.0,
                     "zRotation": 45.0,
-                    "zScale": 0.20100000500679016
+                    "zScale": 0.3499999940395355
                 },
                 {
                     "_isActive": true,
@@ -1212,10 +1212,10 @@
                             "z": 0.0
                         },
                         "Disturbance": {
-                            "w": -1.0,
-                            "x": -1.0,
-                            "y": -1.0,
-                            "z": -1.0
+                            "w": 0.0,
+                            "x": 15.949600219726563,
+                            "y": 0.0,
+                            "z": 0.0
                         }
                     }
                 },
@@ -1229,7 +1229,484 @@
                 }
             ],
             "id": 10,
-            "name": "Mesh(10)",
+            "name": "OrbitRed",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 0.0,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 41,
+                    "type": "Transform",
+                    "xPosition": 0.0,
+                    "xRotation": 0.0,
+                    "xScale": 1.0,
+                    "yPosition": 0.0,
+                    "yRotation": 0.0,
+                    "yScale": 1.0,
+                    "zPosition": 0.8999999761581421,
+                    "zRotation": 0.0,
+                    "zScale": 0.0010000000474974513
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 42,
+                    "materialName": "StripParticle",
+                    "modelPath": "..\\projects\\Sandbox\\models\\strip.obj",
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png",
+                        "1": "..\\projects\\Sandbox\\images\\voronoi_3.png"
+                    },
+                    "type": "Mesh",
+                    "uboVec4s": {
+                        "Color": {
+                            "w": 1.0,
+                            "x": 0.949999988079071,
+                            "y": 0.6600000262260437,
+                            "z": 1.8899999856948853
+                        },
+                        "Disturbance": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert0Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert10Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert11Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert12Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert13Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert14Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert15Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert1Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert2Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert3Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert4Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert5Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert6Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert7Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert8Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "vert9Move": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "Strip (Lua)",
+                    "id": 43,
+                    "scriptParameters": [],
+                    "type": "Script"
+                }
+            ],
+            "id": 11,
+            "name": "StripParticle",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 0.0,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 44,
+                    "type": "Transform",
+                    "xPosition": 0.0,
+                    "xRotation": 0.0,
+                    "xScale": 0.30000001192092896,
+                    "yPosition": 0.0,
+                    "yRotation": 0.0,
+                    "yScale": 0.699999988079071,
+                    "zPosition": 3.0,
+                    "zRotation": 0.0,
+                    "zScale": 0.5
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 45,
+                    "materialName": "warpTexture",
+                    "modelPath": "..\\projects\\Sandbox\\models\\quad.obj",
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\PolygonParticles_Smoke_01.png",
+                        "1": "..\\projects\\Sandbox\\images\\ball.png",
+                        "2": "..\\projects\\Sandbox\\images\\perlin_1.png"
+                    },
+                    "type": "Mesh",
+                    "uboVec4s": {
+                        "BaseColor": {
+                            "w": 4.130000114440918,
+                            "x": 0.14000000059604645,
+                            "y": 0.800000011920929,
+                            "z": 1.0299999713897705
+                        },
+                        "Disturbance": {
+                            "w": 0.0,
+                            "x": 8.100000381469727,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "SecondaryColor": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "Orb (Lua)",
+                    "id": 46,
+                    "scriptParameters": [],
+                    "type": "Script"
+                }
+            ],
+            "id": 12,
+            "name": "Orb",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,

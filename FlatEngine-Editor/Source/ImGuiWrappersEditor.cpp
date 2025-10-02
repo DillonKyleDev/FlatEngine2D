@@ -2823,11 +2823,11 @@ namespace FlatGui
 				switch (iter->second)
 				{
 				case VK_SHADER_STAGE_VERTEX_BIT:
-					shaderStageString = "Vertex Sampled Tex binding = " + std::to_string(iter->first);
+					shaderStageString = "Vertex Sampled Tex binding = " + std::to_string(iter->first + 1);
 					break;
 
 				case VK_SHADER_STAGE_FRAGMENT_BIT:
-					shaderStageString = "Fragment Sampled Tex binding = " + std::to_string(iter->first);
+					shaderStageString = "Fragment Sampled Tex binding = " + std::to_string(iter->first + 1);
 					break;
 
 				default:

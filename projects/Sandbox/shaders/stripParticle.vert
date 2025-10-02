@@ -25,12 +25,20 @@ layout(location = 5) out vec4 color;
 
 void main() {    
     color = ubo.vec4s[0];
-    time = ubo.vec4s[1].x * 2;
+    time = ubo.vec4s[1].x;
+    int adjustedIndex = 2 + int(min(inTexCoord.x * 16.0, 15));
+    vec4 moveTo = ubo.vec4s[adjustedIndex];
+
     vec2 newTexCoord = inTexCoord;
-    // newTexCoord.x += time;
+    newTexCoord.x += time;
     noiseAtPoint = texture(noiseSampler, newTexCoord);
-    vec4 localPos = ubo.model * vec4(inPosition.x, inPosition.y, inPosition.z + noiseAtPoint.x, 1);
-    vec4 worldPos = vec4(localPos.x + ubo.meshPosition.x, localPos.y + ubo.meshPosition.y, localPos.z + ubo.meshPosition.z, 1);
+    moveTo.z += inPosition.z + (noiseAtPoint.x / 2);
+    
+
+
+    // vec4 localPos = ubo.model * (vec4(inPosition.x, inPosition.y, inPosition.z, 1) + moveTo);
+    vec4 localPos = ubo.model * moveTo;
+    vec4 worldPos = vec4(localPos.x + ubo.meshPosition.x, localPos.y + ubo.meshPosition.y, localPos.z + ubo.meshPosition.z, 1) + moveTo;
     gl_Position = ubo.projection * ubo.view * worldPos;    
     fragTexCoord = inTexCoord;
     vec4 rotatedNormal = ubo.model * vec4(inNormal.x, inNormal.y, inNormal.z, 1);

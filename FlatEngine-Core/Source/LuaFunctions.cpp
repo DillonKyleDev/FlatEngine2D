@@ -508,13 +508,13 @@ namespace FlatEngine
 		F_Lua.new_usertype<Vector4>("Vector4",
 			sol::constructors<Vector4(), Vector4(float x, float y, float z, float w)>(),		
 			"SetX", &Vector4::SetX,
-			"x", &Vector4::GetX,
+			"x", sol::readonly(&Vector4::x),
 			"SetY", &Vector4::SetY,
-			"y", &Vector4::GetY,
+			"y", sol::readonly(&Vector4::y),
 			"SetZ", &Vector4::SetZ,
-			"z", &Vector4::GetZ,
+			"z", sol::readonly(&Vector4::z),
 			"SetW", &Vector4::SetW,
-			"w", &Vector4::GetW,
+			"w", sol::readonly(&Vector4::w),
 			"SetXYZW", &Vector4::_xyzw
 		);
 
