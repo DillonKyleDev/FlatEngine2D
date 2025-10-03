@@ -1,0 +1,22 @@
+{
+    "colorBlendAttachmentData": {
+        "alphaBlendOp": 0
+    },
+    "fragmentShaderPath": "../engine/shaders/compiledShaders/unlitFrag.spv",
+    "inputAssemblyData": {
+        "_primitiveRestartEnable": false,
+        "topology": 3
+    },
+    "name": "fl_unlit",
+    "rasterizerData": {
+        "cullMode": 2,
+        "lineWidth": 1.0,
+        "polygonMode": 0
+    },
+    "texturesShaderStageData": {
+        "0": 16,
+        "1": 16
+    },
+    "uboVec4Names": {},
+    "vertexShaderPath": "../engine/shaders/compiledShaders/unlitVert.spv"
+}

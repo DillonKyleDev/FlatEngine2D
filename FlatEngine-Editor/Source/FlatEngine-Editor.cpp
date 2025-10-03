@@ -51,11 +51,7 @@ public:
 		FL::AddProfilerProcess("Collision Testing");	
 		m_startedScenePath = FL::GetLoadedScenePath();
 		m_startedPersistantScenePath = FL::GetLoadedProject().GetPersistantGameObjectsScenePath();
-		FL::SaveScene(FL::GetLoadedScene(), "..\\engine\\tempFiles\\" + FL::GetLoadedScene()->GetName() + ".scn");
-		if (m_startedPersistantScenePath != "" && FL::GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
-		{
-			FL::F_LoadedProject.SavePersistantScene("..\\engine\\tempFiles\\" + FL::GetLoadedProject().GetPersistantGameObjectScene()->GetName() + ".scn");
-		}
+		FL::CreateSceneBackup();
 		FL::GameLoop::Start();
 	};
 	void Stop()

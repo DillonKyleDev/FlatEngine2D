@@ -302,6 +302,7 @@ namespace FlatEngine
 	extern Scene* CreateAndLoadNewScene();
 	extern void SaveScene(Scene* scene, std::string filePath);
 	extern void SaveCurrentScene();
+	extern void CreateSceneBackup();
 	extern void QueueLoadScene(std::string scenePath);
 	extern void LoadScene(std::string actualPath, std::string pointTo = "");
 	extern std::string GetLoadedScenePath();
@@ -545,4 +546,5 @@ namespace FlatEngine
 	extern std::vector<std::string> FindAllFilesWithExtension(std::string dirPath, std::string extension);
 	extern std::string GetFilePathUsingFileName(std::string dirPath, std::string name);
 	extern void WriteStringToFile(std::string path, std::string text);
+	extern void CopyFileFL(std::string from, std::string to);
 };

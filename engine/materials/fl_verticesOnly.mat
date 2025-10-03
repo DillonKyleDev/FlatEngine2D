@@ -7,7 +7,7 @@
         "_primitiveRestartEnable": false,
         "topology": 1
     },
-    "name": "engineMaterial_VerticesOnly",
+    "name": "fl_verticesOnly",
     "rasterizerData": {
         "cullMode": 0,
         "lineWidth": 1.0,

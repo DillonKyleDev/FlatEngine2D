@@ -1616,11 +1616,10 @@
                     "_isActive": true,
                     "_isCollapsed": false,
                     "id": 29,
-                    "materialName": "fl_unlit",
+                    "materialName": "fl_empty",
                     "modelPath": "..\\projects\\Sandbox\\models\\torus.obj",
                     "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\colors\\green.png",
-                        "1": ""
+                        "0": "..\\projects\\Sandbox\\images\\colors\\green.png"
                     },
                     "type": "Mesh",
                     "uboVec4s": {}

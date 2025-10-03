@@ -26,7 +26,8 @@ namespace FlatEngine
 		void Cleanup();
 
 		GameObject* GetParentPtr();
-		bool Initialized();		
+		bool Initialized();
+		bool MissingTextures();
 		void SetModel(Model model);
 		void SetModel(std::string modelPath);
 		Model& GetModel();
@@ -48,12 +49,12 @@ namespace FlatEngine
 	private:
 		Model m_model;
 		std::string m_materialName;
-		std::shared_ptr<Material> m_material;
-		std::vector<Texture> m_textures;
+		std::shared_ptr<Material> m_material;		
 		std::map<uint32_t, Texture> m_texturesByIndex;
 		std::vector<VkDescriptorSet> m_descriptorSets;
 		int m_allocationPoolIndex;
 		bool m_b_initialized;
+		bool m_b_missingTextures;
 
 		// Uniform Buffer Data
 		std::map<std::string, glm::vec4> m_uboVec4s;

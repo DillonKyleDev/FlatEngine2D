@@ -515,17 +515,17 @@ namespace FlatEngine
     void VulkanManager::LoadEngineMaterials()
     {
         // TODO: Do this programatically
-        m_imGuiMaterial = LoadMaterial("../engine/materials/engineMaterial_imgui.mat");
+        m_imGuiMaterial = LoadMaterial("../engine/materials/fl_imgui.mat");
         CreateImGuiResources();
         m_imGuiMaterial->Init();
         // TODO: Remove m_renderToTexture reference
-        m_engineMaterials.emplace("engineMaterial_EmptyMaterial", LoadMaterial("../engine/materials/engineMaterial_EmptyMaterial.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("engineMaterial_Unlit", LoadMaterial("../engine/materials/engineMaterial_Unlit.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("engineMaterial_VerticesOnly", LoadMaterial("../engine/materials/engineMaterial_VerticesOnly.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("engineMaterial_xAxis", LoadMaterial("../engine/materials/engineMaterial_xAxis.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("engineMaterial_yAxis", LoadMaterial("../engine/materials/engineMaterial_yAxis.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("engineMaterial_zAxis", LoadMaterial("../engine/materials/engineMaterial_zAxis.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("engineMaterial_UV", LoadMaterial("../engine/materials/engineMaterial_UV.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_empty", LoadMaterial("../engine/materials/fl_empty.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_unlit", LoadMaterial("../engine/materials/fl_unlit.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_verticesOnly", LoadMaterial("../engine/materials/fl_verticesOnly.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_xAxis", LoadMaterial("../engine/materials/fl_xAxis.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_yAxis", LoadMaterial("../engine/materials/fl_yAxis.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_zAxis", LoadMaterial("../engine/materials/fl_zAxis.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_uv", LoadMaterial("../engine/materials/fl_uv.mat", &m_sceneViewTexture));
     }
 
     void VulkanManager::InitializeMaterials()
@@ -838,7 +838,7 @@ namespace FlatEngine
         grid->SetIsSceneViewGridObject(true);
         grid->SetName("Grid");
         Mesh* gridMesh = grid->AddMesh(grid);
-        gridMesh->SetMaterial("engineMaterial_VerticesOnly");
+        gridMesh->SetMaterial("fl_verticesOnly");
         gridMesh->SetModel("../engine/models/largeGrid.obj");
         gridMesh->AddTexture("../engine/images/colors/cave.png", 0);
         gridMesh->CreateResources();
@@ -847,7 +847,7 @@ namespace FlatEngine
         xAxis->SetIsSceneViewGridObject(true);
         xAxis->SetName("xAxis");
         Mesh* xAxisMesh = xAxis->AddMesh(xAxis);
-        xAxisMesh->SetMaterial("engineMaterial_xAxis");
+        xAxisMesh->SetMaterial("fl_xAxis");
         xAxisMesh->SetModel("../engine/models/xAxis.obj");
         xAxisMesh->AddTexture("../engine/images/colors/green.png", 0);
         xAxisMesh->CreateResources();
@@ -856,7 +856,7 @@ namespace FlatEngine
         yAxis->SetIsSceneViewGridObject(true);
         yAxis->SetName("yAxis");
         Mesh* yAxisMesh = yAxis->AddMesh(yAxis);
-        yAxisMesh->SetMaterial("engineMaterial_yAxis");
+        yAxisMesh->SetMaterial("fl_yAxis");
         yAxisMesh->SetModel("../engine/models/yAxis.obj");
         yAxisMesh->AddTexture("../engine/images/colors/yellow.png", 0);
         yAxisMesh->CreateResources();
@@ -865,7 +865,7 @@ namespace FlatEngine
         zAxis->SetIsSceneViewGridObject(true);
         zAxis->SetName("zAxis");
         Mesh* zAxisMesh = zAxis->AddMesh(zAxis);
-        zAxisMesh->SetMaterial("engineMaterial_zAxis");
+        zAxisMesh->SetMaterial("fl_zAxis");
         zAxisMesh->SetModel("../engine/models/zAxis.obj");
         zAxisMesh->AddTexture("../engine/images/colors/rose.png", 0);    
         zAxisMesh->CreateResources();
@@ -949,11 +949,17 @@ namespace FlatEngine
             for (std::pair<long, Mesh> mesh : FlatEngine::GetMeshes())
             {
                 std::shared_ptr<Material> material = mesh.second.GetMaterial();
-                if (mesh.second.Initialized() && material != nullptr)
+                if (mesh.second.Initialized() && material != nullptr && !mesh.second.MissingTextures())
                 {
                     mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
                     m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
                     m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                }
+                else if (mesh.second.MissingTextures()) // Render the Mesh but using the fl_empty material
+                {
+                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
+                    m_renderToTextureRenderPass.RecordCommandBuffer(GetMaterial("fl_empty")->GetGraphicsPipeline());
+                    m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable   
                 }
             }
 

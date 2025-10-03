@@ -774,12 +774,25 @@ namespace FlatEngine
 	// GameObject / Scene management
 	void SaveScene(Scene* scene, std::string filepath)
 	{
+		CreateSceneBackup();
 		F_SceneManager.SaveScene(scene, filepath);
 	}
 
 	void SaveCurrentScene()
 	{
+		CreateSceneBackup();
 		F_SceneManager.SaveCurrentScene();
+	}
+
+	void CreateSceneBackup()
+	{
+		std::string loadedScenePath = GetLoadedScene()->GetPath();
+		std::string copySceneTo = "..\\engine\\tempFiles\\" + GetLoadedScene()->GetName() + "_backup_copy.scn";
+		std::string loadedPersistantScenePath = GetLoadedProject().GetPersistantGameObjectsScenePath();
+		std::string copyPeristantSceneTo = "..\\engine\\tempFiles\\" + GetLoadedProject().GetPersistantGameObjectScene()->GetName() + "_backup_copy.scn";
+		
+		CopyFileFL(loadedScenePath, copySceneTo);
+		CopyFileFL(loadedPersistantScenePath, copyPeristantSceneTo);
 	}
 
 	// Waits until EndImGuiRender() has been called in Application.cpp to load the next scene
@@ -2647,6 +2660,11 @@ namespace FlatEngine
 
 		fileObject << text.c_str() << std::endl;
 		fileObject.close();
+	}
+
+	void CopyFileFL(std::string from, std::string to)
+	{
+		std::filesystem::copy_file(from, to, std::filesystem::copy_options::overwrite_existing);
 	}
 
 	//For Mouse button collisions - Vector4 objectA(top, right, bottom, left), Vector4 objectB(top, right, bottom, left)

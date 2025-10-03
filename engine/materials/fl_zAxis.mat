@@ -7,7 +7,7 @@
         "_primitiveRestartEnable": false,
         "topology": 2
     },
-    "name": "engineMaterial_zAxis",
+    "name": "fl_zAxis",
     "rasterizerData": {
         "cullMode": 0,
         "lineWidth": 1.0,

@@ -47,6 +47,8 @@ namespace FlatEngine
 		std::vector<std::string> m_tags;
 		std::string m_resourceFailedToLoadImagePath;
 		std::shared_ptr<Texture> m_errorTexture;
+		std::string m_resourceNotPresentImagePath;
+		std::shared_ptr<Texture> m_noResourceTexture;
 		Vector4 m_errorColor;
 	};
 }

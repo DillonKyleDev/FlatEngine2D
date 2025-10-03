@@ -7,14 +7,16 @@
         "_primitiveRestartEnable": false,
         "topology": 3
     },
-    "name": "engineMaterial_EmptyMaterial",
+    "name": "fl_empty",
     "rasterizerData": {
         "cullMode": 2,
         "lineWidth": 1.0,
         "polygonMode": 0
     },
-    "textureCount": 0,
-    "texturesShaderStageData": {},
+    "texturesShaderStageData": {
+        "0": 16,
+        "1": 16
+    },
     "uboVec4Names": {},
     "vertexShaderPath": "../engine/shaders/compiledShaders/emptyVert.spv"
 }

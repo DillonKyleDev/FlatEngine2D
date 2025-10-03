@@ -18,8 +18,10 @@ namespace FlatEngine
 		m_textures = std::map<std::string, std::shared_ptr<Texture>>();
 		m_tags = std::vector<std::string>();
 		m_errorTexture = std::make_shared<Texture>();
+		m_noResourceTexture = std::make_shared<Texture>();
 		m_errorColor = Vector4(1, 0, 0, 1);
 		m_resourceFailedToLoadImagePath = "";	
+		m_resourceNotPresentImagePath = "";
 	}
 
 	AssetManager::~AssetManager()
@@ -39,7 +41,7 @@ namespace FlatEngine
 		m_directories.emplace("audio", "..\\projects\\" + projectName + "\\audio\\");
 		m_directories.emplace("images", "..\\projects\\" + projectName + "\\images\\");
 		m_directories.emplace("tileSets", "..\\projects\\" + projectName + "\\tileSets\\");
-		m_directories.emplace("tileTextures", "..\\projects\\" + projectName + "\\imagese\\tileTextures\\");
+		m_directories.emplace("tileTextures", "..\\projects\\" + projectName + "\\images\\tileTextures\\");
 	}
 
 	std::string AssetManager::GetRootPath()
@@ -173,9 +175,16 @@ namespace FlatEngine
 				try
 				{
 					auto script = F_Lua.safe_script_file(GetFilePath("textures"));
+
 					sol::object errPath = F_Lua["F_ResourceFailedToLoadImagePath"];
 					m_resourceFailedToLoadImagePath = errPath.as<std::string>();
 					m_errorTexture->LoadFromFile(m_resourceFailedToLoadImagePath);
+					m_textures.emplace("resourceFailedToLoad", m_errorTexture);
+	
+					sol::object noResourcePresentPath = F_Lua["F_ResourceNotPresentImagePath"];
+					m_resourceNotPresentImagePath = noResourcePresentPath.as<std::string>();
+					m_noResourceTexture->LoadFromFile(m_resourceNotPresentImagePath);
+					m_textures.emplace("resourceNotPresent", m_noResourceTexture);
 
 					std::optional<sol::table> textureTable = F_Lua["F_Textures"];
 					if (textureTable)

@@ -3,6 +3,7 @@
 ----------------------------
 
 F_ResourceFailedToLoadImagePath = "..\\engine\\images\\resources\\resourceFailedToLoad.png"
+F_ResourceNotPresentImagePath = "..\\engine\\images\\resources\\resourceNotPresent.png"
 
 F_Textures = {
 	-- Resources
