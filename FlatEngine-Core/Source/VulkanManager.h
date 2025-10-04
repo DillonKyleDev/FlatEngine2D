@@ -63,7 +63,7 @@ namespace FlatEngine
         static void CreateCommandPool(VkCommandPool& commandPool, LogicalDevice& logicalDevice, uint32_t queueFamilyIndices, VkCommandPoolCreateFlags flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
 
         // Renderpass
-        void CreateRenderToTextureRenderPassResources();
+        void CreateRenderToTextureRenderPassResources(RenderPass& renderPass, Texture& renderToTexture);
         void CreateImGuiRendePassResources();
         void GetImGuiDescriptorSetLayoutInfo(std::vector<VkDescriptorSetLayoutBinding>& bindings, VkDescriptorSetLayoutCreateInfo& layoutInfo);
         void GetImGuiDescriptorPoolInfo(std::vector<VkDescriptorPoolSize>& poolSizes, VkDescriptorPoolCreateInfo& poolInfo);
@@ -74,11 +74,11 @@ namespace FlatEngine
         void LoadEngineMaterials();
         void InitializeMaterials();        
         void SaveMaterial(std::shared_ptr<Material> material);
-        std::shared_ptr<Material> LoadMaterial(std::string path, Texture* renderToTexture = nullptr);
+        std::shared_ptr<Material> LoadMaterial(std::string path, RenderPass* renderPass, bool b_init = true);
         std::shared_ptr<Material> CreateNewMaterialFile(std::string fileName, std::string path = "");        
         void AddSceneViewMaterial(std::shared_ptr<Material> material);
         void AddGameViewMaterial(std::shared_ptr<Material> material);
-        std::shared_ptr<Material> GetMaterial(std::string materialName);
+        std::shared_ptr<Material> GetMaterial(std::string materialName, ViewportType viewportType = ViewportType::SceneView);
         std::map<std::string, std::shared_ptr<Material>>& GetMaterials();
         void ReloadShaders();
         std::shared_ptr<Model> GetModel(std::string modelPath);
@@ -109,7 +109,8 @@ namespace FlatEngine
         bool CreateVulkanInstance();
         void CreateSyncObjects();        
         
-        RenderPass m_renderToTextureRenderPass;
+        RenderPass m_renderToTextureSceneViewRenderPass;
+        RenderPass m_renderToTextureGameViewRenderPass;
         RenderPass m_imGuiRenderPass;
         std::shared_ptr<Material> m_imGuiMaterial;
         std::map<std::string, std::shared_ptr<Material>> m_engineMaterials;

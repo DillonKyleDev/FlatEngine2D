@@ -122,3 +122,7 @@ https://docs.vulkan.org/samples/latest/samples/api/oit_linked_lists/README.html
 Still a bug with transparent textures showing artifacts through models when viewing the other side of the model through transparent texture.
 
 Fix scene files with textures and ubo json saved wrong.
+
+Add descriptor sets into meshes for both scene view and game view and when setting material and creating resources, create resources for both descriptor sets sets
+
+Create a model for each viewport so there are unique uniform buffers being written to and used in each.

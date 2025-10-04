@@ -15,9 +15,12 @@ namespace FlatEngine
 		SetParentID(parentID);
 		SetType(T_Mesh);
 
-		m_model = Model();
-		m_material = F_VulkanManager->GetMaterial("fl_empty");
-		m_descriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
+		m_sceneViewModel = Model();
+		m_gameViewModel = Model();
+		m_sceneViewMaterial = F_VulkanManager->GetMaterial("fl_empty");
+		m_gameViewMaterial = F_VulkanManager->GetMaterial("fl_empty");
+		m_sceneViewDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
+		m_gameViewDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
 		m_emptyDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
 		m_texturesByIndex = std::map<uint32_t, Texture>();
 		m_allocationPoolIndex = -1;
@@ -46,11 +49,9 @@ namespace FlatEngine
 		std::string materialName = "";
 		json uboVec4s = json::object();
 
-		if (m_material != nullptr)
-		{
-			materialName = m_material->GetName();
-
-			std::map<uint32_t, std::string> vec4Names = m_material->GetUBOVec4Names();
+		if (m_sceneViewMaterial != nullptr)
+		{	
+			std::map<uint32_t, std::string> vec4Names = m_sceneViewMaterial->GetUBOVec4Names();
 			for (std::map<uint32_t, std::string>::iterator iter = vec4Names.begin(); iter != vec4Names.end(); iter++)
 			{
 				if (m_uboVec4s.count(iter->second))
@@ -75,8 +76,8 @@ namespace FlatEngine
 			{ "_isCollapsed", IsCollapsed() },
 			{ "_isActive", IsActive() },
 			{ "textures", texturesData },
-			{ "materialName", materialName },
-			{ "modelPath", m_model.GetModelPath() },
+			{ "materialName", m_materialName },
+			{ "modelPath", m_sceneViewModel.GetModelPath() },
 			{ "uboVec4s", uboVec4s }
 		};
 
@@ -90,14 +91,16 @@ namespace FlatEngine
 		for (std::map<uint32_t, Texture>::iterator texture = m_texturesByIndex.begin(); texture != m_texturesByIndex.end(); texture++)
 		{
 			texture->second.Cleanup(*m_logicalDevice);
-			m_material->GetAllocator().SetFreed(texture->second.GetAllocationIndex());
+			m_sceneViewMaterial->GetAllocator().SetFreed(texture->second.GetAllocationIndex());
+			m_gameViewMaterial->GetAllocator().SetFreed(texture->second.GetAllocationIndex());
 		}
 	}
 
 	void Mesh::Cleanup()
 	{				
 		CleanupTextures();		
-		m_model.Cleanup(*m_logicalDevice);
+		m_sceneViewModel.Cleanup(*m_logicalDevice);
+		m_gameViewModel.Cleanup(*m_logicalDevice);
 	}
 
 
@@ -118,13 +121,16 @@ namespace FlatEngine
 
 	void Mesh::SetModel(Model model)
 	{
-		if (m_model.GetModelPath() != "")
+		if (m_sceneViewModel.GetModelPath() != "")
 		{
-			m_model.Cleanup(*m_logicalDevice);
+			m_sceneViewModel.Cleanup(*m_logicalDevice);
+			m_gameViewModel.Cleanup(*m_logicalDevice);
 		}
-		m_model = model;
 
-		if (m_model.GetModelPath() != "")
+		m_sceneViewModel = model;
+		m_gameViewModel = model;
+
+		if (m_sceneViewModel.GetModelPath() != "")
 		{
 			CreateModelResources(FlatEngine::F_VulkanManager->GetCommandPool(), FlatEngine::F_VulkanManager->GetPhysicalDevice(), FlatEngine::F_VulkanManager->GetLogicalDevice());
 		}
@@ -132,12 +138,14 @@ namespace FlatEngine
 
 	void Mesh::SetModel(std::string modelPath)
 	{
-		if (m_model.GetModelPath() != "")
+		if (m_sceneViewModel.GetModelPath() != "")
 		{
-			m_model.Cleanup(*m_logicalDevice);
+			m_sceneViewModel.Cleanup(*m_logicalDevice);
+			m_gameViewModel.Cleanup(*m_logicalDevice);
 		}
 
-		m_model.SetModelPath(modelPath);
+		m_sceneViewModel.SetModelPath(modelPath);
+		m_gameViewModel.SetModelPath(modelPath);
 
 		if (modelPath != "")
 		{
@@ -145,35 +153,47 @@ namespace FlatEngine
 		}
 	}
 
-	Model& Mesh::GetModel()
+	Model& Mesh::GetSceneViewModel()
 	{
-		return m_model;
+		return m_sceneViewModel;
+	}
+
+	Model& Mesh::GetGameViewModel()
+	{
+		return m_gameViewModel;
 	}
 
 	void Mesh::CreateModelResources(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
 	{
-		std::shared_ptr<Model> loadedModel = F_VulkanManager->GetModel(m_model.GetModelPath());
+		std::shared_ptr<Model> loadedModel = F_VulkanManager->GetModel(m_sceneViewModel.GetModelPath());
 
 		if (loadedModel == nullptr)
 		{
-			loadedModel = F_VulkanManager->LoadModel(m_model.GetModelPath());
+			loadedModel = F_VulkanManager->LoadModel(m_sceneViewModel.GetModelPath());
 		}
 
-		m_model.SetVertices(loadedModel->GetVertices());
-		m_model.SetIndices(loadedModel->GetIndices());
-		m_model.CreateVertexBuffer(commandPool, physicalDevice, logicalDevice);
-		m_model.CreateIndexBuffer(commandPool, physicalDevice, logicalDevice);
-		m_model.CreateUniformBuffers(physicalDevice, logicalDevice);
+		m_sceneViewModel.SetVertices(loadedModel->GetVertices());
+		m_sceneViewModel.SetIndices(loadedModel->GetIndices());
+		m_sceneViewModel.CreateVertexBuffer(commandPool, physicalDevice, logicalDevice);
+		m_sceneViewModel.CreateIndexBuffer(commandPool, physicalDevice, logicalDevice);
+		m_sceneViewModel.CreateUniformBuffers(physicalDevice, logicalDevice);
+
+		m_gameViewModel.SetVertices(loadedModel->GetVertices());
+		m_gameViewModel.SetIndices(loadedModel->GetIndices());
+		m_gameViewModel.CreateVertexBuffer(commandPool, physicalDevice, logicalDevice);
+		m_gameViewModel.CreateIndexBuffer(commandPool, physicalDevice, logicalDevice);
+		m_gameViewModel.CreateUniformBuffers(physicalDevice, logicalDevice);
 	}
 
 	void Mesh::SetMaterial(std::shared_ptr<Material> material)
 	{		
-		m_material = material;
-
-		if (m_material != nullptr)
+		if (material != nullptr)
 		{
-			std::map<uint32_t, std::string> uboVec4Names = material->GetUBOVec4Names();
-			m_materialName = m_material->GetName();			
+			m_materialName = material->GetName();
+			m_sceneViewMaterial = F_VulkanManager->GetMaterial(m_materialName, ViewportType::SceneView);
+			m_gameViewMaterial = F_VulkanManager->GetMaterial(m_materialName, ViewportType::GameView);
+
+			std::map<uint32_t, std::string> uboVec4Names = material->GetUBOVec4Names();		
 
 			for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
 			{
@@ -184,15 +204,26 @@ namespace FlatEngine
 
 	void Mesh::SetMaterial(std::string materialName)
 	{
-		m_material = F_VulkanManager->GetMaterial(materialName);
+		m_sceneViewMaterial = F_VulkanManager->GetMaterial(materialName, ViewportType::SceneView);
+		m_gameViewMaterial = F_VulkanManager->GetMaterial(materialName, ViewportType::GameView);
 		m_materialName = materialName;
 
-		SetMaterial(m_material);
+		std::map<uint32_t, std::string> uboVec4Names = m_sceneViewMaterial->GetUBOVec4Names();
+
+		for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
+		{
+			SetUBOVec4(iter->second, Vector4());
+		}
 	}
 
-	std::shared_ptr<Material> Mesh::GetMaterial()
+	std::shared_ptr<Material> Mesh::GetSceneViewMaterial()
 	{
-		return m_material;
+		return m_sceneViewMaterial;
+	}
+
+	std::shared_ptr<Material> Mesh::GetGameViewMaterial()
+	{
+		return m_gameViewMaterial;
 	}
 
 	std::string Mesh::GetMaterialName()
@@ -205,9 +236,9 @@ namespace FlatEngine
 		m_b_missingTextures = false;
 		m_b_initialized = true;
 
-		if (m_material != nullptr && m_model.GetModelPath() != "")
+		if (m_sceneViewMaterial != nullptr && m_sceneViewModel.GetModelPath() != "")
 		{
-			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = m_material->GetTexturesShaderStages()->begin(); iter != m_material->GetTexturesShaderStages()->end(); iter++)
+			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = m_sceneViewMaterial->GetTexturesShaderStages()->begin(); iter != m_sceneViewMaterial->GetTexturesShaderStages()->end(); iter++)
 			{
 				if (!m_texturesByIndex.count(iter->first) || (m_texturesByIndex.count(iter->first) && (m_texturesByIndex.at(iter->first).GetTexturePath() == "" || m_texturesByIndex.at(iter->first).GetTexturePath() == GetTextureObject("resourceNotPresent")->GetTexturePath())))
 				{
@@ -220,19 +251,23 @@ namespace FlatEngine
 
 			CreateTextureResources();
 
-			if (m_model.GetModelPath() != "")
+			if (m_sceneViewModel.GetModelPath() != "")
 			{
-				CreateModelResources(FlatEngine::F_VulkanManager->GetCommandPool(), FlatEngine::F_VulkanManager->GetPhysicalDevice(), FlatEngine::F_VulkanManager->GetLogicalDevice());
+				CreateModelResources(F_VulkanManager->GetCommandPool(), F_VulkanManager->GetPhysicalDevice(), F_VulkanManager->GetLogicalDevice());
 			}
 
-			if (m_material != nullptr)
+			if (m_sceneViewMaterial != nullptr)
 			{
-				m_material->CreateDescriptorSets(m_descriptorSets, m_model, m_texturesByIndex);
-			}		
+				m_sceneViewMaterial->CreateDescriptorSets(m_sceneViewDescriptorSets, m_sceneViewModel, m_texturesByIndex);
+			}	
+			if (m_gameViewMaterial != nullptr)
+			{
+				m_gameViewMaterial->CreateDescriptorSets(m_gameViewDescriptorSets, m_gameViewModel, m_texturesByIndex);
+			}
 
 			// Create empty material descriptor sets
 			std::map<uint32_t, Texture> emptyTextures = std::map<uint32_t, Texture>();
-			F_VulkanManager->GetMaterial("fl_empty")->CreateDescriptorSets(m_emptyDescriptorSets, m_model, emptyTextures);
+			F_VulkanManager->GetMaterial("fl_empty")->CreateDescriptorSets(m_emptyDescriptorSets, m_sceneViewModel, emptyTextures);
 		}
 		else
 		{
@@ -289,9 +324,14 @@ namespace FlatEngine
 		}
 	}
 
-	std::vector<VkDescriptorSet>& Mesh::GetDescriptorSets()
+	std::vector<VkDescriptorSet>& Mesh::GetSceneViewDescriptorSets()
 	{
-		return m_descriptorSets;
+		return m_sceneViewDescriptorSets;
+	}
+
+	std::vector<VkDescriptorSet>& Mesh::GetGameViewDescriptorSets()
+	{
+		return m_gameViewDescriptorSets;
 	}
 
 	std::vector<VkDescriptorSet>& Mesh::GetEmptyDescriptorSets()

@@ -2714,10 +2714,10 @@ namespace FlatGui
 	{
 		bool b_isActive = mesh->IsActive();		
 		long ID = mesh->GetID();
-		Model& model = mesh->GetModel();
+		Model& model = mesh->GetSceneViewModel();
 		std::string modelPath = model.GetModelPath();
 		std::string modelFileName = FL::GetFilenameFromPath(modelPath, true);
-		std::shared_ptr<Material> material = mesh->GetMaterial();
+		std::shared_ptr<Material> material = mesh->GetSceneViewMaterial();
 		std::string materialName = "";
 		// UBO Data
 		std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
@@ -2748,7 +2748,7 @@ namespace FlatGui
 				if (fsPath.extension() == ".obj")
 				{
 					model.SetModelPath(fsPath.string());
-					if (mesh->GetMaterial() != nullptr)
+					if (material != nullptr)
 					{
 						mesh->CreateResources();
 					}
@@ -2765,7 +2765,7 @@ namespace FlatGui
 			else if (openedObjPath != "")
 			{
 				model.SetModelPath(openedObjPath);
-				if (mesh->GetMaterial() != nullptr)
+				if (material != nullptr)
 				{
 					mesh->CreateResources();
 				}
@@ -2783,7 +2783,7 @@ namespace FlatGui
 				{					
 					mesh->SetMaterial(FL::GetFilenameFromPath(fsPath.string()));
 					mesh->CreateResources();
-					material = mesh->GetMaterial();
+					material = mesh->GetSceneViewMaterial();
 				}
 				else
 				{

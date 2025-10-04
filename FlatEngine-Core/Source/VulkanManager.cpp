@@ -47,7 +47,8 @@ namespace FlatEngine
         m_physicalDevice = PhysicalDevice();
         m_logicalDevice = LogicalDevice();       
 
-        m_renderToTextureRenderPass = RenderPass();
+        m_renderToTextureSceneViewRenderPass = RenderPass();
+        m_renderToTextureGameViewRenderPass = RenderPass();
         m_imGuiRenderPass = RenderPass();
 
         // gpu communication
@@ -105,7 +106,8 @@ namespace FlatEngine
         VM_validationLayers.Cleanup(m_instance);
         m_winSystem.CleanupSystem();
 
-        m_renderToTextureRenderPass.Cleanup(m_logicalDevice);
+        m_renderToTextureSceneViewRenderPass.Cleanup(m_logicalDevice);
+        m_renderToTextureGameViewRenderPass.Cleanup(m_logicalDevice);
         m_imGuiRenderPass.Cleanup(m_logicalDevice);
 
         // Destroy Vulkan instance
@@ -176,8 +178,9 @@ namespace FlatEngine
                 m_sceneViewTexture.CreateRenderToTextureResources();
                 m_gameViewTexture.CreateRenderToTextureResources();
                 
+                CreateRenderToTextureRenderPassResources(m_renderToTextureSceneViewRenderPass, m_sceneViewTexture);
+                CreateRenderToTextureRenderPassResources(m_renderToTextureGameViewRenderPass, m_gameViewTexture);
                 CreateImGuiRendePassResources();
-                CreateRenderToTextureRenderPassResources();
 
                 LoadEngineMaterials();
 
@@ -269,16 +272,16 @@ namespace FlatEngine
         }
     }
 
-    void VulkanManager::CreateRenderToTextureRenderPassResources()
+    void VulkanManager::CreateRenderToTextureRenderPassResources(RenderPass& renderPass, Texture& renderToTexture)
     {
-        m_renderToTextureRenderPass.SetHandles(&m_instance, &m_winSystem, &m_physicalDevice, &m_logicalDevice);
+        renderPass.SetHandles(&m_instance, &m_winSystem, &m_physicalDevice, &m_logicalDevice);
 
-        m_renderToTextureRenderPass.EnableDepthBuffering();
-        m_renderToTextureRenderPass.EnableMsaa();
+        renderPass.EnableDepthBuffering();
+        renderPass.EnableMsaa();
         VkSampleCountFlagBits msaaSamples = VK_SAMPLE_COUNT_1_BIT; // F_VulkanManager->GetMaxSamples();
         VkFormat colorFormat = VK_FORMAT_R32G32B32A32_SFLOAT;
-        m_renderToTextureRenderPass.SetImageColorFormat(colorFormat);
-        m_renderToTextureRenderPass.SetMSAASampleCount(msaaSamples);
+        renderPass.SetImageColorFormat(colorFormat);
+        renderPass.SetMSAASampleCount(msaaSamples);
 
         VkAttachmentDescription colorAttachment{};
         colorAttachment.format = colorFormat;
@@ -292,7 +295,7 @@ namespace FlatEngine
         VkAttachmentReference colorAttachmentRef{};
         colorAttachmentRef.attachment = 0;
         colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-        m_renderToTextureRenderPass.AddRenderPassAttachment(colorAttachment, colorAttachmentRef);
+        renderPass.AddRenderPassAttachment(colorAttachment, colorAttachmentRef);
 
         VkAttachmentDescription depthAttachment{};
         depthAttachment.format = Helper::FindDepthFormat(m_physicalDevice.GetDevice());
@@ -306,7 +309,7 @@ namespace FlatEngine
         VkAttachmentReference depthAttachmentRef{};
         depthAttachmentRef.attachment = 1;
         depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-        m_renderToTextureRenderPass.AddRenderPassAttachment(depthAttachment, depthAttachmentRef);
+        renderPass.AddRenderPassAttachment(depthAttachment, depthAttachmentRef);
 
         VkAttachmentDescription colorAttachmentResolve{};
         colorAttachmentResolve.format = colorFormat;
@@ -320,7 +323,7 @@ namespace FlatEngine
         VkAttachmentReference colorAttachmentResolveRef{};
         colorAttachmentResolveRef.attachment = 2;
         colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-        m_renderToTextureRenderPass.AddRenderPassAttachment(colorAttachmentResolve, colorAttachmentResolveRef);
+        renderPass.AddRenderPassAttachment(colorAttachmentResolve, colorAttachmentResolveRef);
         
         VkSubpassDependency dependency{};
         dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
@@ -329,19 +332,19 @@ namespace FlatEngine
         dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
         dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT;
         dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-        m_renderToTextureRenderPass.AddSubpassDependency(dependency);
+        renderPass.AddSubpassDependency(dependency);
 
         VkSubpassDescription subpass{};
         subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
         subpass.colorAttachmentCount = 1;
-        subpass.pColorAttachments = &m_renderToTextureRenderPass.GetAttachmentRefs()[0];
-        subpass.pDepthStencilAttachment = &m_renderToTextureRenderPass.GetAttachmentRefs()[1];
-        subpass.pResolveAttachments = &m_renderToTextureRenderPass.GetAttachmentRefs()[2];
-        m_renderToTextureRenderPass.AddSubpass(subpass);
+        subpass.pColorAttachments = &renderPass.GetAttachmentRefs()[0];
+        subpass.pDepthStencilAttachment = &renderPass.GetAttachmentRefs()[1];
+        subpass.pResolveAttachments = &renderPass.GetAttachmentRefs()[2];
+        renderPass.AddSubpass(subpass);
 
-        m_renderToTextureRenderPass.ConfigureFrameBufferImageViews(m_sceneViewTexture.GetImageViews()); // Give m_renderPass the VkImageViews to write to their VkImages (to be used later by ImGui material)		
+        renderPass.ConfigureFrameBufferImageViews(renderToTexture.GetImageViews()); // Give m_renderPass the VkImageViews to write to their VkImages (to be used later by ImGui material)		
 
-        m_renderToTextureRenderPass.Init(m_commandPool);
+        renderPass.Init(m_commandPool);
     }
 
     void VulkanManager::CreateImGuiRendePassResources()
@@ -515,17 +518,17 @@ namespace FlatEngine
     void VulkanManager::LoadEngineMaterials()
     {
         // TODO: Do this programatically
-        m_imGuiMaterial = LoadMaterial("../engine/materials/fl_imgui.mat");
+        m_imGuiMaterial = LoadMaterial("../engine/materials/fl_imgui.mat", &m_imGuiRenderPass, false);
         CreateImGuiResources();
         m_imGuiMaterial->Init();
         // TODO: Remove m_renderToTexture reference
-        m_engineMaterials.emplace("fl_empty", LoadMaterial("../engine/materials/fl_empty.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("fl_unlit", LoadMaterial("../engine/materials/fl_unlit.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("fl_verticesOnly", LoadMaterial("../engine/materials/fl_verticesOnly.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("fl_xAxis", LoadMaterial("../engine/materials/fl_xAxis.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("fl_yAxis", LoadMaterial("../engine/materials/fl_yAxis.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("fl_zAxis", LoadMaterial("../engine/materials/fl_zAxis.mat", &m_sceneViewTexture));
-        m_engineMaterials.emplace("fl_uv", LoadMaterial("../engine/materials/fl_uv.mat", &m_sceneViewTexture));
+        m_engineMaterials.emplace("fl_empty", LoadMaterial("../engine/materials/fl_empty.mat", &m_renderToTextureSceneViewRenderPass));
+        m_engineMaterials.emplace("fl_unlit", LoadMaterial("../engine/materials/fl_unlit.mat", &m_renderToTextureSceneViewRenderPass));
+        m_engineMaterials.emplace("fl_verticesOnly", LoadMaterial("../engine/materials/fl_verticesOnly.mat", &m_renderToTextureSceneViewRenderPass));
+        m_engineMaterials.emplace("fl_xAxis", LoadMaterial("../engine/materials/fl_xAxis.mat", &m_renderToTextureSceneViewRenderPass));
+        m_engineMaterials.emplace("fl_yAxis", LoadMaterial("../engine/materials/fl_yAxis.mat", &m_renderToTextureSceneViewRenderPass));
+        m_engineMaterials.emplace("fl_zAxis", LoadMaterial("../engine/materials/fl_zAxis.mat", &m_renderToTextureSceneViewRenderPass));
+        m_engineMaterials.emplace("fl_uv", LoadMaterial("../engine/materials/fl_uv.mat", &m_renderToTextureSceneViewRenderPass));
     }
 
     void VulkanManager::InitializeMaterials()
@@ -538,8 +541,8 @@ namespace FlatEngine
 
         for (std::string path : materialFiles)
         {
-            AddSceneViewMaterial(LoadMaterial(path, &m_sceneViewTexture));
-            AddGameViewMaterial(LoadMaterial(path, &m_gameViewTexture));
+            AddSceneViewMaterial(LoadMaterial(path, &m_renderToTextureSceneViewRenderPass));
+            AddGameViewMaterial(LoadMaterial(path, &m_renderToTextureGameViewRenderPass));
         }
     }
 
@@ -572,7 +575,7 @@ namespace FlatEngine
         }
     }
 
-    std::shared_ptr<Material> VulkanManager::LoadMaterial(std::string path, Texture* renderToTexture)
+    std::shared_ptr<Material> VulkanManager::LoadMaterial(std::string path, RenderPass* renderPass, bool b_init)
     {
         std::shared_ptr<Material> newMaterial = std::make_shared<Material>();
 
@@ -668,15 +671,12 @@ namespace FlatEngine
                 newMaterial->SetColorBlendAttachmentCreateInfos(colorBlendAttachmentInfos);                
             }
 
-            if (renderToTexture != nullptr)
+            newMaterial->SetHandles(&m_instance, &m_winSystem, &m_physicalDevice, &m_logicalDevice, &m_commandPool, renderPass);
+
+            if (b_init)
             {
-                newMaterial->SetHandles(&m_instance, &m_winSystem, &m_physicalDevice, &m_logicalDevice, &m_commandPool, &m_renderToTextureRenderPass);
                 newMaterial->Init();
-            }
-            else
-            {
-                newMaterial->SetHandles(&m_instance, &m_winSystem, &m_physicalDevice, &m_logicalDevice, &m_commandPool, &m_imGuiRenderPass);
-            }
+            }            
         }
 
         return newMaterial;
@@ -696,9 +696,10 @@ namespace FlatEngine
             filePath = path + "/" + fileName + ".mat";
         }
 
+        // TODO: SHOULD ADD THE MATERIAL TO BOTH SCENE VIEW AND GAME VIEW MATERIALS
         newMaterial->SetPath(filePath);
         newMaterial->SetName(fileName);
-        newMaterial->SetHandles(&m_instance, &m_winSystem, &m_physicalDevice, &m_logicalDevice, &m_commandPool, &m_renderToTextureRenderPass);
+        newMaterial->SetHandles(&m_instance, &m_winSystem, &m_physicalDevice, &m_logicalDevice, &m_commandPool, &m_renderToTextureSceneViewRenderPass);
         SaveMaterial(newMaterial);        
 
         return newMaterial;
@@ -716,8 +717,32 @@ namespace FlatEngine
     }
 
     // Assume Scene View Materials for now
-    std::shared_ptr<Material> VulkanManager::GetMaterial(std::string materialName)
+    std::shared_ptr<Material> VulkanManager::GetMaterial(std::string materialName, ViewportType viewportType)
     {                
+        switch (viewportType)
+        {
+        case ViewportType::SceneView:
+            for (std::map<std::string, std::shared_ptr<Material>>::iterator material = m_sceneViewMaterials.begin(); material != m_sceneViewMaterials.end(); material++)
+            {
+                if (material->second->GetName() == materialName)
+                {
+                    return material->second;
+                }
+            }
+            break;
+        case ViewportType::GameView:
+            for (std::map<std::string, std::shared_ptr<Material>>::iterator material = m_gameViewMaterials.begin(); material != m_gameViewMaterials.end(); material++)
+            {
+                if (material->second->GetName() == materialName)
+                {
+                    return material->second;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+
         for (std::map<std::string, std::shared_ptr<Material>>::iterator material = m_engineMaterials.begin(); material != m_engineMaterials.end(); material++)
         {
             if (material->second->GetName() == materialName)
@@ -725,20 +750,7 @@ namespace FlatEngine
                 return material->second;
             }
         }
-        for (std::map<std::string, std::shared_ptr<Material>>::iterator material = m_sceneViewMaterials.begin(); material != m_sceneViewMaterials.end(); material++)
-        {
-            if (material->second->GetName() == materialName)
-            {
-                return material->second;
-            }
-        }
-        for (std::map<std::string, std::shared_ptr<Material>>::iterator material = m_gameViewMaterials.begin(); material != m_gameViewMaterials.end(); material++)
-        {
-            if (material->second->GetName() == materialName)
-            {
-                return material->second;
-            }
-        }
+
         if (materialName == "imgui")
         {
             return m_imGuiMaterial;
@@ -928,50 +940,96 @@ namespace FlatEngine
 
         std::vector<VkCommandBuffer> commandBuffers;       
 
-        if (m_renderToTextureRenderPass.Initialized())
+        if (m_renderToTextureSceneViewRenderPass.Initialized())
         {
-            m_renderToTextureRenderPass.BeginRenderPass(imageIndex);
+            m_renderToTextureSceneViewRenderPass.BeginRenderPass(imageIndex);
 
             if (m_b_showGridObjects)
             {
                 for (std::pair<long, Mesh> mesh : F_sceneViewGridObjects.GetMeshes())
                 {
-                    std::shared_ptr<Material> material = mesh.second.GetMaterial();
+                    std::shared_ptr<Material> material = mesh.second.GetSceneViewMaterial();
                     if (mesh.second.Initialized() && material != nullptr)
                     {
-                        mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
-                        m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-                        m_renderToTextureRenderPass.DrawIndexed(mesh.second, material); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                        mesh.second.GetSceneViewModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
+                        m_renderToTextureSceneViewRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
+                        m_renderToTextureSceneViewRenderPass.DrawIndexed(mesh.second, material, ViewportType::SceneView); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                     }
                 }
             }
            
             for (std::pair<long, Mesh> mesh : FlatEngine::GetMeshes())
-            {
-                std::shared_ptr<Material> material = mesh.second.GetMaterial();
+            {                
+                std::shared_ptr<Material> material = mesh.second.GetSceneViewMaterial();
                 if (mesh.second.Initialized() && material != nullptr && !mesh.second.MissingTextures())
                 {
-                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
-                    m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-                    m_renderToTextureRenderPass.DrawIndexed(mesh.second, mesh.second.GetMaterial()); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                    mesh.second.GetSceneViewModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
+                    m_renderToTextureSceneViewRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
+                    m_renderToTextureSceneViewRenderPass.DrawIndexed(mesh.second, material, ViewportType::SceneView); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                 }
                 else if (mesh.second.MissingTextures()) // Render the Mesh but using the fl_empty material
                 {
-                    mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
-                    m_renderToTextureRenderPass.RecordCommandBuffer(GetMaterial("fl_empty")->GetGraphicsPipeline());
-                    m_renderToTextureRenderPass.DrawIndexed(mesh.second, GetMaterial("fl_empty")); // Create final VkImage on m_sceneViewTexture's m_images member variable   
+                    mesh.second.GetSceneViewModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
+                    m_renderToTextureSceneViewRenderPass.RecordCommandBuffer(GetMaterial("fl_empty")->GetGraphicsPipeline());
+                    m_renderToTextureSceneViewRenderPass.DrawIndexed(mesh.second, GetMaterial("fl_empty"), ViewportType::SceneView); // Create final VkImage on m_sceneViewTexture's m_images member variable   
                 }
             }
 
-            m_renderToTextureRenderPass.EndRenderPass();
+            m_renderToTextureSceneViewRenderPass.EndRenderPass();
 
-            // Once VkImage has been written to from m_renderToTextureRenderPass, that image can be used as a texture to render to using a different material and desired descriptorSets, so we'd need to create descriptor sets for it using that material's configuration           
+            // Once VkImage has been written to from m_renderToTextureSceneViewRenderPass, that image can be used as a texture to render to using a different material and desired descriptorSets, so we'd need to create descriptor sets for it using that material's configuration           
             Model emptyModel = Model();
             std::map<uint32_t, Texture> textures = std::map<uint32_t, Texture>();
-            // m_sceneViewTexture was given to m_renderToTextureRenderPass in each material and it was written to in m_renderToTextureRenderPass.DrawIndexed()
+            // m_sceneViewTexture was given to m_renderToTextureSceneViewRenderPass in each material and it was written to in m_renderToTextureSceneViewRenderPass.DrawIndexed()
             textures.emplace(0, m_sceneViewTexture);
             m_imGuiMaterial->GetAllocator().AllocateDescriptorSets(m_sceneViewTexture.GetDescriptorSets(), emptyModel, *m_imGuiMaterial->GetTexturesShaderStages(), textures);
-            commandBuffers.push_back(m_renderToTextureRenderPass.GetCommandBuffers()[VM_currentFrame]);            
+            commandBuffers.push_back(m_renderToTextureSceneViewRenderPass.GetCommandBuffers()[VM_currentFrame]);            
+        }
+
+        if (m_renderToTextureGameViewRenderPass.Initialized())
+        {
+            m_renderToTextureGameViewRenderPass.BeginRenderPass(imageIndex);
+
+            //if (m_b_showGridObjects)
+            //{
+            //    for (std::pair<long, Mesh> mesh : F_sceneViewGridObjects.GetMeshes())
+            //    {
+            //        std::shared_ptr<Material> material = mesh.second.GetGameViewMaterial();
+            //        if (mesh.second.Initialized() && material != nullptr)
+            //        {
+            //            mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::GameView, m_b_orthographic);
+            //            m_renderToTextureGameViewRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
+            //            m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, material, ViewportType::GameView); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+            //        }
+            //    }
+            //}
+
+            for (std::pair<long, Mesh> mesh : FlatEngine::GetMeshes())
+            {                
+                std::shared_ptr<Material> material = mesh.second.GetGameViewMaterial();
+                if (mesh.second.Initialized() && material != nullptr && !mesh.second.MissingTextures())
+                {
+                    mesh.second.GetGameViewModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::GameView, m_b_orthographic);
+                    m_renderToTextureGameViewRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
+                    m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, material, ViewportType::GameView); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                }
+                else if (mesh.second.MissingTextures()) // Render the Mesh but using the fl_empty material
+                {
+                    mesh.second.GetGameViewModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::GameView, m_b_orthographic);
+                    m_renderToTextureGameViewRenderPass.RecordCommandBuffer(GetMaterial("fl_empty")->GetGraphicsPipeline());
+                    m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, GetMaterial("fl_empty"), ViewportType::GameView); // Create final VkImage on m_sceneViewTexture's m_images member variable   
+                }
+            }
+
+            m_renderToTextureGameViewRenderPass.EndRenderPass();
+
+            // Once VkImage has been written to from m_renderToTextureGameViewRenderPass, that image can be used as a texture to render to using a different material and desired descriptorSets, so we'd need to create descriptor sets for it using that material's configuration           
+            Model emptyModel = Model();
+            std::map<uint32_t, Texture> textures = std::map<uint32_t, Texture>();
+            // m_gameViewTexture was given to m_renderToTextureGameViewRenderPass in each material and it was written to in m_renderToTextureGameViewRenderPass.DrawIndexed()
+            textures.emplace(0, m_gameViewTexture);
+            m_imGuiMaterial->GetAllocator().AllocateDescriptorSets(m_gameViewTexture.GetDescriptorSets(), emptyModel, *m_imGuiMaterial->GetTexturesShaderStages(), textures);
+            commandBuffers.push_back(m_renderToTextureGameViewRenderPass.GetCommandBuffers()[VM_currentFrame]);
         }
  
         if (m_imGuiMaterial != nullptr)
@@ -1036,25 +1094,11 @@ namespace FlatEngine
         m_sceneViewTexture.CreateRenderToTextureResources();
         //m_gameViewTexture.CreateRenderToTextureResources();
 
-        m_renderToTextureRenderPass.ConfigureFrameBufferImageViews(m_sceneViewTexture.GetImageViews());        
-        m_renderToTextureRenderPass.RecreateFrameBuffers(m_commandPool);
+        m_renderToTextureSceneViewRenderPass.ConfigureFrameBufferImageViews(m_sceneViewTexture.GetImageViews());        
+        m_renderToTextureSceneViewRenderPass.RecreateFrameBuffers(m_commandPool);
 
         m_imGuiRenderPass.ConfigureFrameBufferImageViews(m_winSystem.GetSwapChainImageViews());
         m_imGuiRenderPass.RecreateFrameBuffers(m_commandPool);
-
-        //m_imGuiMaterial->RecreateGraphicsPipeline();
-        //for (std::shared_ptr<Material> material : m_engineMaterials)
-        //{
-        //    material->RecreateGraphicsPipeline();
-        //}
-        //for (std::shared_ptr<Material> material : m_sceneViewMaterials)
-        //{
-        //    material->RecreateGraphicsPipeline();
-        //}
-        //for (std::shared_ptr<Material> material : m_gameViewMaterials)
-        //{
-        //    material->RecreateGraphicsPipeline();
-        //}
 
         ImGui_ImplVulkan_SetMinImageCount(static_cast<uint32_t>(m_winSystem.GetSwapChainImageViews().size()));
     }

@@ -548,26 +548,52 @@ namespace FlatEngine
         }
     }
 
-    void RenderPass::DrawIndexed(Mesh& mesh, std::shared_ptr<Material> material)
+    void RenderPass::DrawIndexed(Mesh& mesh, std::shared_ptr<Material> material, ViewportType viewportType)
     {
-        VkPipelineLayout& pipelineLayout = material->GetPipelineLayout();
-        VkDescriptorSet& descriptorSet = mesh.GetDescriptorSets()[VM_currentFrame]; // Use Mesh descriptor sets to draw the objects to the VkImage that will THEN be used with imgui material and the descriptor sets created using the imgui material
+        VkPipelineLayout& pipelineLayout = material->GetPipelineLayout();        
+        VkDescriptorSet descriptorSet;
+        std::vector<uint32_t> indices;
+
+        switch (viewportType)
+        {
+        case ViewportType::SceneView:
+        {
+            descriptorSet = mesh.GetSceneViewDescriptorSets()[VM_currentFrame]; // Use Mesh descriptor sets to draw the objects to the VkImage that will THEN be used with imgui material and the descriptor sets created using the imgui material
+
+            VkBuffer& vertexBuffer = mesh.GetSceneViewModel().GetVertexBuffer();
+            VkBuffer& indexBuffer = mesh.GetSceneViewModel().GetIndexBuffer();
+            indices = mesh.GetSceneViewModel().GetIndices();
+            VkBuffer vertexBuffers[] = { vertexBuffer };
+            VkDeviceSize offsets[] = { 0 };
+            vkCmdBindVertexBuffers(m_commandBuffers[VM_currentFrame], 0, 1, vertexBuffers, offsets);
+            vkCmdBindIndexBuffer(m_commandBuffers[VM_currentFrame], indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+
+            break;
+        }
+        case ViewportType::GameView:
+        {
+            descriptorSet = mesh.GetGameViewDescriptorSets()[VM_currentFrame]; // Use Mesh descriptor sets to draw the objects to the VkImage that will THEN be used with imgui material and the descriptor sets created using the imgui material
+
+            VkBuffer& vertexBuffer = mesh.GetGameViewModel().GetVertexBuffer();
+            VkBuffer& indexBuffer = mesh.GetGameViewModel().GetIndexBuffer();
+            indices = mesh.GetGameViewModel().GetIndices();
+            VkBuffer vertexBuffers[] = { vertexBuffer };
+            VkDeviceSize offsets[] = { 0 };
+            vkCmdBindVertexBuffers(m_commandBuffers[VM_currentFrame], 0, 1, vertexBuffers, offsets);
+            vkCmdBindIndexBuffer(m_commandBuffers[VM_currentFrame], indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+
+            break;
+        }
+        default:
+            break;
+        }
+
         if (material->GetName() == "fl_empty")
         {
             descriptorSet = mesh.GetEmptyDescriptorSets()[VM_currentFrame];
         }
-        VkBuffer& vertexBuffer = mesh.GetModel().GetVertexBuffer();
-        VkBuffer& indexBuffer = mesh.GetModel().GetIndexBuffer();
-        std::vector<uint32_t> indices = mesh.GetModel().GetIndices();
-
-        VkBuffer vertexBuffers[] = { vertexBuffer };
-        VkDeviceSize offsets[] = { 0 };
-        vkCmdBindVertexBuffers(m_commandBuffers[VM_currentFrame], 0, 1, vertexBuffers, offsets);
-
-        vkCmdBindIndexBuffer(m_commandBuffers[VM_currentFrame], indexBuffer, 0, VK_INDEX_TYPE_UINT32);
-
+      
         vkCmdBindDescriptorSets(m_commandBuffers[VM_currentFrame], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSet, 0, nullptr);
-
         // Refer to - https://vulkan-tutorial.com/en/Vertex_buffers/Index_buffer
         vkCmdDrawIndexed(m_commandBuffers[VM_currentFrame], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0); // reusing vertices with index buffers.
         // NOTE FROM THE WIKI: The previous chapter already mentioned that you should allocate multiple resources like buffers from a single memory allocation, but in fact you should go a step further. Driver developers recommend that you also store multiple buffers, like the vertex and index buffer, into a single VkBuffer and use offsets in commands like vkCmdBindVertexBuffers. The advantage is that your data is more cache friendly in that case, because it's closer together. It is even possible to reuse the same chunk of memory for multiple resources if they are not used during the same render operations, provided that their data is refreshed, of course. This is known as aliasing and some Vulkan functions have explicit flags to specify that you want to do this.

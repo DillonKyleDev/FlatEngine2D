@@ -250,7 +250,7 @@ namespace FlatEngine
         }
     }
 
-    void Model::UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewport, bool b_orthographic)
+    void Model::UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewportType, bool b_orthographic)
     {        
         GameObject* parent = mesh->GetParentPtr();
         Transform* transform = parent->GetTransform();
@@ -260,24 +260,37 @@ namespace FlatEngine
         Camera* primaryCamera = nullptr;
         Vector3 cameraPosition = Vector3();
         std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
-        std::map<uint32_t, std::string> materialVec4s = mesh->GetMaterial()->GetUBOVec4Names();
+        std::map<uint32_t, std::string> materialVec4s;
 
-        switch (viewport)
+        switch (viewportType)
         {
         case ViewportType::SceneView:
+        {
             primaryCamera = F_sceneViewCameraObject->GetCamera();
             if (primaryCamera != nullptr)
             {
                 cameraPosition = F_sceneViewCameraObject->GetTransform()->GetPosition();
             }
+
+            materialVec4s = mesh->GetSceneViewMaterial()->GetUBOVec4Names();
             break;
+        }
         case ViewportType::GameView:
+        {
             primaryCamera = GetPrimaryCamera();
             if (primaryCamera != nullptr)
             {
                 cameraPosition = primaryCamera->GetParent()->GetTransform()->GetPosition();
             }
+            else
+            {
+                primaryCamera = F_sceneViewCameraObject->GetCamera();
+                cameraPosition = F_sceneViewCameraObject->GetTransform()->GetPosition();
+            }
+
+            materialVec4s = mesh->GetGameViewMaterial()->GetUBOVec4Names();
             break;
+        }
         default:
             break;
         }

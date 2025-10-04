@@ -144,14 +144,12 @@ namespace FlatEngine
 
 	Vector3 Camera::GetLookDirection()
 	{
-		float horizontalRotation = m_horizontalViewAngle;
-		float verticalRotation = m_verticalViewAngle;
-
+		// TODO: FIXME
 		if (GetParent() != nullptr)
 		{
 			Vector3 rotation = GetParent()->GetTransform()->GetRotation();
-			horizontalRotation = rotation.x;
-			verticalRotation = rotation.y;
+			m_horizontalViewAngle = rotation.z;
+			m_verticalViewAngle = rotation.x;
 		}
 		
 		glm::mat4 horCameraRotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_horizontalViewAngle), glm::vec3(0.0f, 0.0f, 1.0f));
