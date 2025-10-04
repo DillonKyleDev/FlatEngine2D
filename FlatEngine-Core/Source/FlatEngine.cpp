@@ -114,12 +114,10 @@ namespace FlatEngine
 		if (F_b_sceneViewRightClicked && sceneViewCamera != nullptr)
 		{			
 			MappingContext* engineContext = GetMappingContext("EngineContext");
-			Vector3 lookDir = sceneViewCamera->GetLookDirection();
+			glm::vec4 lookDir = sceneViewCamera->GetLookDirection();
 			Vector2 xyPlane = Vector2(lookDir.x, lookDir.y);
 			Vector2 leftDir = Vector2::Rotate(xyPlane, 90);
 			Vector2 rightDir = Vector2::Rotate(xyPlane, -90);
-			Vector3 upDir = Vector3(rightDir.x, rightDir.y, 0).Cross(lookDir);
-			Vector3 downDir = Vector3(leftDir.x, leftDir.y, 0).Cross(lookDir);
 			float moveDamping = 0.005f;
 
 			if (engineContext->ActionPressed("MoveCameraLeft"))
@@ -1003,12 +1001,10 @@ namespace FlatEngine
 		if (F_b_sceneViewRightClicked)
 		{
 			MappingContext* engineContext = GetMappingContext("EngineContext");
-			Vector3 lookDir = GetPrimaryCamera()->GetLookDirection();
+			glm::vec4 lookDir = GetPrimaryCamera()->GetLookDirection();
 			Vector2 xyPlane = Vector2(lookDir.x, lookDir.y);
 			Vector2 leftDir = Vector2::Rotate(xyPlane, 90);
 			Vector2 rightDir = Vector2::Rotate(xyPlane, -90);
-			Vector3 upDir = Vector3(rightDir.x, rightDir.y, 0).Cross(lookDir);
-			Vector3 downDir = Vector3(leftDir.x, leftDir.y, 0).Cross(lookDir);
 			float moveDamping = 0.005f;
 			Camera* sceneViewCamera = F_sceneViewCameraObject->GetCamera();
 
@@ -3827,7 +3823,7 @@ namespace FlatEngine
 							}
 							else if (type == "Mesh")
 							{
-								Mesh* newMesh = loadedObject->AddMesh(loadedObject, id, b_isActive, b_isCollapsed);
+								Mesh* newMesh = loadedObject->AddMesh(id, b_isActive, b_isCollapsed);
 
 								std::string materialName = CheckJsonString(componentJson, "materialName", objectName);
 								std::string modelPath = CheckJsonString(componentJson, "modelPath", objectName);

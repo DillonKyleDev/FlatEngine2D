@@ -148,6 +148,13 @@ namespace FlatEngine
 		return scaleOrigin * m_scale;
 	}
 
+	void Transform::AddRotation(float x, float y, float z)
+	{
+		m_rotation.x += x;
+		m_rotation.y += y;
+		m_rotation.z += z;
+	}
+
 	void Transform::SetScale(Vector3 newScale)
 	{
 		m_scale = newScale;		

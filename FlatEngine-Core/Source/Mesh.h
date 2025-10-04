@@ -27,8 +27,7 @@ namespace FlatEngine
 
 		GameObject* GetParentPtr();
 		bool Initialized();
-		bool MissingTextures();
-		void SetModel(Model model);
+		bool MissingTextures();		
 		void SetModel(std::string modelPath);
 		Model& GetSceneViewModel();
 		Model& GetGameViewModel();

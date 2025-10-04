@@ -84,6 +84,11 @@ namespace FlatEngine
         std::shared_ptr<Model> GetModel(std::string modelPath);
         std::shared_ptr<Model> LoadModel(std::string modelPath);
 
+        // Memory management
+        void QueueBufferDeletion(VkBuffer bufferToDelete);
+        void QueueDeviceMemoryDeletion(VkDeviceMemory deviceMemoryToDelete);
+        void DeleteQueuedVKObjects();
+
         // ImGui
         void CreateImGuiTexture(Texture& texture, std::vector<VkDescriptorSet>& descriptorSets);
         void FreeImGuiTexture(uint32_t allocatedFrom);
@@ -133,5 +138,8 @@ namespace FlatEngine
         std::vector<VkSemaphore> m_imageAvailableSemaphores;
         std::vector<VkSemaphore> m_renderFinishedSemaphores;
         std::vector<VkFence> m_inFlightFences;        
+
+        std::vector<VkBuffer> m_bufferDeleteQueue;
+        std::vector<VkDeviceMemory> m_deviceMemoryDeleteQueue;
     };
 }

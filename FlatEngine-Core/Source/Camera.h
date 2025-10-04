@@ -9,17 +9,19 @@ namespace FlatEngine
 	class Camera : public Component
 	{
 	public:
-		Camera(long myID = -1, long parentID = -1);		
+		Camera(GameObject* parentPtr, long myID = -1, long parentID = -1);
 		~Camera();
 		std::string GetData();
+		GameObject* GetParentPtr();
 
 		void SetPrimaryCamera(bool b_isPrimary);
 		bool IsPrimary();
+		bool ForceZUp();
+		void SetForceZUp(bool b_forceZUp);
 		void SetDimensions(float width, float height);
 		void SetZoom(float zoom);
 		float GetZoom();
-		void SetLookDirection(Vector3 lookDir);
-		Vector3 GetLookDirection();
+		glm::vec4 GetLookDirection();
 		float GetNearClippingDistance();
 		void SetNearClippingDistance(float nearDistance);
 		float GetFarClippingDistance();
@@ -48,6 +50,8 @@ namespace FlatEngine
 		void Update();
 
 	private:
+		GameObject* m_parentPtr;
+		bool m_b_forceZup;
 		float m_width;
 		float m_height;
 		float m_zoom;

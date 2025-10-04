@@ -139,7 +139,7 @@ namespace FlatGui
 					{
 						if (ImGui::MenuItem("Mesh"))
 						{
-							focusedObject->AddMesh(focusedObject);
+							focusedObject->AddMesh();
 							ImGui::CloseCurrentPopup();
 						}
 					}

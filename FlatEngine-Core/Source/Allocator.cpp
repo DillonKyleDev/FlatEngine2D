@@ -82,6 +82,8 @@ namespace FlatEngine
 
 	void Allocator::SetDefaultDescriptorSetLayoutConfig()
 	{
+		m_bindings.clear();
+
 		// Default Descriptor Set Layout config
 		VkDescriptorSetLayoutBinding uboLayoutBinding{};
 		uboLayoutBinding.binding = 0;
@@ -131,16 +133,17 @@ namespace FlatEngine
 	{
 		// Refer to - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
 
-		std::vector<VkDescriptorSetLayoutBinding> bindings{};
-
-		if (!m_b_imguiAllocator) // m_layoutInfo.bindingCount == 0)
+		if (m_deviceHandle != VK_NULL_HANDLE)
 		{
-			SetDefaultDescriptorSetLayoutConfig();
-		}
+			if (!m_b_imguiAllocator)
+			{
+				SetDefaultDescriptorSetLayoutConfig();
+			}
 
-		if (m_deviceHandle != VK_NULL_HANDLE && vkCreateDescriptorSetLayout(m_deviceHandle->GetDevice(), &m_layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
-		{
-			throw std::runtime_error("failed to create descriptor set layout!");
+			if (vkCreateDescriptorSetLayout(m_deviceHandle->GetDevice(), &m_layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
+			{
+				throw std::runtime_error("failed to create descriptor set layout!");
+			}
 		}
 	}
 

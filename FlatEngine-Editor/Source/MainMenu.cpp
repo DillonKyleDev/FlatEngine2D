@@ -367,7 +367,7 @@ namespace FlatGui
 					if (ImGui::MenuItem("Mesh"))
 					{
 						GameObject* newObject = FL::CreateGameObject(-1);
-						newObject->AddMesh(newObject);
+						newObject->AddMesh();
 						newObject->SetName("Mesh(" + std::to_string(newObject->GetID()) + ")");
 						SetFocusedGameObjectID(newObject->GetID());
 					}

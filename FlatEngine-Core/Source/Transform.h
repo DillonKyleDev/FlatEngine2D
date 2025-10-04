@@ -32,6 +32,7 @@ namespace FlatEngine
 		void SetScale(Vector3 scale);
 		Vector3 GetScale();
 		Vector3 GetAbsoluteScale();
+		void AddRotation(float x, float y, float z);
 		void SetXRotation(float rotation);
 		void SetYRotation(float rotation);
 		void SetZRotation(float rotation);

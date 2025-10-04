@@ -119,23 +119,6 @@ namespace FlatEngine
 		return m_b_missingTextures;
 	}
 
-	void Mesh::SetModel(Model model)
-	{
-		if (m_sceneViewModel.GetModelPath() != "")
-		{
-			m_sceneViewModel.Cleanup(*m_logicalDevice);
-			m_gameViewModel.Cleanup(*m_logicalDevice);
-		}
-
-		m_sceneViewModel = model;
-		m_gameViewModel = model;
-
-		if (m_sceneViewModel.GetModelPath() != "")
-		{
-			CreateModelResources(FlatEngine::F_VulkanManager->GetCommandPool(), FlatEngine::F_VulkanManager->GetPhysicalDevice(), FlatEngine::F_VulkanManager->GetLogicalDevice());
-		}
-	}
-
 	void Mesh::SetModel(std::string modelPath)
 	{
 		if (m_sceneViewModel.GetModelPath() != "")

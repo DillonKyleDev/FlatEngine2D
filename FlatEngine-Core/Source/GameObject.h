@@ -76,7 +76,7 @@ namespace FlatEngine
 		JointMaker* AddJointMaker(long ID = -1, bool b_active = true, bool b_collapsed = false);
 		CharacterController* AddCharacterController(long ID = -1, bool b_active = true, bool b_collapsed = false);
 		TileMap* AddTileMap(long ID = -1, bool b_active = true, bool b_collapsed = false);
-		Mesh* AddMesh(GameObject* parent, long ID = -1, bool b_active = true, bool b_collapsed = false);
+		Mesh* AddMesh(long ID = -1, bool b_active = true, bool b_collapsed = false);
 		Light* AddLight(long ID = -1, bool b_active = true, bool b_collapsed = false);
 
 		Sprite* AddSpriteLua() { return AddSprite(-1, true, false); };
@@ -90,7 +90,7 @@ namespace FlatEngine
 		CharacterController* AddCharacterControllerLua() { return AddCharacterController(-1, true, false); };
 		TileMap* AddTileMapLua() { return AddTileMap(-1, true, false); };
 		Body* AddBodyLua() { return AddBody(Physics::BodyProps(), -1, true, false); };
-		Mesh* AddMeshLua() { return AddMesh(nullptr, -1, true, false); };
+		Mesh* AddMeshLua() { return AddMesh(-1, true, false); };
 
 		Component* GetComponent(ComponentTypes type);
 		bool HasComponent(ComponentTypes type);

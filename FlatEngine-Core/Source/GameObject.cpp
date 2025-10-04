@@ -302,7 +302,7 @@ namespace FlatEngine
 			}
 		}
 
-		Camera camera = Camera(nextID, m_ID);
+		Camera camera = Camera(this, nextID, m_ID);
 		camera.SetActive(b_active);
 		camera.SetCollapsed(b_collapsed);
 		
@@ -698,7 +698,7 @@ namespace FlatEngine
 		return tileMapPtr;
 	}
 
-	Mesh* GameObject::AddMesh(GameObject* parent, long ID, bool b_active, bool b_collapsed)
+	Mesh* GameObject::AddMesh(long ID, bool b_active, bool b_collapsed)
 	{
 		long nextID = ID;
 		if (nextID == -1)
@@ -717,7 +717,7 @@ namespace FlatEngine
 			}
 		}
 
-		Mesh mesh = Mesh(parent, nextID, m_ID);
+		Mesh mesh = Mesh(this, nextID, m_ID);
 		mesh.SetActive(b_active);
 		mesh.SetCollapsed(b_collapsed);
 

@@ -36,21 +36,27 @@ namespace FlatEngine
     {
         for (size_t i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
         {
-            vkDestroyBuffer(logicalDevice.GetDevice(), m_uniformBuffers[i], nullptr);
-            vkFreeMemory(logicalDevice.GetDevice(), m_uniformBuffersMemory[i], nullptr);
+            F_VulkanManager->QueueBufferDeletion(m_uniformBuffers[i]);
+            F_VulkanManager->QueueDeviceMemoryDeletion(m_uniformBuffersMemory[i]);
+            //vkDestroyBuffer(logicalDevice.GetDevice(), m_uniformBuffers[i], nullptr);
+            //vkFreeMemory(logicalDevice.GetDevice(), m_uniformBuffersMemory[i], nullptr);
         }
     }
 
     void Model::CleanupIndexBuffers(LogicalDevice& logicalDevice)
     {
-        vkDestroyBuffer(logicalDevice.GetDevice(), m_indexBuffer, nullptr);
-        vkFreeMemory(logicalDevice.GetDevice(), m_indexBufferMemory, nullptr);
+        F_VulkanManager->QueueBufferDeletion(m_indexBuffer);
+        F_VulkanManager->QueueDeviceMemoryDeletion(m_indexBufferMemory);
+        //vkDestroyBuffer(logicalDevice.GetDevice(), m_indexBuffer, nullptr);
+        //vkFreeMemory(logicalDevice.GetDevice(), m_indexBufferMemory, nullptr);
     }
 
     void Model::CleanupVertexBuffers(LogicalDevice& logicalDevice)
     {
-        vkDestroyBuffer(logicalDevice.GetDevice(), m_vertexBuffer, nullptr);
-        vkFreeMemory(logicalDevice.GetDevice(), m_vertexBufferMemory, nullptr);
+        F_VulkanManager->QueueBufferDeletion(m_vertexBuffer);
+        F_VulkanManager->QueueDeviceMemoryDeletion(m_vertexBufferMemory);
+        //vkDestroyBuffer(logicalDevice.GetDevice(), m_vertexBuffer, nullptr);
+        //vkFreeMemory(logicalDevice.GetDevice(), m_vertexBufferMemory, nullptr);
     }
 
     void Model::Cleanup(LogicalDevice& logicalDevice)
@@ -297,16 +303,27 @@ namespace FlatEngine
                  
         
         if (primaryCamera != nullptr)
-        {
-            Vector3 lookDir = primaryCamera->GetLookDirection();
-            //Vector3 lookDir = Vector3(0, 1, 0);
-            glm::vec3 up = glm::vec3(0.0f, 0.0f, 1.0f);           
+        {            
+            glm::mat4 cameraRotation = primaryCamera->GetParentPtr()->GetTransform()->GetRotationMatrix();
+            bool b_forceZUp = primaryCamera->ForceZUp();
+            //glm::vec4 lookDir = cameraRotation * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+            glm::vec4 lookDir = primaryCamera->GetLookDirection();
+            glm::vec4 up;
+
+            if (b_forceZUp)
+            {
+                up = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+            }
+            else
+            {
+                up = cameraRotation * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+            }
+            
             glm::vec4 meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);
             glm::vec4 viewportCameraPos = glm::vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0);
             glm::mat4 model = meshRotation * meshScale;
             glm::vec4 cameraLookDir = glm::vec4(lookDir.x, lookDir.y, lookDir.z, 0);
-            glm::mat4 view = glm::lookAt(cameraPosition.GetGLMVec3(), glm::vec3(cameraPosition.x + cameraLookDir.x, cameraPosition.y + cameraLookDir.y, cameraPosition.z + cameraLookDir.z), up);
-            //glm::mat4 view = glm::lookAt(glm::vec3(0.f, 0.f, 10.0f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.0f, 1.0f, 0.0f));
+            glm::mat4 view = glm::lookAt(cameraPosition.GetGLMVec3(), glm::vec3(cameraPosition.x + cameraLookDir.x, cameraPosition.y + cameraLookDir.y, cameraPosition.z + cameraLookDir.z), glm::vec3(up));            
 
             glm::mat4 projection;
             if (b_orthographic)

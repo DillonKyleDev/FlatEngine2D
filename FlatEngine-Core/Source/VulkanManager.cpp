@@ -66,6 +66,9 @@ namespace FlatEngine
         m_gameViewTexture = Texture();
         m_models = std::map<std::string, std::shared_ptr<Model>>();
 
+        m_bufferDeleteQueue= std::vector<VkBuffer>();
+        m_deviceMemoryDeleteQueue = std::vector<VkDeviceMemory>();
+
         m_b_showGridObjects = true;
         m_b_orthographic = false;
     }
@@ -812,6 +815,37 @@ namespace FlatEngine
         return newModel;
     }
 
+    void VulkanManager::QueueBufferDeletion(VkBuffer bufferToDelete)
+    {
+        m_bufferDeleteQueue.push_back(bufferToDelete);
+    }
+
+    void VulkanManager::QueueDeviceMemoryDeletion(VkDeviceMemory deviceMemoryToDelete)
+    {
+        m_deviceMemoryDeleteQueue.push_back(deviceMemoryToDelete);
+    }
+
+    void VulkanManager::DeleteQueuedVKObjects()
+    {
+        if (m_bufferDeleteQueue.size())
+        {
+            for (VkBuffer buffer : m_bufferDeleteQueue)
+            {
+                vkDestroyBuffer(m_logicalDevice.GetDevice(), buffer, nullptr);
+            }
+            m_bufferDeleteQueue.clear();
+        }
+
+        if (m_deviceMemoryDeleteQueue.size())
+        {
+            for (VkDeviceMemory deviceMemory : m_deviceMemoryDeleteQueue)
+            {
+                vkFreeMemory(m_logicalDevice.GetDevice(), deviceMemory, nullptr);
+            }
+            m_deviceMemoryDeleteQueue.clear();
+        }
+    }
+
     void VulkanManager::CreateSyncObjects()
     {
         // More info here - https://vulkan-tutorial.com/en/Drawing_a_triangle/Drawing/Rendering_and_presentation
@@ -849,7 +883,7 @@ namespace FlatEngine
         GameObject* grid = F_sceneViewGridObjects.CreateGameObject();
         grid->SetIsSceneViewGridObject(true);
         grid->SetName("Grid");
-        Mesh* gridMesh = grid->AddMesh(grid);
+        Mesh* gridMesh = grid->AddMesh();
         gridMesh->SetMaterial("fl_verticesOnly");
         gridMesh->SetModel("../engine/models/largeGrid.obj");
         gridMesh->AddTexture("../engine/images/colors/cave.png", 0);
@@ -858,7 +892,7 @@ namespace FlatEngine
         GameObject* xAxis = F_sceneViewGridObjects.CreateGameObject();
         xAxis->SetIsSceneViewGridObject(true);
         xAxis->SetName("xAxis");
-        Mesh* xAxisMesh = xAxis->AddMesh(xAxis);
+        Mesh* xAxisMesh = xAxis->AddMesh();
         xAxisMesh->SetMaterial("fl_xAxis");
         xAxisMesh->SetModel("../engine/models/xAxis.obj");
         xAxisMesh->AddTexture("../engine/images/colors/green.png", 0);
@@ -867,7 +901,7 @@ namespace FlatEngine
         GameObject* yAxis = F_sceneViewGridObjects.CreateGameObject();
         yAxis->SetIsSceneViewGridObject(true);
         yAxis->SetName("yAxis");
-        Mesh* yAxisMesh = yAxis->AddMesh(yAxis);
+        Mesh* yAxisMesh = yAxis->AddMesh();
         yAxisMesh->SetMaterial("fl_yAxis");
         yAxisMesh->SetModel("../engine/models/yAxis.obj");
         yAxisMesh->AddTexture("../engine/images/colors/yellow.png", 0);
@@ -876,7 +910,7 @@ namespace FlatEngine
         GameObject* zAxis = F_sceneViewGridObjects.CreateGameObject();
         zAxis->SetIsSceneViewGridObject(true);
         zAxis->SetName("zAxis");
-        Mesh* zAxisMesh = zAxis->AddMesh(zAxis);
+        Mesh* zAxisMesh = zAxis->AddMesh();
         zAxisMesh->SetMaterial("fl_zAxis");
         zAxisMesh->SetModel("../engine/models/zAxis.obj");
         zAxisMesh->AddTexture("../engine/images/colors/rose.png", 0);    
@@ -925,6 +959,8 @@ namespace FlatEngine
 
         // At the start of the frame, we want to wait until the previous frame has finished, so that the command buffer and semaphores are available to use. To do that, we call vkWaitForFences:
         vkWaitForFences(m_logicalDevice.GetDevice(), 1, &m_inFlightFences[VM_currentFrame], VK_TRUE, UINT64_MAX);
+
+        DeleteQueuedVKObjects();
 
         uint32_t imageIndex;        
         VkResult aquireImageResult = vkAcquireNextImageKHR(m_logicalDevice.GetDevice(), m_winSystem.GetSwapChain(), UINT64_MAX, m_imageAvailableSemaphores[VM_currentFrame], VK_NULL_HANDLE, &imageIndex);
@@ -990,20 +1026,6 @@ namespace FlatEngine
         {
             m_renderToTextureGameViewRenderPass.BeginRenderPass(imageIndex);
 
-            //if (m_b_showGridObjects)
-            //{
-            //    for (std::pair<long, Mesh> mesh : F_sceneViewGridObjects.GetMeshes())
-            //    {
-            //        std::shared_ptr<Material> material = mesh.second.GetGameViewMaterial();
-            //        if (mesh.second.Initialized() && material != nullptr)
-            //        {
-            //            mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::GameView, m_b_orthographic);
-            //            m_renderToTextureGameViewRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-            //            m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, material, ViewportType::GameView); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
-            //        }
-            //    }
-            //}
-
             for (std::pair<long, Mesh> mesh : FlatEngine::GetMeshes())
             {                
                 std::shared_ptr<Material> material = mesh.second.GetGameViewMaterial();
@@ -1011,22 +1033,20 @@ namespace FlatEngine
                 {
                     mesh.second.GetGameViewModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::GameView, m_b_orthographic);
                     m_renderToTextureGameViewRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-                    m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, material, ViewportType::GameView); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                    m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, material, ViewportType::GameView);                                    
                 }
-                else if (mesh.second.MissingTextures()) // Render the Mesh but using the fl_empty material
+                else if (mesh.second.MissingTextures())
                 {
                     mesh.second.GetGameViewModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::GameView, m_b_orthographic);
                     m_renderToTextureGameViewRenderPass.RecordCommandBuffer(GetMaterial("fl_empty")->GetGraphicsPipeline());
-                    m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, GetMaterial("fl_empty"), ViewportType::GameView); // Create final VkImage on m_sceneViewTexture's m_images member variable   
+                    m_renderToTextureGameViewRenderPass.DrawIndexed(mesh.second, GetMaterial("fl_empty"), ViewportType::GameView);
                 }
             }
 
             m_renderToTextureGameViewRenderPass.EndRenderPass();
-
-            // Once VkImage has been written to from m_renderToTextureGameViewRenderPass, that image can be used as a texture to render to using a different material and desired descriptorSets, so we'd need to create descriptor sets for it using that material's configuration           
+            
             Model emptyModel = Model();
             std::map<uint32_t, Texture> textures = std::map<uint32_t, Texture>();
-            // m_gameViewTexture was given to m_renderToTextureGameViewRenderPass in each material and it was written to in m_renderToTextureGameViewRenderPass.DrawIndexed()
             textures.emplace(0, m_gameViewTexture);
             m_imGuiMaterial->GetAllocator().AllocateDescriptorSets(m_gameViewTexture.GetDescriptorSets(), emptyModel, *m_imGuiMaterial->GetTexturesShaderStages(), textures);
             commandBuffers.push_back(m_renderToTextureGameViewRenderPass.GetCommandBuffers()[VM_currentFrame]);
@@ -1092,10 +1112,13 @@ namespace FlatEngine
         m_winSystem.RecreateSwapChain();   
 
         m_sceneViewTexture.CreateRenderToTextureResources();
-        //m_gameViewTexture.CreateRenderToTextureResources();
+        m_gameViewTexture.CreateRenderToTextureResources();
 
         m_renderToTextureSceneViewRenderPass.ConfigureFrameBufferImageViews(m_sceneViewTexture.GetImageViews());        
         m_renderToTextureSceneViewRenderPass.RecreateFrameBuffers(m_commandPool);
+
+        m_renderToTextureGameViewRenderPass.ConfigureFrameBufferImageViews(m_gameViewTexture.GetImageViews());
+        m_renderToTextureGameViewRenderPass.RecreateFrameBuffers(m_commandPool);
 
         m_imGuiRenderPass.ConfigureFrameBufferImageViews(m_winSystem.GetSwapChainImageViews());
         m_imGuiRenderPass.RecreateFrameBuffers(m_commandPool);

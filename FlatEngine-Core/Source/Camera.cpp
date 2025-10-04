@@ -9,12 +9,14 @@
 
 namespace FlatEngine 
 {
-	Camera::Camera(long myID, long parentID)
+	Camera::Camera(GameObject* parentPtr, long myID, long parentID)
 	{
 		SetType(T_Camera);
 		SetID(myID);
 		SetParentID(parentID);
+		m_parentPtr = parentPtr;
 		m_b_isPrimaryCamera = false;
+		m_b_forceZup = true;
 		m_width = 50;
 		m_height = 30;
 		m_zoom = 10;
@@ -61,6 +63,11 @@ namespace FlatEngine
 		return data;
 	}
 
+	GameObject* Camera::GetParentPtr()
+	{
+		return m_parentPtr;
+	}
+
 	void Camera::SetPrimaryCamera(bool b_isPrimary)
 	{
 		m_b_isPrimaryCamera = b_isPrimary;
@@ -69,6 +76,16 @@ namespace FlatEngine
 	bool Camera::IsPrimary()
 	{
 		return m_b_isPrimaryCamera;
+	}
+
+	bool Camera::ForceZUp()
+	{
+		return m_b_forceZup;
+	}
+
+	void Camera::SetForceZUp(bool b_forceZUp)
+	{
+		m_b_forceZup = b_forceZUp;
 	}
 
 	void Camera::SetFrustrumColor(Vector4 color)
@@ -137,26 +154,33 @@ namespace FlatEngine
 		return m_zoom;
 	}
 
-	void Camera::SetLookDirection(Vector3 lookDir)
+	glm::vec4 Camera::GetLookDirection()
 	{
-		m_lookDirection = lookDir;
-	}
+		float xRotation = 0;
+		glm::mat4 rollCameraMatrix;
 
-	Vector3 Camera::GetLookDirection()
-	{
-		// TODO: FIXME
 		if (GetParent() != nullptr)
 		{
-			Vector3 rotation = GetParent()->GetTransform()->GetRotation();
+			Vector3 rotation = m_parentPtr->GetTransform()->GetRotations();
+			xRotation = rotation.x;
 			m_horizontalViewAngle = rotation.z;
-			m_verticalViewAngle = rotation.x;
+			m_verticalViewAngle = rotation.y;
+
+			rollCameraMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(xRotation), glm::vec3(1.0f, 0.0f, 0.0f));
 		}
-		
+
 		glm::mat4 horCameraRotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_horizontalViewAngle), glm::vec3(0.0f, 0.0f, 1.0f));
 		glm::mat4 vertCameraRotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_verticalViewAngle), glm::vec3(0.0f, 1.0f, 0.0f));
-		glm::vec4 cameraLookDir = horCameraRotationMatrix * vertCameraRotationMatrix * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
-		
-		return Vector3(cameraLookDir.x, cameraLookDir.y, cameraLookDir.z);		
+		glm::mat4 rotationMatrix = horCameraRotationMatrix * vertCameraRotationMatrix;
+
+		if (xRotation != 0)
+		{
+			rotationMatrix *= rollCameraMatrix;
+		}
+
+		glm::vec4 cameraLookDir = rotationMatrix * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+
+		return cameraLookDir;
 	}
 
 	float Camera::GetNearClippingDistance()

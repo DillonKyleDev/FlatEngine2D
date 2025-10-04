@@ -7,6 +7,7 @@
 #include "Matrix.h"
 #include "box2d.h"
 #include "Texture.h"
+#include "Transform.h"
 
 #include <string>
 #include "imgui_internal.h"
@@ -2087,6 +2088,8 @@ namespace FlatGui
 				scrolling.x += mouseDelta.x;
 				scrolling.y += mouseDelta.y;
 				lastMousePos = mousePos;	
+				//Transform* cameraTransform = FL::F_sceneViewCameraObject->GetTransform();
+				//cameraTransform->AddRotation(0.0f, -mouseDelta.y * 0.25f, -mouseDelta.x * 0.25f);
 				FL::F_sceneViewCameraObject->GetCamera()->AddToHorizontalViewAngle(-mouseDelta.x * 0.25f);
 				FL::F_sceneViewCameraObject->GetCamera()->AddToVerticalViewAngle(mouseDelta.y * 0.25f);
 

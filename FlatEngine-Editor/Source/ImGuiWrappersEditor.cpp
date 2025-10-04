@@ -2713,10 +2713,8 @@ namespace FlatGui
 	void RenderMeshComponent(Mesh* mesh)
 	{
 		bool b_isActive = mesh->IsActive();		
-		long ID = mesh->GetID();
-		Model& model = mesh->GetSceneViewModel();
-		std::string modelPath = model.GetModelPath();
-		std::string modelFileName = FL::GetFilenameFromPath(modelPath, true);
+		long ID = mesh->GetID();				
+		std::string modelFileName = FL::GetFilenameFromPath(mesh->GetSceneViewModel().GetModelPath(), true);
 		std::shared_ptr<Material> material = mesh->GetSceneViewMaterial();
 		std::string materialName = "";
 		// UBO Data
@@ -2747,7 +2745,7 @@ namespace FlatGui
 				std::filesystem::path fsPath(FL::F_selectedFiles[droppedObjValue - 1]);
 				if (fsPath.extension() == ".obj")
 				{
-					model.SetModelPath(fsPath.string());
+					mesh->SetModel(fsPath.string());
 					if (material != nullptr)
 					{
 						mesh->CreateResources();
@@ -2760,11 +2758,11 @@ namespace FlatGui
 			}
 			else if (droppedObjValue == -2)
 			{
-				model.SetModelPath("");
+				mesh->SetModel("");
 			}
 			else if (openedObjPath != "")
 			{
-				model.SetModelPath(openedObjPath);
+				mesh->SetModel(openedObjPath);
 				if (material != nullptr)
 				{
 					mesh->CreateResources();
