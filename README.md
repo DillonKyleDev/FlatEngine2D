@@ -3,7 +3,9 @@
 
 <img width="1920" height="1032" alt="Screenshot 2025-09-24 142253" src="https://github.com/user-attachments/assets/385879f3-4c8b-4da5-8686-0e7f7cdfe165" />
 
-<img width="1920" height="1032" alt="Screenshot 2025-09-24 142314" src="https://github.com/user-attachments/assets/a92cb5d8-e4c2-4dcc-9b01-8b97c8c0d91f" />
+<img width="1920" height="1032" alt="2025-10-04_2" src="https://github.com/user-attachments/assets/66491724-d664-47fa-b637-e230bf4c6fc0" />
+
+
 
 
 <a href="https://github.com/DillonKyleDev/FlatEngine2D?tab=readme-ov-file#documentation">Jump to documentation</a>
@@ -36,7 +38,17 @@ You're now set up to use the engine and edit it's source code as you wish. ~~Fro
 - The Box2D implementation is only partly complete and the components section has yet to be updated to reflect the changes. Expect ReadMe documentation changes to accompany the next major release of FlatEngine2D.</br>
 - The ReadMe's Documentation section in general should be considered mostly out of date.
 
-## Update - Sept. 24th, 2025 - Custom Material UBOs
+# Updates
+
+## Oct. 4th, 2025 - Multiple Viewport Rendering
+
+I was able to get the Game View viewport rendering through a Camera component in the scene using a second renderpass.</br>
+
+There is a serious amount of optimization that still needs to be done to improve frame rate.  I still need to find the best way to group objects before rendering them, and after that I need to implement multi-threading to further improve performance.  There are many minor tweaks I can make to improve performance and those will come as my understanding of Vulkan improves.</br>
+
+So far I've just been getting things working and only worrying about optimization once I fully understand the needs of my specific systems, but given the substantial decrease in frames as objects are added, optimization has moved it's way up the list.
+
+## Sept. 24th, 2025 - Custom Material UBOs
 
 ~~Unfortunately, there is a chance that if you download and build the engine in it's current state that you will get a compilation/linking error.  I haven't had the time to sort out what the problem is yet but I am having that issue on my second desktop PC when compiling, so I apologize if that's a problem anyone else is facing.~~
 
@@ -46,11 +58,11 @@ I've added a Light Component and I've just begun to implement per-material Unifo
 
 Tomorrow is my first day back to school so unfortunately progress will be slow, if not stopped completely, until I have a handle on my coursework.  Wish me luck!
 
-## Update - Sept. 18th, 2025 - Fixes
+## Sept. 18th, 2025 - Fixes
 
 Window resizing is now fixed and so is crashing immediately on launch, (at least on my native laptop monitor).  The crash seemed to have something to do with it picking my integrated graphics card over my discrete GPU but more investigation is required and more VkPhysicalDevice selection options need to be created.  I also fixed up several validation errors.  There is still a bug in VulkanMangager::DrawFrame() that is causing an issue with semaphores, fences, and aquiring the next available image that only seems to appear when my laptop is not connected to my external monitor.
 
-## Update - Sept. 17th, 2025 - Disclaimer
+## Sept. 17th, 2025 - Disclaimer
 
 Due to the recent inclusion of Vulkan and my still incomplete understanding of it, FlatEngine may or may not launch without crashing immediately on your computer after downloading, compiling, and running it.  It works on my external monitor (a 27 inch 1920 x 1080 Asus) but not on my native laptop screen (higher native resolution, but even at 1920 x 1080 it does not work) and I've yet to dive in and figure out why.  Resizing the window currently doesn't work, and there are many other crashes and validation errors currently plaguing the implementation.  In addition, you will likely need to download and install the VulkanSDK if you haven't already and have it on your system.  I have it installed in `C:\VulkanSDK`.  You can download it here: https://vulkan.lunarg.com/
 
@@ -58,7 +70,7 @@ FlatEngine2D, the 2D-only engine without Vulkan, found in the branch "LegacyNoVu
 
 Best of luck to any who enter at this point.
 
-## Update - Sept. 4th, 2025 - Vulkan Inclusion
+## Sept. 4th, 2025 - Vulkan Inclusion
 
 FlatEngine2D is now just FlatEngine.  Instead of managing two separate codebases for a 2D and 3D engine and the nightmares that go along with that, I've decided to just merge them into a single engine and use Vulkan as the renderer along side SDL2 for window and event management.</br>
 
@@ -71,7 +83,7 @@ I'll be starting my next year at college later this month though so progress wil
 I still need to go through and edit the ReadMe to reflect the change from FlatEngine2D to FlatEngine, among many other things.
 
 
-## Update - Jan. 1st 2025 - Initial Release
+## Jan. 1st 2025 - Initial Release
 
 There is now a published release for FlatEngine2D!  Please see the "Releases" section on the right-hand side for a download link and read up on the ReadMe for details on how to use FlatEngine.
 
