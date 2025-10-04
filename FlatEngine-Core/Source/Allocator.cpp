@@ -20,6 +20,7 @@ namespace FlatEngine
 		m_poolSizes = {};
 		m_poolInfo = {};
 		m_deviceHandle = nullptr;
+		m_b_imguiAllocator = false;
 	}
 
 	Allocator::~Allocator()
@@ -29,23 +30,28 @@ namespace FlatEngine
 
 	void Allocator::CleanupPools()
 	{
-		switch (m_type)
+		if (m_deviceHandle != VK_NULL_HANDLE)
 		{
-		case AllocatorType::DescriptorPool:
-			for (uint32_t i = 0; i < m_descriptorPools.size(); i++)
+			switch (m_type)
 			{
-				vkDestroyDescriptorPool(m_deviceHandle->GetDevice(), m_descriptorPools[i], nullptr);
+			case AllocatorType::DescriptorPool:
+				for (uint32_t i = 0; i < m_descriptorPools.size(); i++)
+				{
+					vkDestroyDescriptorPool(m_deviceHandle->GetDevice(), m_descriptorPools[i], nullptr);
+				}
+				break;
+			case AllocatorType::CommandPool:
+				break;
+			default:
+				break;
 			}
-			break;
-		case AllocatorType::CommandPool:
-			break;
-		default:
-			break;
 		}
 	}
 
 	void Allocator::Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool)
 	{
+		CleanupPools();
+
 		m_type = type;
 		m_texturesShaderStages = texturesShaderStages;		
 		m_deviceHandle = &logicalDevice;
@@ -113,6 +119,7 @@ namespace FlatEngine
 			m_layoutInfo = layoutInfo;
 			m_layoutInfo.bindingCount = static_cast<uint32_t>(m_bindings.size());
 			m_layoutInfo.pBindings = m_bindings.data();
+			m_b_imguiAllocator = true;
 		}
 		else
 		{
@@ -126,12 +133,12 @@ namespace FlatEngine
 
 		std::vector<VkDescriptorSetLayoutBinding> bindings{};
 
-		if (m_layoutInfo.bindingCount == 0)
+		if (!m_b_imguiAllocator) // m_layoutInfo.bindingCount == 0)
 		{
 			SetDefaultDescriptorSetLayoutConfig();
 		}
 
-		if (vkCreateDescriptorSetLayout(m_deviceHandle->GetDevice(), &m_layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
+		if (m_deviceHandle != VK_NULL_HANDLE && vkCreateDescriptorSetLayout(m_deviceHandle->GetDevice(), &m_layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
 		{
 			throw std::runtime_error("failed to create descriptor set layout!");
 		}
@@ -149,7 +156,7 @@ namespace FlatEngine
 
 	void Allocator::FillPools()
 	{
-		if (m_poolSizes.size() == 0)
+		if (!m_b_imguiAllocator)
 		{
 			SetDefaultDescriptorPoolConfig();
 		}
@@ -213,7 +220,7 @@ namespace FlatEngine
 		// Refer to - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_pool_and_sets
 		// And for combined sampler - https://vulkan-tutorial.com/en/Texture_mapping/Combined_image_sampler
 
-		if (vkCreateDescriptorPool(m_deviceHandle->GetDevice(), &m_poolInfo, nullptr, &descriptorPool) != VK_SUCCESS)
+		if (m_deviceHandle != VK_NULL_HANDLE && vkCreateDescriptorPool(m_deviceHandle->GetDevice(), &m_poolInfo, nullptr, &descriptorPool) != VK_SUCCESS)
 		{
 			throw std::runtime_error("failed to create descriptor pool!");
 		}
@@ -246,7 +253,7 @@ namespace FlatEngine
 				size_t newSize = materialTextures.size();
 				std::vector<VkWriteDescriptorSet> descriptorWrites{};
 				descriptorWrites.resize(newSize);
-	
+
 				if (model.GetModelPath() != "")
 				{
 					descriptorWrites.resize(newSize + (size_t)1);
@@ -269,10 +276,10 @@ namespace FlatEngine
 
 				std::vector<VkDescriptorImageInfo> imageInfos{};
 				imageInfos.resize(m_texturesShaderStages->size());
-				
+
 				int imageIndex = 0;
 				for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = materialTextures.begin(); iter != materialTextures.end(); iter++)
-				{									
+				{
 					if (meshTextures.count(iter->first))
 					{
 						imageInfos[imageIndex].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
@@ -294,7 +301,7 @@ namespace FlatEngine
 				}
 
 				vkUpdateDescriptorSets(m_deviceHandle->GetDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
-				m_allocationsRemainingByPool[m_currentPoolIndex] -= descriptorCounter;				
+				m_allocationsRemainingByPool[m_currentPoolIndex] -= 1;
 			}
 		}
 		else

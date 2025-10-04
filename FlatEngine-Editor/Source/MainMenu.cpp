@@ -371,6 +371,13 @@ namespace FlatGui
 						newObject->SetName("Mesh(" + std::to_string(newObject->GetID()) + ")");
 						SetFocusedGameObjectID(newObject->GetID());
 					}
+					if (ImGui::MenuItem("Light"))
+					{
+						GameObject* newObject = FL::CreateGameObject(-1);
+						newObject->AddLight();
+						newObject->SetName("Light(" + std::to_string(newObject->GetID()) + ")");
+						SetFocusedGameObjectID(newObject->GetID());
+					}
 					ImGui::EndMenu();
 				}
 				if (ImGui::BeginMenu("Prefabs"))

@@ -21,7 +21,7 @@ namespace FlatEngine
 		Allocator();
 		~Allocator();
 
-		void Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool = 50);
+		void Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool = 100);
 		void SetFreed(uint32_t freedFrom);
 		void AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures);
 		void ConfigureDescriptorSetLayout(std::vector<VkDescriptorSetLayoutBinding> bindings, VkDescriptorSetLayoutCreateInfo layoutInfo);
@@ -59,5 +59,6 @@ namespace FlatEngine
 		std::vector<VkDescriptorPoolSize> m_poolSizes;
 		VkDescriptorPoolCreateInfo m_poolInfo;
 		LogicalDevice* m_deviceHandle;
+		bool m_b_imguiAllocator;
 	};
 }

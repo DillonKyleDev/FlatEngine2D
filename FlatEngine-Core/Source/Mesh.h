@@ -43,6 +43,7 @@ namespace FlatEngine
 		std::map<uint32_t, Texture>& GetTextures();
 		void CreateTextureResources();
 		std::vector<VkDescriptorSet>& GetDescriptorSets();
+		std::vector<VkDescriptorSet>& GetEmptyDescriptorSets();
 		std::map<std::string, glm::vec4>& GetUBOVec4s();
 		void SetUBOVec4(std::string name, Vector4 value);
 
@@ -52,6 +53,7 @@ namespace FlatEngine
 		std::shared_ptr<Material> m_material;		
 		std::map<uint32_t, Texture> m_texturesByIndex;
 		std::vector<VkDescriptorSet> m_descriptorSets;
+		std::vector<VkDescriptorSet> m_emptyDescriptorSets;
 		int m_allocationPoolIndex;
 		bool m_b_initialized;
 		bool m_b_missingTextures;

@@ -16,8 +16,9 @@ namespace FlatEngine
 		SetType(T_Mesh);
 
 		m_model = Model();
-		m_material = F_VulkanManager->GetMaterial("engineMaterial_emptyMaterial");
-		m_descriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});		
+		m_material = F_VulkanManager->GetMaterial("fl_empty");
+		m_descriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
+		m_emptyDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
 		m_texturesByIndex = std::map<uint32_t, Texture>();
 		m_allocationPoolIndex = -1;
 		m_b_initialized = false;
@@ -172,8 +173,7 @@ namespace FlatEngine
 		if (m_material != nullptr)
 		{
 			std::map<uint32_t, std::string> uboVec4Names = material->GetUBOVec4Names();
-			m_materialName = m_material->GetName();
-			//m_textures.resize(m_material->GetTextureCount());
+			m_materialName = m_material->GetName();			
 
 			for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
 			{
@@ -203,6 +203,7 @@ namespace FlatEngine
 	void Mesh::CreateResources()
 	{
 		m_b_missingTextures = false;
+		m_b_initialized = true;
 
 		if (m_material != nullptr && m_model.GetModelPath() != "")
 		{
@@ -213,7 +214,7 @@ namespace FlatEngine
 					Texture emptyTexture = Texture();
 					m_texturesByIndex.emplace(iter->first, emptyTexture);
 					m_texturesByIndex.at(iter->first).LoadFromFile(GetTextureObject("resourceNotPresent")->GetTexturePath());
-					m_b_missingTextures = true;
+					m_b_missingTextures = true;										
 				}
 			}
 
@@ -222,14 +223,16 @@ namespace FlatEngine
 			if (m_model.GetModelPath() != "")
 			{
 				CreateModelResources(FlatEngine::F_VulkanManager->GetCommandPool(), FlatEngine::F_VulkanManager->GetPhysicalDevice(), FlatEngine::F_VulkanManager->GetLogicalDevice());
-
-				m_b_initialized = true;
 			}
 
 			if (m_material != nullptr)
 			{
 				m_material->CreateDescriptorSets(m_descriptorSets, m_model, m_texturesByIndex);
-			}
+			}		
+
+			// Create empty material descriptor sets
+			std::map<uint32_t, Texture> emptyTextures = std::map<uint32_t, Texture>();
+			F_VulkanManager->GetMaterial("fl_empty")->CreateDescriptorSets(m_emptyDescriptorSets, m_model, emptyTextures);
 		}
 		else
 		{
@@ -245,26 +248,27 @@ namespace FlatEngine
 		if (m_texturesByIndex.count(index))
 		{
 			m_texturesByIndex.at(index) = newTexture;
-			CreateTextureResources();
 		}
 		else
 		{
-			m_texturesByIndex.emplace(index, newTexture);
-			CreateTextureResources();
+			m_texturesByIndex.emplace(index, newTexture);			
 		}
+
+		CreateTextureResources();
 	}
 
 	void Mesh::AddTexture(Texture texture, uint32_t index)
 	{
 		if (m_texturesByIndex.count(index))
 		{
-			m_texturesByIndex.at(index) = texture;
-			CreateTextureResources();
+			m_texturesByIndex.at(index) = texture;			
 		}
 		else
 		{
 			m_texturesByIndex.emplace(index, texture);
 		}
+
+		CreateTextureResources();
 	}
 
 	std::map<uint32_t, Texture>& Mesh::GetTextures()
@@ -276,16 +280,23 @@ namespace FlatEngine
 	{
 		for (std::map<uint32_t, Texture>::iterator iter = m_texturesByIndex.begin(); iter != m_texturesByIndex.end(); iter++)
 		{
-			if (iter->second.GetTexturePath() != "")
-			{
-				iter->second.CreateTextureImage();
+			if (iter->second.GetTexturePath() == "")
+			{				
+				iter->second.LoadFromFile(GetTextureObject("resourceNotPresent")->GetTexturePath());
 			}
+			
+			iter->second.CreateTextureImage();
 		}
 	}
 
 	std::vector<VkDescriptorSet>& Mesh::GetDescriptorSets()
 	{
 		return m_descriptorSets;
+	}
+
+	std::vector<VkDescriptorSet>& Mesh::GetEmptyDescriptorSets()
+	{
+		return m_emptyDescriptorSets;
 	}
 
 	std::map<std::string, glm::vec4>& Mesh::GetUBOVec4s()

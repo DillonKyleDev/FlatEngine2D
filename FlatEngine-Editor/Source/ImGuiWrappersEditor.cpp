@@ -2725,7 +2725,12 @@ namespace FlatGui
 
 		if (material != nullptr)
 		{
-			materialName = material->GetName();					
+			materialName = material->GetName();	
+
+			if (materialName == "fl_empty")
+			{
+				materialName = "";
+			}
 		}
 
 		if (RenderIsActiveCheckbox(b_isActive))
@@ -2787,7 +2792,7 @@ namespace FlatGui
 			}
 			else if (droppedMaterialValue == -2)
 			{
-				model.SetModelPath("");
+				// Remove reference
 			}
 			else if (openedMaterialPath != "")
 			{				
@@ -2798,9 +2803,8 @@ namespace FlatGui
 
 		if (material != nullptr)
 		{
-			// Samper2Ds
-			std::map<uint32_t, VkShaderStageFlags>* texturesShaderData = material->GetTexturesShaderStages();
-			//std::vector<Texture>& meshTextures = mesh->GetTextures();
+			// Sampler2Ds
+			std::map<uint32_t, VkShaderStageFlags>* texturesShaderData = material->GetTexturesShaderStages();			
 			std::map<uint32_t, Texture>& meshTextures = mesh->GetTextures();			
 
 			int textureCounter = 0;
@@ -2812,11 +2816,10 @@ namespace FlatGui
 				if (meshTextures.count(iter->first))
 				{
 					textureName = FL::GetFilenameFromPath(meshTextures.at(iter->first).GetTexturePath());
-				}
-				else
-				{
-					Texture newTexture = Texture();
-					meshTextures.emplace(iter->first, newTexture);
+					if (textureName == "resourceNotPresent")
+					{
+						textureName = "";
+					}
 				}
 
 				std::string shaderStageString = "";
@@ -2840,25 +2843,40 @@ namespace FlatGui
 					if (droppedTextureValue >= 0)
 					{
 						std::filesystem::path fsPath(FL::F_selectedFiles[droppedTextureValue - 1]);
-						if (fsPath.extension() == ".png")
+						if (fsPath.extension() == ".png" || fsPath.extension() == ".jpg")
 						{							
-							meshTextures.at(iter->first).LoadFromFile(fsPath.string());
-							mesh->CreateResources(); // Creates descriptor sets using new texture path
+							if (meshTextures.at(iter->first).LoadFromFile(fsPath.string()))
+							{
+								mesh->CreateResources();
+							}
 						}
 						else
 						{
-							FL::LogError("File must be of type .png to drop here.");
+							FL::LogError("File must be of type .png or .jpg to drop here.");
 						}
 					}
 					else if (droppedTextureValue == -2)
 					{
-						//model.SetModelPath("");
+						// Remove reference
+						if (meshTextures.at(iter->first).LoadFromFile(FL::GetTextureObject("resourceNotPresent")->GetTexturePath()))
+						{
+							mesh->CreateResources();
+						}
 					}
 					else if (openedTexturePath != "")
 					{
-						FL::LogString(openedTexturePath);
-						meshTextures.at(iter->first).LoadFromFile(openedTexturePath);
-						mesh->CreateResources(); // Creates descriptor sets using new texture path
+						std::filesystem::path fsPath(openedTexturePath);
+						if (fsPath.extension() == ".png" || fsPath.extension() == ".jpg")
+						{
+							if (meshTextures.at(iter->first).LoadFromFile(openedTexturePath))
+							{
+								mesh->CreateResources();
+							}
+						}	
+						else
+						{
+							FL::LogError("File must be of type .png or .jpg to drop here.");
+						}
 					}
 				}
 				textureCounter++;

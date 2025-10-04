@@ -548,10 +548,14 @@ namespace FlatEngine
         }
     }
 
-    void RenderPass::DrawIndexed(Mesh& mesh)
+    void RenderPass::DrawIndexed(Mesh& mesh, std::shared_ptr<Material> material)
     {
-        VkPipelineLayout& pipelineLayout = mesh.GetMaterial()->GetPipelineLayout();
+        VkPipelineLayout& pipelineLayout = material->GetPipelineLayout();
         VkDescriptorSet& descriptorSet = mesh.GetDescriptorSets()[VM_currentFrame]; // Use Mesh descriptor sets to draw the objects to the VkImage that will THEN be used with imgui material and the descriptor sets created using the imgui material
+        if (material->GetName() == "fl_empty")
+        {
+            descriptorSet = mesh.GetEmptyDescriptorSets()[VM_currentFrame];
+        }
         VkBuffer& vertexBuffer = mesh.GetModel().GetVertexBuffer();
         VkBuffer& indexBuffer = mesh.GetModel().GetIndexBuffer();
         std::vector<uint32_t> indices = mesh.GetModel().GetIndices();

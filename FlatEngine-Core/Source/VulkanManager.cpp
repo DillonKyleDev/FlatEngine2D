@@ -941,7 +941,7 @@ namespace FlatEngine
                     {
                         mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
                         m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-                        m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                        m_renderToTextureRenderPass.DrawIndexed(mesh.second, material); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                     }
                 }
             }
@@ -953,13 +953,13 @@ namespace FlatEngine
                 {
                     mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
                     m_renderToTextureRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-                    m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
+                    m_renderToTextureRenderPass.DrawIndexed(mesh.second, mesh.second.GetMaterial()); // Create final VkImage on m_sceneViewTexture's m_images member variable                                       
                 }
                 else if (mesh.second.MissingTextures()) // Render the Mesh but using the fl_empty material
                 {
                     mesh.second.GetModel().UpdateUniformBuffer(m_winSystem, &mesh.second, ViewportType::SceneView, m_b_orthographic);
                     m_renderToTextureRenderPass.RecordCommandBuffer(GetMaterial("fl_empty")->GetGraphicsPipeline());
-                    m_renderToTextureRenderPass.DrawIndexed(mesh.second); // Create final VkImage on m_sceneViewTexture's m_images member variable   
+                    m_renderToTextureRenderPass.DrawIndexed(mesh.second, GetMaterial("fl_empty")); // Create final VkImage on m_sceneViewTexture's m_images member variable   
                 }
             }
 

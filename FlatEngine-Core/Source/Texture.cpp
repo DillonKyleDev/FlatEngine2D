@@ -54,7 +54,7 @@ namespace FlatEngine
 	{
 		m_path = path;
 
-		if (path != "")
+		if (path != "" && DoesFileExist(path))
 		{
 			FreeTexture();
 
@@ -67,6 +67,7 @@ namespace FlatEngine
 		}
 		else
 		{
+			LogError("File path was not found: " + path);
 			return false;
 		}
 	}

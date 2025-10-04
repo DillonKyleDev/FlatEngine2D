@@ -251,6 +251,8 @@ namespace FlatEngine
 		{
 			m_texturesStageFlags.emplace(index, shaderStage);
 		}
+
+		m_allocator.Init(AllocatorType::DescriptorPool, &m_texturesStageFlags, *m_logicalDevice);
 	}
 
 	void Material::RemoveTexture(int index)
@@ -265,6 +267,8 @@ namespace FlatEngine
 		{
 			m_texturesStageFlags.erase((uint32_t)index);
 		}
+
+		m_allocator.Init(AllocatorType::DescriptorPool, &m_texturesStageFlags, *m_logicalDevice);
 	}
 
 	void Material::OnWindowResized()

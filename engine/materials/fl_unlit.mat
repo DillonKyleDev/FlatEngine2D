@@ -14,8 +14,7 @@
         "polygonMode": 0
     },
     "texturesShaderStageData": {
-        "0": 16,
-        "1": 16
+        "0": 16
     },
     "uboVec4Names": {},
     "vertexShaderPath": "../engine/shaders/compiledShaders/unlitVert.spv"

@@ -4,12 +4,14 @@
 #include "WinSys.h"
 
 #include <vector>
+#include <memory>
 
 
 namespace FlatEngine
 {
 	class Mesh;
 	class GraphicsPipeline;
+	class Material;
 
 	class RenderPass
 	{
@@ -43,7 +45,7 @@ namespace FlatEngine
 		std::vector<VkCommandBuffer>& GetCommandBuffers();
 		void RecordCommandBuffer(GraphicsPipeline& graphicsPipeline);
 		void RecordCommandBuffer(VkPipelineLayout pipelineLayout, std::vector<uint32_t>& m_pushConstOffsets, std::vector<uint32_t>& m_pushConstSizes, std::vector<const void*>& m_pushValues);
-		void DrawIndexed(Mesh& mesh);
+		void DrawIndexed(Mesh& mesh, std::shared_ptr<Material> material);
 		void BeginRenderPass(uint32_t imageIndex);
 		void EndRenderPass();
 

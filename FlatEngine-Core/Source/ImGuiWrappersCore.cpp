@@ -653,7 +653,8 @@ namespace FlatEngine
 		}
 
 		// Right click menu
-		if (ImGui::BeginPopupContextItem("##DropInputOpenFilesdropTarget"))
+		std::string dropTargetRightClickID = "##DropInputOpenFilesdropTarget##" + ID;
+		if (ImGui::BeginPopupContextItem(dropTargetRightClickID.c_str()))
 		{
 			PushMenuStyles();
 			if (ImGui::MenuItem("Remove reference"))

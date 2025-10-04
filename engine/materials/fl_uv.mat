@@ -13,9 +13,7 @@
         "lineWidth": 1.0,
         "polygonMode": 0
     },
-    "texturesShaderStageData": {
-        "0": 16
-    },
+    "texturesShaderStageData": {},
     "uboVec4Names": {},
     "vertexShaderPath": "../engine/shaders/compiledShaders/uvVert.spv"
 }
