@@ -10,12 +10,15 @@
 
 ### Building From Source
 
+Note: I'm having issues with Github LFS that aren't allowing further clones of the repo to be made at the moment due to file limits.  I'll get around to fixing this in the near future.  In the meantime, you may not be able to clone the dependencies (Vendor) directory of the repo successfully.
+
 There currently is not a stable release for building from source, but if you are okay with some crashes and wish to proceed anyway, here's how to get setup:
 
-1. Clone the repo. ~~Download the .zip and extract~~
-2. Run the Premake batch file by double clicking it located at `Premake/Setup-Windows.bat` to generate the Visual Studio solution file.
-3. Open the solution file that was created in the root directory. In Visual Studio, click Build -> Build Solution.
-4. Run the app.
+1. Download the VulkanSDK onto your computer. I have it installed in `C:\VulkanSDK`.  You can download it here: https://vulkan.lunarg.com/
+2. Clone the repo.. ~~Download the .zip and extract~~
+3. Run the Premake batch file by double clicking it located at `Premake/Setup-Windows.bat` to generate the Visual Studio solution file.
+4. Open the solution file that was created in the root directory. In Visual Studio, click Build -> Build Solution.
+5. Run the app.
 
 You're now set up to use the engine and edit it's source code as you wish. ~~From here, building a final game project is the same as it is with the main Release.~~
 
