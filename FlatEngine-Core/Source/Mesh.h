@@ -32,7 +32,6 @@ namespace FlatEngine
 		Model& GetSceneViewModel();
 		Model& GetGameViewModel();
 		void CreateModelResources(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
-		void SetMaterial(std::shared_ptr<Material> material);
 		void SetMaterial(std::string materialName);
 		std::shared_ptr<Material> GetSceneViewMaterial();
 		std::shared_ptr<Material> GetGameViewMaterial();
@@ -58,7 +57,8 @@ namespace FlatEngine
 		std::map<uint32_t, Texture> m_texturesByIndex;
 		std::vector<VkDescriptorSet> m_sceneViewDescriptorSets;
 		std::vector<VkDescriptorSet> m_gameViewDescriptorSets;
-		std::vector<VkDescriptorSet> m_emptyDescriptorSets;
+		std::vector<VkDescriptorSet> m_emptyDescriptorSets; // Dedicate to Scene View?
+		//std::vector<VkDescriptorSet> m_emptyGameViewDescriptorSets; // Dedicate to Game View?
 		int m_allocationPoolIndex;
 		bool m_b_initialized;
 		bool m_b_missingTextures;

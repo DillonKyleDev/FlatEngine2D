@@ -168,28 +168,20 @@ namespace FlatEngine
 		m_gameViewModel.CreateUniformBuffers(physicalDevice, logicalDevice);
 	}
 
-	void Mesh::SetMaterial(std::shared_ptr<Material> material)
-	{		
-		if (material != nullptr)
-		{
-			m_materialName = material->GetName();
-			m_sceneViewMaterial = F_VulkanManager->GetMaterial(m_materialName, ViewportType::SceneView);
-			m_gameViewMaterial = F_VulkanManager->GetMaterial(m_materialName, ViewportType::GameView);
-
-			std::map<uint32_t, std::string> uboVec4Names = material->GetUBOVec4Names();		
-
-			for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
-			{
-				SetUBOVec4(iter->second, Vector4());
-			}
-		}
-	}
-
 	void Mesh::SetMaterial(std::string materialName)
 	{
 		m_sceneViewMaterial = F_VulkanManager->GetMaterial(materialName, ViewportType::SceneView);
 		m_gameViewMaterial = F_VulkanManager->GetMaterial(materialName, ViewportType::GameView);
+
+		if (m_materialName != "")
+		{			
+			F_VulkanManager->RemoveSceneViewMaterialMesh(m_materialName, GetID(), this);
+			F_VulkanManager->RemoveGameViewMaterialMesh(m_materialName, GetID(), this);
+		}
 		m_materialName = materialName;
+
+		F_VulkanManager->AddSceneViewMaterialMesh(m_materialName, GetID(), this);
+		F_VulkanManager->AddGameViewMaterialMesh(m_materialName, GetID(), this);
 
 		std::map<uint32_t, std::string> uboVec4Names = m_sceneViewMaterial->GetUBOVec4Names();
 

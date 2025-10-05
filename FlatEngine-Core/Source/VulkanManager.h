@@ -40,7 +40,7 @@ namespace FlatEngine
     class VulkanManager
     {
         friend class Mesh;
-        friend class Application;        
+        friend class Application;            
 
     public:
         VulkanManager();
@@ -81,6 +81,10 @@ namespace FlatEngine
         std::shared_ptr<Material> GetMaterial(std::string materialName, ViewportType viewportType = ViewportType::SceneView);
         std::map<std::string, std::shared_ptr<Material>>& GetMaterials();
         void ReloadShaders();
+        void AddSceneViewMaterialMesh(std::string materialName, long ID, Mesh* mesh);
+        void AddGameViewMaterialMesh(std::string materialName, long ID, Mesh* mesh);
+        void RemoveSceneViewMaterialMesh(std::string materialName, long ID, Mesh* mesh);
+        void RemoveGameViewMaterialMesh(std::string materialName, long ID, Mesh* mesh);
         std::shared_ptr<Model> GetModel(std::string modelPath);
         std::shared_ptr<Model> LoadModel(std::string modelPath);
 
@@ -118,9 +122,10 @@ namespace FlatEngine
         RenderPass m_renderToTextureGameViewRenderPass;
         RenderPass m_imGuiRenderPass;
         std::shared_ptr<Material> m_imGuiMaterial;
-        std::map<std::string, std::shared_ptr<Material>> m_engineMaterials;
         std::map<std::string, std::shared_ptr<Material>> m_sceneViewMaterials;
         std::map<std::string, std::shared_ptr<Material>> m_gameViewMaterials;
+        std::map<std::string, std::map<long, Mesh*>> m_sceneViewMaterialMeshes;
+        std::map<std::string, std::map<long, Mesh*>> m_gameViewMaterialMeshes;
         std::map<std::string, std::shared_ptr<Model>> m_models; // so we don't have to reload model indices and vertices for every object that uses it
         Texture m_sceneViewTexture;
         Texture m_gameViewTexture;        
