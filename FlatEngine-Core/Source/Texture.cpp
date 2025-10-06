@@ -212,7 +212,7 @@ namespace FlatEngine
 		F_VulkanManager->CreateTextureSampler(m_sampler, m_mipLevels);
 	}
 
-	void Texture::CreateRenderToTextureResources()
+	void Texture::CreateRenderToTextureResources(VkCommandPool& commandPool)
 	{
 		WinSys& windowSystem = F_VulkanManager->GetWinSystem();
 		LogicalDevice& logicalDevice = F_VulkanManager->GetLogicalDevice();
@@ -236,7 +236,7 @@ namespace FlatEngine
 			windowSystem.CreateBuffer(imageSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 			windowSystem.CreateImage(texWidth, texHeight, 1, VK_SAMPLE_COUNT_1_BIT, m_imageFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_images[i], m_imageMemory[i]);
 
-			VkCommandBuffer copyCmd = Helper::BeginSingleTimeCommands();
+			VkCommandBuffer copyCmd = Helper::BeginSingleTimeCommands(commandPool);
 			windowSystem.InsertImageMemoryBarrier(
 				copyCmd,
 				m_images[i],
@@ -247,11 +247,11 @@ namespace FlatEngine
 				VK_PIPELINE_STAGE_TRANSFER_BIT,
 				VK_PIPELINE_STAGE_TRANSFER_BIT,
 				VkImageSubresourceRange{ VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 });
-			Helper::EndSingleTimeCommands(copyCmd);
+			Helper::EndSingleTimeCommands(copyCmd, commandPool);
 
-			windowSystem.TransitionImageLayout(m_images[i], m_imageFormat, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1);
-			windowSystem.CopyBufferToImage(stagingBuffer, m_images[i], static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
-			windowSystem.TransitionImageLayout(m_images[i], m_imageFormat, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 1);
+			windowSystem.TransitionImageLayout(m_images[i], m_imageFormat, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, commandPool);
+			windowSystem.CopyBufferToImage(stagingBuffer, m_images[i], static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), commandPool);
+			windowSystem.TransitionImageLayout(m_images[i], m_imageFormat, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL, 1, commandPool);
 
 			vkDestroyBuffer(device, stagingBuffer, nullptr);
 			vkFreeMemory(device, stagingBufferMemory, nullptr);

@@ -188,7 +188,7 @@ namespace FlatEngine
         }
     }
 
-    void Model::CreateVertexBuffer(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
+    void Model::CreateVertexBuffer(VkCommandPool& commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
     {
         // Create staging buffer for control from the cpu
         // Refer to - https://vulkan-tutorial.com/en/Vertex_buffers/Staging_buffer
@@ -208,14 +208,14 @@ namespace FlatEngine
         m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_vertexBuffer, m_vertexBufferMemory);
 
         // We can now call copyBuffer function to move the vertex data to the device local buffer:
-        m_winSystem->CopyBuffer(stagingBuffer, m_vertexBuffer, bufferSize);
+        m_winSystem->CopyBuffer(stagingBuffer, m_vertexBuffer, bufferSize, commandPool);
 
         // After copying the data from the staging buffer to the device buffer, we should clean it up:
         vkDestroyBuffer(logicalDevice.GetDevice(), stagingBuffer, nullptr);
         vkFreeMemory(logicalDevice.GetDevice(), stagingBufferMemory, nullptr);
     }
 
-    void Model::CreateIndexBuffer(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
+    void Model::CreateIndexBuffer(VkCommandPool& commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
     {
         // Refer to - https://vulkan-tutorial.com/en/Vertex_buffers/Index_buffer
 
@@ -232,7 +232,7 @@ namespace FlatEngine
 
         m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_indexBuffer, m_indexBufferMemory);
 
-        m_winSystem->CopyBuffer(stagingBuffer, m_indexBuffer, bufferSize);
+        m_winSystem->CopyBuffer(stagingBuffer, m_indexBuffer, bufferSize, commandPool);
 
         vkDestroyBuffer(logicalDevice.GetDevice(), stagingBuffer, nullptr);
         vkFreeMemory(logicalDevice.GetDevice(), stagingBufferMemory, nullptr);

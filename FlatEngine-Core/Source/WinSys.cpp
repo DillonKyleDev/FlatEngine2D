@@ -448,7 +448,7 @@ namespace FlatEngine
         }
     }
 
-    VkImage WinSys::CreateTextureImage(std::string path, uint32_t mipLevels, VkDeviceMemory textureImageMemory)
+    VkImage WinSys::CreateTextureImage(std::string path, uint32_t mipLevels, VkDeviceMemory textureImageMemory, VkCommandPool& commandPool)
     {
         // Refer to - https://vulkan-tutorial.com/en/Texture_mapping/Images
         // And refer to - https://vulkan-tutorial.com/en/Generating_Mipmaps
@@ -480,9 +480,9 @@ namespace FlatEngine
 
         CreateImage(texWidth, texHeight, mipLevels, VK_SAMPLE_COUNT_1_BIT, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, newImage, textureImageMemory);
 
-        TransitionImageLayout(newImage, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels);
-        CopyBufferToImage(stagingBuffer, newImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
-        GenerateMipmaps(newImage, VK_FORMAT_R8G8B8A8_UNORM, texWidth, texHeight, mipLevels);
+        TransitionImageLayout(newImage, VK_FORMAT_R8G8B8A8_UNORM, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, mipLevels, commandPool);
+        CopyBufferToImage(stagingBuffer, newImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight), commandPool);
+        GenerateMipmaps(newImage, VK_FORMAT_R8G8B8A8_UNORM, texWidth, texHeight, mipLevels, commandPool);
 
         vkDestroyBuffer(m_logicalDevice->GetDevice(), stagingBuffer, nullptr);
         vkFreeMemory(m_logicalDevice->GetDevice(), stagingBufferMemory, nullptr);
@@ -490,7 +490,7 @@ namespace FlatEngine
         return newImage;
     }
 
-    void WinSys::GenerateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels)
+    void WinSys::GenerateMipmaps(VkImage image, VkFormat imageFormat, int32_t texWidth, int32_t texHeight, uint32_t mipLevels, VkCommandPool& commandPool)
     {
         // Refer to - https://vulkan-tutorial.com/en/Generating_Mipmaps
 
@@ -502,7 +502,7 @@ namespace FlatEngine
             throw std::runtime_error("texture image format does not support linear blitting!");
         }
 
-        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands();
+        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands(commandPool);
 
         VkImageMemoryBarrier barrier{};
         barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -579,14 +579,14 @@ namespace FlatEngine
             0, nullptr,
             1, &barrier);
 
-        Helper::EndSingleTimeCommands(commandBuffer);
+        Helper::EndSingleTimeCommands(commandBuffer, commandPool);
     }
 
-    void WinSys::TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels)
+    void WinSys::TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout, uint32_t mipLevels, VkCommandPool& commandPool)
     {
         // Refer to - https://vulkan-tutorial.com/en/Texture_mapping/Images
 
-        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands();
+        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands(commandPool);
 
         VkImageMemoryBarrier barrier{};
         barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
@@ -626,7 +626,7 @@ namespace FlatEngine
 
         vkCmdPipelineBarrier(commandBuffer, sourceStage, destinationStage, 0, 0, nullptr, 0, nullptr, 1, &barrier);
 
-        Helper::EndSingleTimeCommands(commandBuffer);
+        Helper::EndSingleTimeCommands(commandBuffer, commandPool);
     }
 
     void WinSys::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory)
@@ -660,21 +660,21 @@ namespace FlatEngine
         vkBindBufferMemory(m_logicalDevice->GetDevice(), buffer, bufferMemory, 0);
     }
 
-    void WinSys::CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
+    void WinSys::CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size, VkCommandPool& commandPool)
     {
-        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands();
+        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands(commandPool);
 
         // We're only going to use the command buffer once and wait with returning from the function until the copy operation has finished executing. It's good practice to tell the driver about our intent using 
         VkBufferCopy copyRegion{};
         copyRegion.size = size;
         vkCmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, &copyRegion);
 
-        Helper::EndSingleTimeCommands(commandBuffer);
+        Helper::EndSingleTimeCommands(commandBuffer, commandPool);
     }
 
-    void WinSys::CopyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height)
+    void WinSys::CopyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, VkCommandPool& commandPool)
     {
-        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands();
+        VkCommandBuffer commandBuffer = Helper::BeginSingleTimeCommands(commandPool);
 
         VkBufferImageCopy region{};
         region.bufferOffset = 0;
@@ -702,7 +702,7 @@ namespace FlatEngine
             &region
         );
 
-        Helper::EndSingleTimeCommands(commandBuffer);
+        Helper::EndSingleTimeCommands(commandBuffer, commandPool);
     }
 
     void WinSys::InsertImageMemoryBarrier(VkCommandBuffer commandBuffer, VkImage image, VkAccessFlags srcAccessMask, VkAccessFlags dstAccessMask, VkImageLayout oldImageLayout, VkImageLayout newImageLayout, VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, VkImageSubresourceRange subresourceRange)

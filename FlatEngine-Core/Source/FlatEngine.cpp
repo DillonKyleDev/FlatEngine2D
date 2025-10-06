@@ -1,5 +1,6 @@
 #include "FlatEngine.h"
 #include "VulkanManager.h"
+#include "ThreadPool.h"
 #include "WinSys.h"
 #include "PrefabManager.h"
 #include "Logger.h"
@@ -45,6 +46,7 @@ namespace FlatEngine
 {	
 	std::shared_ptr<Application> F_Application = std::make_shared<Application>();
 	std::shared_ptr<VulkanManager> F_VulkanManager = std::make_shared<VulkanManager>();
+	std::shared_ptr<ThreadPool> F_ThreadPool = std::make_shared<ThreadPool>();
 	AssetManager F_AssetManager = AssetManager();
 	std::vector<std::string> F_selectedFiles = std::vector<std::string>();
 
@@ -800,13 +802,14 @@ namespace FlatEngine
 		F_sceneToBeLoaded = scenePath;
 	}
 
-	// actualPath is the actual scene path we want to load from, pointTo is the scene path we say we're loading. Useful for loading temporary scene copies and not saving the temp scene file location as last scene loaded
+	// actualPath is the actual scene path we want to load from, pointTo is the scene path that will be considered the currently loaded scene path. Useful for loading temporary scene copies and not saving the temp scene file location as last scene loaded
 	void LoadScene(std::string actualPath, std::string pointTo)
 	{				
 		if (DoesFileExist(actualPath))
 		{
 			RemovePrimaryCamera();
 			F_SoundController.StopMusic();
+			F_VulkanManager->ClearGroupedByMaterialMeshes();
 			F_SceneManager.LoadScene(actualPath, pointTo);
 		}
 		else
@@ -2335,145 +2338,147 @@ namespace FlatEngine
 	// 
 	std::string OpenSaveFileExplorer()
 	{
-		std::string sSelectedFile;
-		std::string sFilePath;
-		HRESULT hr = 0;
+		// TODO: Understand how this function should work and implement it correctly
+		std::string sSelectedFile = "";
+		std::string sFilePath = "";
+		//HRESULT hr = 0;
 
-		//  CREATE FILE OBJECT INSTANCE
-		HRESULT f_SysHr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-		if (FAILED(f_SysHr))
-		{
-			return "";
-		}
+		////  CREATE FILE OBJECT INSTANCE
+		//HRESULT f_SysHr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+		//if (FAILED(f_SysHr))
+		//{
+		//	return "";
+		//}
 
-		// CREATE FileSaveDialog OBJECT
-		IFileSaveDialog* f_FileSystem = nullptr;
-		hr = CoCreateInstance(CLSID_FileSaveDialog, nullptr, CLSCTX_INPROC_SERVER, IID_IFileSaveDialog, (void**)(&f_FileSystem));
-		if (FAILED(f_SysHr)) 
-		{
-			CoUninitialize();
-			return "";
-		}
+		//// CREATE FileSaveDialog OBJECT
+		//IFileSaveDialog* f_FileSystem = nullptr;
+		//hr = CoCreateInstance(CLSID_FileSaveDialog, nullptr, CLSCTX_INPROC_SERVER, IID_IFileSaveDialog, (void**)(&f_FileSystem));
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  SHOW OPEN FILE DIALOG WINDOW
-		f_SysHr = f_FileSystem->Show(nullptr);
-		if (FAILED(f_SysHr)) 
-		{
-			f_FileSystem->Release();
-			CoUninitialize();
-			return "";
-		}
+		////  SHOW OPEN FILE DIALOG WINDOW
+		//f_SysHr = f_FileSystem->Show(nullptr);
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	f_FileSystem->Release();
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  RETRIEVE FILE NAME FROM THE SELECTED ITEM
-		IShellItem* f_Files;
-		f_SysHr = f_FileSystem->GetResult(&f_Files);
-		if (FAILED(f_SysHr)) 
-		{
-			f_FileSystem->Release();
-			CoUninitialize();
-			return "";
-		}
+		////  RETRIEVE FILE NAME FROM THE SELECTED ITEM
+		//IShellItem* f_Files;
+		//f_SysHr = f_FileSystem->GetResult(&f_Files);
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	f_FileSystem->Release();
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  STORE AND CONVERT THE FILE NAME
-		PWSTR f_Path;
-		f_SysHr = f_Files->GetDisplayName(SIGDN_FILESYSPATH, &f_Path);
-		if (FAILED(f_SysHr)) 
-		{
-			f_Files->Release();
-			f_FileSystem->Release();
-			CoUninitialize();
-			return "";
-		}
+		////  STORE AND CONVERT THE FILE NAME
+		//PWSTR f_Path;
+		//f_SysHr = f_Files->GetDisplayName(SIGDN_FILESYSPATH, &f_Path);
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	f_Files->Release();
+		//	f_FileSystem->Release();
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  FORMAT AND STORE THE FILE PATH
-		std::wstring path(f_Path);
-		std::string c(path.begin(), path.end());
-		sFilePath = c;
+		////  FORMAT AND STORE THE FILE PATH
+		//std::wstring path(f_Path);
+		//std::string c(path.begin(), path.end());
+		//sFilePath = c;
 
-		//  FORMAT STRING FOR EXECUTABLE NAME
-		const size_t slash = sFilePath.find_last_of("/\\");
-		sSelectedFile = sFilePath.substr(slash + 1);
+		////  FORMAT STRING FOR EXECUTABLE NAME
+		//const size_t slash = sFilePath.find_last_of("/\\");
+		//sSelectedFile = sFilePath.substr(slash + 1);
 
-		//  SUCCESS, CLEAN UP
-		CoTaskMemFree(f_Path);
-		f_Files->Release();
-		f_FileSystem->Release();
-		CoUninitialize();
+		////  SUCCESS, CLEAN UP
+		//CoTaskMemFree(f_Path);
+		//f_Files->Release();
+		//f_FileSystem->Release();
+		//CoUninitialize();
 
 		return sFilePath;
 	}
 
 	std::string OpenLoadFileExplorer()
 	{
-		std::string sSelectedFile;
-		std::string sFilePath;
-		HRESULT hr = 0;
-		wchar_t* pSaveFileName = nullptr;
-		IShellItem* pShellItem = nullptr;
-		wchar_t* ppszName = nullptr;
+		// TODO: Understand how this function should work and implement it correctly
+		std::string sSelectedFile = "";
+		std::string sFilePath = "";
+		//HRESULT hr = 0;
+		//wchar_t* pSaveFileName = nullptr;
+		//IShellItem* pShellItem = nullptr;
+		//wchar_t* ppszName = nullptr;
 
-		//  CREATE FILE OBJECT INSTANCE
-		HRESULT f_SysHr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-		if (FAILED(f_SysHr))
-		{
-			return "";
-		}
+		////  CREATE FILE OBJECT INSTANCE
+		//HRESULT f_SysHr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+		//if (FAILED(f_SysHr))
+		//{
+		//	return "";
+		//}
 
-		// CREATE FileOpenDialog OBJECT
-		IFileOpenDialog* f_FileSystem;
-		f_SysHr = CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<void**>(&f_FileSystem));
-		if (FAILED(f_SysHr)) 
-		{
-			CoUninitialize();
-			return "";
-		}
+		//// CREATE FileOpenDialog OBJECT
+		//IFileOpenDialog* f_FileSystem;
+		//f_SysHr = CoCreateInstance(CLSID_FileOpenDialog, nullptr, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<void**>(&f_FileSystem));
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  SHOW OPEN FILE DIALOG WINDOW
-		f_SysHr = f_FileSystem->Show(nullptr);
-		if (FAILED(f_SysHr)) 
-		{
-			f_FileSystem->Release();
-			CoUninitialize();
-			return "";
-		}
+		////  SHOW OPEN FILE DIALOG WINDOW
+		//f_SysHr = f_FileSystem->Show(nullptr);
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	f_FileSystem->Release();
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  RETRIEVE FILE NAME FROM THE SELECTED ITEM
-		IShellItem* f_Files;
-		f_SysHr = f_FileSystem->GetResult(&f_Files);
-		if (FAILED(f_SysHr)) 
-		{
-			f_FileSystem->Release();
-			CoUninitialize();
-			return "";
-		}
+		////  RETRIEVE FILE NAME FROM THE SELECTED ITEM
+		//IShellItem* f_Files;
+		//f_SysHr = f_FileSystem->GetResult(&f_Files);
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	f_FileSystem->Release();
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  STORE AND CONVERT THE FILE NAME
-		PWSTR f_Path;
-		f_SysHr = f_Files->GetDisplayName(SIGDN_FILESYSPATH, &f_Path);
-		if (FAILED(f_SysHr)) 
-		{
-			f_Files->Release();
-			f_FileSystem->Release();
-			CoUninitialize();
-			return "";
-		}
+		////  STORE AND CONVERT THE FILE NAME
+		//PWSTR f_Path;
+		//f_SysHr = f_Files->GetDisplayName(SIGDN_FILESYSPATH, &f_Path);
+		//if (FAILED(f_SysHr)) 
+		//{
+		//	f_Files->Release();
+		//	f_FileSystem->Release();
+		//	CoUninitialize();
+		//	return "";
+		//}
 
-		//  FORMAT AND STORE THE FILE PATH
-		std::wstring path(f_Path);
-		std::string c(path.begin(), path.end());
-		sFilePath = c;
+		////  FORMAT AND STORE THE FILE PATH
+		//std::wstring path(f_Path);
+		//std::string c(path.begin(), path.end());
+		//sFilePath = c;
 
-		//  FORMAT STRING FOR EXECUTABLE NAME
-		const size_t slash = sFilePath.find_last_of("/\\");
-		sSelectedFile = sFilePath.substr(slash);
-		//  SUCCESS, CLEAN UP
+		////  FORMAT STRING FOR EXECUTABLE NAME
+		//const size_t slash = sFilePath.find_last_of("/\\");
+		//sSelectedFile = sFilePath.substr(slash);
+		////  SUCCESS, CLEAN UP
 
-		std::string relativePath = MakePathRelative(sFilePath);
+		//std::string relativePath = MakePathRelative(sFilePath);
 
-		CoTaskMemFree(f_Path);
-		f_Files->Release();
-		f_FileSystem->Release();
-		CoUninitialize();
+		//CoTaskMemFree(f_Path);
+		//f_Files->Release();
+		//f_FileSystem->Release();
+		//CoUninitialize();
 
 	
 		return sFilePath;
@@ -2548,12 +2553,14 @@ namespace FlatEngine
 
 	std::string GetCurrentDir()
 	{
-		TCHAR buffer[MAX_PATH] = { 0 };
-		GetModuleFileName(nullptr, buffer, MAX_PATH);
-		std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
-		std::wstring ws = std::wstring(buffer).substr(0, pos);
-		std::string dir(ws.begin(), ws.end());
-		return dir;
+		// TODO: Fix this
+		return "";
+		//TCHAR buffer[MAX_PATH] = { 0 };
+		//GetModuleFileName(nullptr, buffer, MAX_PATH);
+		//std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
+		//std::wstring ws = std::wstring(buffer).substr(0, pos);
+		//std::string dir(ws.begin(), ws.end());
+		//return dir;
 	}
 
 	json LoadFileData(std::string filepath)
@@ -3356,9 +3363,8 @@ namespace FlatEngine
 		jointProps.motorSpeed = CheckJsonFloat(jointJson, "motorSpeed", objectName);
 	}
 
-	GameObject *CreateObjectFromJson(json objectJson, Scene* scene)
+	 void CreateObjectFromJson(json objectJson, Scene* scene, GameObject* loadedObject)
 	{
-		GameObject *loadedObject;
 		std::string objectName = CheckJsonString(objectJson, "name", "Name");
 		bool b_isActive = CheckJsonBool(objectJson, "_isActive", objectName);
 		bool b_isPrefab = CheckJsonBool(objectJson, "_isPrefab", objectName);
@@ -3983,8 +3989,6 @@ namespace FlatEngine
 				loadedObject->GetButton()->CalculateActiveEdges();
 			}
 		}
-
-		return loadedObject;
 	}
 }
 

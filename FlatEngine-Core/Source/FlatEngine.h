@@ -92,6 +92,7 @@ namespace FlatEngine
 	class MotorJoint;
 	class WheelJoint;
 	class VulkanManager;
+	class ThreadPool;
 
 	enum F_CURSOR_MODE {
 		TRANSLATE,
@@ -109,6 +110,9 @@ namespace FlatEngine
 	extern Vector2 AddImageToDrawList(VkDescriptorSet texture, Vector2 positionInGrid, Vector2 relativeCenterPoint, float textureWidthPx, float textureHeightPx, Vector2 offset, Vector2 scale, bool b_scalesWithZoom, float zoomMultiplier, ImDrawList* drawList, float rotation = 0, ImU32 addColor = 1, Vector2 uvStart = Vector2(0, 0), Vector2 uvEnd = Vector2(1, 1));
 	extern std::map<long, Mesh>& GetMeshes();
 	extern std::map<long, Light>& GetLights();
+
+	// Multi-threading
+	extern std::shared_ptr<ThreadPool> F_ThreadPool;
 
 	extern std::shared_ptr<Application> F_Application;
 	extern sol::state F_Lua;
@@ -452,7 +456,7 @@ namespace FlatEngine
 	extern void RetrieveWeldJointProps(WeldJoint::WeldJointProps& jointProps, json jointJson, std::string objectName);
 	extern void RetrieveMotorJointProps(MotorJoint::MotorJointProps& jointProps, json jointJson, std::string objectName);
 	extern void RetrieveWheelJointProps(WheelJoint::WheelJointProps& jointProps, json jointJson, std::string objectName);
-	extern GameObject* CreateObjectFromJson(json objectJson, Scene* scene);
+	extern void CreateObjectFromJson(json objectJson, Scene* scene, GameObject* loadedObject);
 	extern std::string CheckJsonString(json obj, std::string checkFor, std::string loadedName);
 	extern std::string CheckJsonString(json obj, std::string checkFor, std::string loadedName, std::string& errorMessage);
 	extern float CheckJsonFloat(json obj, std::string checkFor, std::string loadedName);

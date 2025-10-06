@@ -75,15 +75,16 @@ namespace FlatEngine
     }
 
 
-    void RenderPass::SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice)
+    void RenderPass::SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, VkCommandPool* commandPool)
     {
         m_instance = instance;
         m_winSystem = winSystem;
         m_physicalDevice = physicalDevice;
         m_logicalDevice = logicalDevice;
+        m_commandPool = commandPool;
     }
 
-    void RenderPass::Init(VkCommandPool commandPool)
+    void RenderPass::Init()
     {
         if (m_b_msaaEnabled)
         {
@@ -95,7 +96,7 @@ namespace FlatEngine
         }
         CreateRenderPass();
         CreateFrameBuffers();
-        CreateCommandBuffers(commandPool);
+        CreateCommandBuffers();
         m_b_initialized = true;
     }
 
@@ -348,7 +349,7 @@ namespace FlatEngine
         }
     }
 
-    void RenderPass::RecreateFrameBuffers(VkCommandPool commandPool)
+    void RenderPass::RecreateFrameBuffers()
     {
         DestroyFrameBuffers();        
 
@@ -568,6 +569,11 @@ namespace FlatEngine
             vkCmdBindVertexBuffers(m_commandBuffers[VM_currentFrame], 0, 1, vertexBuffers, offsets);
             vkCmdBindIndexBuffer(m_commandBuffers[VM_currentFrame], indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
+            if (material->GetName() == "fl_empty")
+            {
+                descriptorSet = mesh.GetEmptySceneViewDescriptorSets()[VM_currentFrame];
+            }
+
             break;
         }
         case ViewportType::GameView:
@@ -582,15 +588,15 @@ namespace FlatEngine
             vkCmdBindVertexBuffers(m_commandBuffers[VM_currentFrame], 0, 1, vertexBuffers, offsets);
             vkCmdBindIndexBuffer(m_commandBuffers[VM_currentFrame], indexBuffer, 0, VK_INDEX_TYPE_UINT32);
 
+            if (material->GetName() == "fl_empty")
+            {
+                descriptorSet = mesh.GetEmptyGameViewDescriptorSets()[VM_currentFrame];
+            }
+
             break;
         }
         default:
             break;
-        }
-
-        if (material->GetName() == "fl_empty")
-        {
-            descriptorSet = mesh.GetEmptyDescriptorSets()[VM_currentFrame];
         }
       
         vkCmdBindDescriptorSets(m_commandBuffers[VM_currentFrame], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSet, 0, nullptr);
@@ -599,11 +605,11 @@ namespace FlatEngine
         // NOTE FROM THE WIKI: The previous chapter already mentioned that you should allocate multiple resources like buffers from a single memory allocation, but in fact you should go a step further. Driver developers recommend that you also store multiple buffers, like the vertex and index buffer, into a single VkBuffer and use offsets in commands like vkCmdBindVertexBuffers. The advantage is that your data is more cache friendly in that case, because it's closer together. It is even possible to reuse the same chunk of memory for multiple resources if they are not used during the same render operations, provided that their data is refreshed, of course. This is known as aliasing and some Vulkan functions have explicit flags to specify that you want to do this.
     }
 
-    void RenderPass::CreateCommandBuffers(VkCommandPool commandPool)
+    void RenderPass::CreateCommandBuffers()
     {
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-        allocInfo.commandPool = commandPool;
+        allocInfo.commandPool = *m_commandPool;
         allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
         allocInfo.commandBufferCount = VM_MAX_FRAMES_IN_FLIGHT;
 

@@ -29,7 +29,7 @@ namespace FlatEngine
 		void Cleanup();
 		void RecreateGraphicsPipeline();
 
-		void SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, VkCommandPool* commandPool, RenderPass* renderPass);
+		void SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, RenderPass* renderPass);
 		void SetName(std::string name);
 		std::string GetName();		
 		void SetPath(std::string path);
@@ -59,13 +59,9 @@ namespace FlatEngine
 		
 		RenderPass* GetRenderPass();
 
-		//std::vector<std::string>& GetUBOFloatNames();
-		//std::vector<std::string>& GetUBOVec2Names();
-		//std::vector<std::string>& GetUBOVec3Names();
 		std::map<uint32_t, std::string>& GetUBOVec4Names();
 		bool AddUBOVec4(std::string name, int index = -1);
 		void RemoveUBOVec4(int index = -1);
-		//std::vector<std::string>& GetUBOMat4Names();
 
 	private:
 		void SetDefaultValues();
@@ -82,7 +78,6 @@ namespace FlatEngine
 		WinSys* m_winSystem;
 		PhysicalDevice* m_physicalDevice;
 		LogicalDevice* m_logicalDevice;	
-		VkCommandPool* m_commandPool;
 		bool m_b_initialized;
 
 		std::vector<uint32_t> m_pushConstOffsets;

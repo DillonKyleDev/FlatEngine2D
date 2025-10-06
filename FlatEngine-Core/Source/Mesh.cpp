@@ -21,7 +21,8 @@ namespace FlatEngine
 		m_gameViewMaterial = F_VulkanManager->GetMaterial("fl_empty");
 		m_sceneViewDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
 		m_gameViewDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
-		m_emptyDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
+		m_emptySceneViewDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
+		m_emptyGameViewDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
 		m_texturesByIndex = std::map<uint32_t, Texture>();
 		m_allocationPoolIndex = -1;
 		m_b_initialized = false;
@@ -240,9 +241,10 @@ namespace FlatEngine
 				m_gameViewMaterial->CreateDescriptorSets(m_gameViewDescriptorSets, m_gameViewModel, m_texturesByIndex);
 			}
 
-			// Create empty material descriptor sets
+			// Create empty material descriptor sets for Scene View and Game View
 			std::map<uint32_t, Texture> emptyTextures = std::map<uint32_t, Texture>();
-			F_VulkanManager->GetMaterial("fl_empty")->CreateDescriptorSets(m_emptyDescriptorSets, m_sceneViewModel, emptyTextures);
+			F_VulkanManager->GetMaterial("fl_empty", ViewportType::SceneView)->CreateDescriptorSets(m_emptySceneViewDescriptorSets, m_sceneViewModel, emptyTextures);
+			F_VulkanManager->GetMaterial("fl_empty", ViewportType::GameView)->CreateDescriptorSets(m_emptyGameViewDescriptorSets, m_gameViewModel, emptyTextures);
 		}
 		else
 		{
@@ -309,9 +311,14 @@ namespace FlatEngine
 		return m_gameViewDescriptorSets;
 	}
 
-	std::vector<VkDescriptorSet>& Mesh::GetEmptyDescriptorSets()
+	std::vector<VkDescriptorSet>& Mesh::GetEmptySceneViewDescriptorSets()
 	{
-		return m_emptyDescriptorSets;
+		return m_emptySceneViewDescriptorSets;
+	}
+
+	std::vector<VkDescriptorSet>& Mesh::GetEmptyGameViewDescriptorSets()
+	{
+		return m_emptyGameViewDescriptorSets;
 	}
 
 	std::map<std::string, glm::vec4>& Mesh::GetUBOVec4s()

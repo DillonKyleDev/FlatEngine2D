@@ -63,7 +63,7 @@ namespace FlatEngine
 		std::vector<VkDescriptorSet>& GetDescriptorSets();
 
 		void CreateTextureImage();
-		void CreateRenderToTextureResources();		
+		void CreateRenderToTextureResources(VkCommandPool& commandPool);
 
 	private:
 		std::string m_path;

@@ -132,9 +132,9 @@ namespace FlatEngine
         return files;
     }
 
-    VkCommandBuffer Helper::BeginSingleTimeCommands()
+    VkCommandBuffer Helper::BeginSingleTimeCommands(VkCommandPool& commandPool)
     {
-        VkCommandPool& commandPool = F_VulkanManager->GetCommandPool();
+        //VkCommandPool& commandPool = F_VulkanManager->GetCommandPool();
         LogicalDevice& logicalDevice = F_VulkanManager->GetLogicalDevice();
 
         // For copying our cpu staging buffer over to our actual device buffer
@@ -159,9 +159,9 @@ namespace FlatEngine
         return commandBuffer;
     }
 
-    void Helper::EndSingleTimeCommands(VkCommandBuffer commandBuffer)
+    void Helper::EndSingleTimeCommands(VkCommandBuffer commandBuffer, VkCommandPool& commandPool)
     {
-        VkCommandPool& commandPool = F_VulkanManager->GetCommandPool();
+        //VkCommandPool& commandPool = F_VulkanManager->GetCommandPool();
         LogicalDevice& logicalDevice = F_VulkanManager->GetLogicalDevice();
 
         // Stop recording

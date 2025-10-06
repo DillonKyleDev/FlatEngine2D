@@ -63,7 +63,7 @@ namespace FlatEngine
         static void CreateCommandPool(VkCommandPool& commandPool, LogicalDevice& logicalDevice, uint32_t queueFamilyIndices, VkCommandPoolCreateFlags flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
 
         // Renderpass
-        void CreateRenderToTextureRenderPassResources(RenderPass& renderPass, Texture& renderToTexture);
+        void CreateRenderToTextureRenderPassResources(RenderPass& renderPass, Texture& renderToTexture, VkCommandPool& commandPool);
         void CreateImGuiRendePassResources();
         void GetImGuiDescriptorSetLayoutInfo(std::vector<VkDescriptorSetLayoutBinding>& bindings, VkDescriptorSetLayoutCreateInfo& layoutInfo);
         void GetImGuiDescriptorPoolInfo(std::vector<VkDescriptorPoolSize>& poolSizes, VkDescriptorPoolCreateInfo& poolInfo);
@@ -85,6 +85,7 @@ namespace FlatEngine
         void AddGameViewMaterialMesh(std::string materialName, long ID, Mesh* mesh);
         void RemoveSceneViewMaterialMesh(std::string materialName, long ID, Mesh* mesh);
         void RemoveGameViewMaterialMesh(std::string materialName, long ID, Mesh* mesh);
+        void ClearGroupedByMaterialMeshes();
         std::shared_ptr<Model> GetModel(std::string modelPath);
         std::shared_ptr<Model> LoadModel(std::string modelPath);
 
@@ -139,7 +140,10 @@ namespace FlatEngine
         VkSampleCountFlagBits m_maxSamples;
         LogicalDevice m_logicalDevice;
         bool m_b_framebufferResized;
-        VkCommandPool m_commandPool;
+        VkCommandPool m_systemCommandPool;
+        VkCommandPool m_imGuiCommandPool;
+        VkCommandPool m_sceneViewCommandPool;
+        VkCommandPool m_gameViewCommandPool;
         std::vector<VkSemaphore> m_imageAvailableSemaphores;
         std::vector<VkSemaphore> m_renderFinishedSemaphores;
         std::vector<VkFence> m_inFlightFences;        

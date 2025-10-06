@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "FlatEngine.h"
 #include "Project.h"
+#include "ThreadPool.h"
 
 #include <iostream>
 #include <fstream>
@@ -153,7 +154,7 @@ namespace FlatEngine
 								}
 								else
 								{
-									CreateObjectFromJson(objectJson, &m_loadedScene);
+									CreateObjectFromJson(objectJson, &m_loadedScene, nullptr);						
 								}
 							}
 							catch (const json::out_of_range& e)
@@ -167,7 +168,7 @@ namespace FlatEngine
 						{
 							try
 							{
-								CreateObjectFromJson(objectJson, &m_loadedScene);
+								CreateObjectFromJson(objectJson, &m_loadedScene, nullptr);
 							}
 							catch (const json::out_of_range& e)
 							{

@@ -21,8 +21,8 @@ namespace FlatEngine
 		~RenderPass();
 		void Cleanup(LogicalDevice& logicalDevice);
 
-		void SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice);
-		void Init(VkCommandPool commandPool);
+		void SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, VkCommandPool* commandPool);
+		void Init();
 		bool Initialized();
 		void SetDefaultRenderPassConfig();
 		void CreateSceneRenderPassResources();
@@ -36,12 +36,12 @@ namespace FlatEngine
 		void ConfigureFrameBufferImageViews(std::vector<VkImageView>& imageViews);
 		void CreateFrameBuffers();
 		void DestroyFrameBuffers();
-		void RecreateFrameBuffers(VkCommandPool commandPool);
+		void RecreateFrameBuffers();
 		std::vector<VkFramebuffer>& GetFrameBuffers();
 		void EnableMsaa();
 		void EnableDepthBuffering();
 		VkSampleCountFlagBits GetMsaa();
-		void CreateCommandBuffers(VkCommandPool commandPool);
+		void CreateCommandBuffers();
 		void DestroyCommandBuffers();
 		std::vector<VkCommandBuffer>& GetCommandBuffers();
 		void RecordCommandBuffer(GraphicsPipeline& graphicsPipeline);
@@ -87,6 +87,7 @@ namespace FlatEngine
 		WinSys* m_winSystem;
 		PhysicalDevice* m_physicalDevice;
 		LogicalDevice* m_logicalDevice;
+		VkCommandPool* m_commandPool;
 
 		
 		VkCommandBufferBeginInfo m_beginInfo{};

@@ -183,7 +183,8 @@ namespace FlatEngine
 						{						
 							// Add created GameObject to our new Scene
 							bool b_persistant = true;
-							GameObject* loadedObject = CreateObjectFromJson(fileContentJson["Persistant GameObjects"][i], &m_persistantGameObjectsScene);
+							GameObject* loadedObject = nullptr;
+							CreateObjectFromJson(fileContentJson["Persistant GameObjects"][i], &m_persistantGameObjectsScene, loadedObject);
 							// Check for primary camera
 							if (loadedObject != nullptr && loadedObject->HasComponent("Camera") && loadedObject->GetCamera()->IsPrimary())
 							{
@@ -197,7 +198,7 @@ namespace FlatEngine
 					{
 						try
 						{
-							CreateObjectFromJson(objectJson, &m_persistantGameObjectsScene);
+							CreateObjectFromJson(objectJson, &m_persistantGameObjectsScene, nullptr);
 						}
 						catch (const json::out_of_range& e)
 						{

@@ -44,7 +44,8 @@ namespace FlatEngine
 		void CreateTextureResources();
 		std::vector<VkDescriptorSet>& GetSceneViewDescriptorSets();
 		std::vector<VkDescriptorSet>& GetGameViewDescriptorSets();
-		std::vector<VkDescriptorSet>& GetEmptyDescriptorSets();
+		std::vector<VkDescriptorSet>& GetEmptySceneViewDescriptorSets();
+		std::vector<VkDescriptorSet>& GetEmptyGameViewDescriptorSets();
 		std::map<std::string, glm::vec4>& GetUBOVec4s();
 		void SetUBOVec4(std::string name, Vector4 value);
 
@@ -57,8 +58,8 @@ namespace FlatEngine
 		std::map<uint32_t, Texture> m_texturesByIndex;
 		std::vector<VkDescriptorSet> m_sceneViewDescriptorSets;
 		std::vector<VkDescriptorSet> m_gameViewDescriptorSets;
-		std::vector<VkDescriptorSet> m_emptyDescriptorSets; // Dedicate to Scene View?
-		//std::vector<VkDescriptorSet> m_emptyGameViewDescriptorSets; // Dedicate to Game View?
+		std::vector<VkDescriptorSet> m_emptySceneViewDescriptorSets;
+		std::vector<VkDescriptorSet> m_emptyGameViewDescriptorSets;
 		int m_allocationPoolIndex;
 		bool m_b_initialized;
 		bool m_b_missingTextures;

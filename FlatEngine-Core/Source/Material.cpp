@@ -146,13 +146,12 @@ namespace FlatEngine
 		m_graphicsPipeline.Cleanup(*m_logicalDevice);
 	}
 
-	void Material::SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, VkCommandPool* commandPool, RenderPass* renderPass)
+	void Material::SetHandles(VkInstance* instance, WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, RenderPass* renderPass)
 	{		
 		m_instance = instance;
 		m_winSystem = winSystem;
 		m_physicalDevice = physicalDevice;
 		m_logicalDevice = logicalDevice;
-		m_commandPool = commandPool;
 		m_renderPass = renderPass;
 	}
 
