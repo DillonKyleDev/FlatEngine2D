@@ -159,7 +159,7 @@ namespace FlatEngine
 		float xRotation = 0;
 		glm::mat4 rollCameraMatrix;
 
-		if (GetParent() != nullptr)
+		if (GetParentPtr() != nullptr && GetParentPtr()->GetName() != "SceneViewCamera")
 		{
 			Vector3 rotation = m_parentPtr->GetTransform()->GetRotations();
 			xRotation = rotation.x;

@@ -19,7 +19,7 @@ namespace FlatEngine
 		m_layoutInfo.bindingCount = 0;
 		m_poolSizes = {};
 		m_poolInfo = {};
-		m_deviceHandle = nullptr;
+		m_logicalDevice = nullptr;
 		m_b_imguiAllocator = false;
 	}
 
@@ -30,14 +30,14 @@ namespace FlatEngine
 
 	void Allocator::CleanupPools()
 	{
-		if (m_deviceHandle != VK_NULL_HANDLE)
+		if (m_logicalDevice != VK_NULL_HANDLE)
 		{
 			switch (m_type)
 			{
 			case AllocatorType::DescriptorPool:
 				for (uint32_t i = 0; i < m_descriptorPools.size(); i++)
 				{
-					vkDestroyDescriptorPool(m_deviceHandle->GetDevice(), m_descriptorPools[i], nullptr);
+					vkDestroyDescriptorPool(m_logicalDevice->GetDevice(), m_descriptorPools[i], nullptr);
 				}
 				break;
 			case AllocatorType::CommandPool:
@@ -54,7 +54,7 @@ namespace FlatEngine
 
 		m_type = type;
 		m_texturesShaderStages = texturesShaderStages;		
-		m_deviceHandle = &logicalDevice;
+		m_logicalDevice = &logicalDevice;
 		if (m_poolSizes.size() == 0)
 		{
 			m_sizePerPool = perPool;
@@ -133,14 +133,14 @@ namespace FlatEngine
 	{
 		// Refer to - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
 
-		if (m_deviceHandle != VK_NULL_HANDLE)
+		if (m_logicalDevice != VK_NULL_HANDLE)
 		{
 			if (!m_b_imguiAllocator)
 			{
 				SetDefaultDescriptorSetLayoutConfig();
 			}
 
-			if (vkCreateDescriptorSetLayout(m_deviceHandle->GetDevice(), &m_layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
+			if (vkCreateDescriptorSetLayout(m_logicalDevice->GetDevice(), &m_layoutInfo, nullptr, &m_descriptorSetLayout) != VK_SUCCESS)
 			{
 				throw std::runtime_error("failed to create descriptor set layout!");
 			}
@@ -149,7 +149,7 @@ namespace FlatEngine
 
 	void Allocator::CleanupDescriptorSetLayout()
 	{
-		vkDestroyDescriptorSetLayout(m_deviceHandle->GetDevice(), m_descriptorSetLayout, nullptr);
+		vkDestroyDescriptorSetLayout(m_logicalDevice->GetDevice(), m_descriptorSetLayout, nullptr);
 	}
 
 	VkDescriptorSetLayout& Allocator::GetDescriptorSetLayout()
@@ -223,7 +223,7 @@ namespace FlatEngine
 		// Refer to - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_pool_and_sets
 		// And for combined sampler - https://vulkan-tutorial.com/en/Texture_mapping/Combined_image_sampler
 
-		if (m_deviceHandle != VK_NULL_HANDLE && vkCreateDescriptorPool(m_deviceHandle->GetDevice(), &m_poolInfo, nullptr, &descriptorPool) != VK_SUCCESS)
+		if (m_logicalDevice != VK_NULL_HANDLE && vkCreateDescriptorPool(m_logicalDevice->GetDevice(), &m_poolInfo, nullptr, &descriptorPool) != VK_SUCCESS)
 		{
 			throw std::runtime_error("failed to create descriptor pool!");
 		}
@@ -244,7 +244,7 @@ namespace FlatEngine
 			allocInfo.descriptorSetCount = static_cast<uint32_t>(VM_MAX_FRAMES_IN_FLIGHT);
 			allocInfo.pSetLayouts = layouts.data();
 
-			VkResult err = vkAllocateDescriptorSets(m_deviceHandle->GetDevice(), &allocInfo, descriptorSets.data());
+			VkResult err = vkAllocateDescriptorSets(m_logicalDevice->GetDevice(), &allocInfo, descriptorSets.data());
 			if (err != VK_SUCCESS)
 			{
 				FlatEngine::LogError("failed to allocate descriptor sets!");
@@ -303,7 +303,7 @@ namespace FlatEngine
 					}
 				}
 
-				vkUpdateDescriptorSets(m_deviceHandle->GetDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+				vkUpdateDescriptorSets(m_logicalDevice->GetDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 				m_allocationsRemainingByPool[m_currentPoolIndex] -= 1;
 			}
 		}
@@ -357,7 +357,7 @@ namespace FlatEngine
 			{
 			case AllocatorType::DescriptorPool:
 
-				vkDestroyDescriptorPool(m_deviceHandle->GetDevice(), m_descriptorPools[freedFrom], nullptr);
+				F_VulkanManager->QueueDescriptorPoolDeletion(m_descriptorPools[freedFrom]);				
 
 				break;
 			case AllocatorType::CommandPool:

@@ -92,6 +92,7 @@ namespace FlatEngine
         // Memory management
         void QueueBufferDeletion(VkBuffer bufferToDelete);
         void QueueDeviceMemoryDeletion(VkDeviceMemory deviceMemoryToDelete);
+        void QueueDescriptorPoolDeletion(VkDescriptorPool descriptorPoolToDelete);
         void DeleteQueuedVKObjects();
 
         // ImGui
@@ -150,5 +151,6 @@ namespace FlatEngine
 
         std::vector<VkBuffer> m_bufferDeleteQueue;
         std::vector<VkDeviceMemory> m_deviceMemoryDeleteQueue;
+        std::vector<VkDescriptorPool> m_descriptorPoolDeleteQueue;
     };
 }

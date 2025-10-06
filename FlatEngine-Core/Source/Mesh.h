@@ -39,6 +39,7 @@ namespace FlatEngine
 		void CreateResources();
 		void AddTexture(std::string path, uint32_t index);
 		void AddTexture(Texture texture, uint32_t index);
+		void AddTextureLua(std::string path, int index);
 		//std::vector<Texture>& GetTextures();
 		std::map<uint32_t, Texture>& GetTextures();
 		void CreateTextureResources();

@@ -594,6 +594,9 @@ namespace FlatEngine
 		bool b_success = false;
 		if (m_Meshes.count(ownerID))
 		{
+			std::string materialName = m_Meshes.at(ownerID).GetMaterialName();
+			F_VulkanManager->RemoveSceneViewMaterialMesh(materialName, m_Meshes.at(ownerID).GetID(), &m_Meshes.at(ownerID));
+			F_VulkanManager->RemoveGameViewMaterialMesh(materialName, m_Meshes.at(ownerID).GetID(), &m_Meshes.at(ownerID));
 			m_Meshes.at(ownerID).Cleanup();
 			m_Meshes.erase(ownerID);
 			b_success = true;

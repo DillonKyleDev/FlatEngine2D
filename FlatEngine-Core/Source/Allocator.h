@@ -58,7 +58,7 @@ namespace FlatEngine
 		VkDescriptorSetLayoutCreateInfo m_layoutInfo;
 		std::vector<VkDescriptorPoolSize> m_poolSizes;
 		VkDescriptorPoolCreateInfo m_poolInfo;
-		LogicalDevice* m_deviceHandle;
+		LogicalDevice* m_logicalDevice;
 		bool m_b_imguiAllocator;
 	};
 }

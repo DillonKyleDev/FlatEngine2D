@@ -555,6 +555,7 @@ namespace FlatEngine
 			"AddBody", &GameObject::AddBody,
 			"AddCharacterController", &GameObject::AddCharacterControllerLua,
 			"AddTileMap", &GameObject::AddTileMapLua,
+			"AddMesh", & GameObject::AddMeshLua,
 
 			"AddChild", &GameObject::AddChild,
 			"RemoveChild", &GameObject::RemoveChild,
@@ -757,7 +758,11 @@ namespace FlatEngine
 		);
 
 		F_Lua.new_usertype<Mesh>("Mesh",
-			"SetUBOVec4", &Mesh::SetUBOVec4			
+			"SetUBOVec4", &Mesh::SetUBOVec4,
+			"AddTexture", &Mesh::AddTextureLua,
+			"SetModel", &Mesh::SetModel,
+			"SetMaterial", &Mesh::SetMaterial,
+			"CreateResources", &Mesh::CreateResources			
 		);
 
 		F_Lua.new_usertype<CharacterController>("CharacterController",

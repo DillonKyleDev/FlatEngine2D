@@ -304,7 +304,8 @@ namespace FlatEngine
         
         if (primaryCamera != nullptr)
         {            
-            glm::mat4 cameraRotation = primaryCamera->GetParentPtr()->GetTransform()->GetRotationMatrix();
+            //glm::mat4 cameraRotation = primaryCamera->GetParentPtr()->GetTransform()->GetRotationMatrix();
+
             bool b_forceZUp = primaryCamera->ForceZUp();
             //glm::vec4 lookDir = cameraRotation * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
             glm::vec4 lookDir = primaryCamera->GetLookDirection();
@@ -316,7 +317,7 @@ namespace FlatEngine
             }
             else
             {
-                up = cameraRotation * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+                up = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
             }
             
             glm::vec4 meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);

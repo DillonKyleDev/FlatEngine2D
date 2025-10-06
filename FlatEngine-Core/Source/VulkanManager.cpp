@@ -75,6 +75,7 @@ namespace FlatEngine
 
         m_bufferDeleteQueue= std::vector<VkBuffer>();
         m_deviceMemoryDeleteQueue = std::vector<VkDeviceMemory>();
+        m_descriptorPoolDeleteQueue = std::vector<VkDescriptorPool>();
 
         m_b_showGridObjects = true;
         m_b_orthographic = false;
@@ -875,6 +876,11 @@ namespace FlatEngine
         m_deviceMemoryDeleteQueue.push_back(deviceMemoryToDelete);
     }
 
+    void VulkanManager::QueueDescriptorPoolDeletion(VkDescriptorPool descriptorPoolToDelete)
+    {
+        m_descriptorPoolDeleteQueue.push_back(descriptorPoolToDelete);;
+    }
+
     void VulkanManager::DeleteQueuedVKObjects()
     {
         if (m_bufferDeleteQueue.size())
@@ -893,6 +899,15 @@ namespace FlatEngine
                 vkFreeMemory(m_logicalDevice.GetDevice(), deviceMemory, nullptr);
             }
             m_deviceMemoryDeleteQueue.clear();
+        }
+
+        if (m_descriptorPoolDeleteQueue.size())
+        {
+            for (VkDescriptorPool descriptorPool : m_descriptorPoolDeleteQueue)
+            {
+                vkDestroyDescriptorPool(m_logicalDevice.GetDevice(), descriptorPool, nullptr);
+            }
+            m_descriptorPoolDeleteQueue.clear();
         }
     }
 
@@ -1043,8 +1058,7 @@ namespace FlatEngine
                         {                            
                             mesh->second.GetSceneViewModel().UpdateUniformBuffer(m_winSystem, &mesh->second, ViewportType::SceneView, m_b_orthographic);
                             m_renderToTextureSceneViewRenderPass.RecordCommandBuffer(material->GetGraphicsPipeline());
-                            m_renderToTextureSceneViewRenderPass.DrawIndexed(mesh->second, material, ViewportType::SceneView); // Create final VkImage on m_sceneViewTexture's m_images member variable                        
-                               
+                            m_renderToTextureSceneViewRenderPass.DrawIndexed(mesh->second, material, ViewportType::SceneView); // Create final VkImage on m_sceneViewTexture's m_images member variable                                                       
                         }
                     }
                 }          

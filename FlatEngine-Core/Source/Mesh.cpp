@@ -92,8 +92,13 @@ namespace FlatEngine
 		for (std::map<uint32_t, Texture>::iterator texture = m_texturesByIndex.begin(); texture != m_texturesByIndex.end(); texture++)
 		{
 			texture->second.Cleanup(*m_logicalDevice);
-			m_sceneViewMaterial->GetAllocator().SetFreed(texture->second.GetAllocationIndex());
-			m_gameViewMaterial->GetAllocator().SetFreed(texture->second.GetAllocationIndex());
+			int allocationIndex = texture->second.GetAllocationIndex();
+
+			if (allocationIndex >= 0)
+			{
+				m_sceneViewMaterial->GetAllocator().SetFreed(allocationIndex);
+				m_gameViewMaterial->GetAllocator().SetFreed(allocationIndex);
+			}
 		}
 	}
 
@@ -288,6 +293,18 @@ namespace FlatEngine
 		}
 
 		CreateTextureResources();
+	}
+
+	void Mesh::AddTextureLua(std::string path, int index)
+	{
+		if (index >= 0)
+		{
+			AddTexture(path, index);
+		}
+		else
+		{
+			LogError("Texture index must be positive.");
+		}
 	}
 
 	std::map<uint32_t, Texture>& Mesh::GetTextures()
