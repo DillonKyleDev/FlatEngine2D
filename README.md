@@ -42,7 +42,7 @@ You're now set up to use the engine and edit it's source code as you wish. ~~Fro
 
 ## Oct. 5th, 2025 - Multi-threaded RenderPasses
 
-After some trial and error, I was able to get threading working using std::threads and split the work of each RenderPass into it's own thread.  As far as I can tell, everything is working as it should be, but the performance gain from doing so is not as noticable as it was from grouping the Meshes by Material/Pipeline before rendering them (at least while only rendering a handful of Meshes).  Of course, as the load increases, the performance boost from multi-threading will be more noticable.</br>
+After some trial and error, I was able to get multi-threading working using std::threads and split the work of each RenderPass into it's own thread.  As far as I can tell, everything is working as it should be, but the performance gain from doing so is not as noticable as it was from grouping the Meshes by Material/Pipeline before rendering them (at least while only rendering a handful of Meshes).  Of course, as the load increases, the performance boost from multi-threading will be more noticable.</br>
 
 I'll be doing some stress testing in the very near future to test the limits of the new implementation.
 
