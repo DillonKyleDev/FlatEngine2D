@@ -42,9 +42,11 @@ You're now set up to use the engine and edit it's source code as you wish. ~~Fro
 
 ## Oct. 5th, 2025 - Multi-threaded RenderPasses
 
-After some trial and error, I was able to get multi-threading working using std::threads and split the work of each RenderPass into it's own thread.  As far as I can tell, everything is working as it should be, but the performance gain from doing so is not as noticable as it was from grouping the Meshes by Material/Pipeline before rendering them (at least while only rendering a handful of Meshes).  Of course, as the load increases, the performance boost from multi-threading will be more noticable.</br>
+After some trial and error, I was able to get multi-threading working using std::threads and split the work of each RenderPass into it's own thread.  There is a crash that I haven't solved yet related to memory allocation and it's probably either in my threading implementation, or is bubbling up because of it.  The performance gain from threading is not as significant as I was expecting, but maybe there is something incorrect about my implementation.  Of course, as the load increases, the performance boost from multi-threading will probably be more noticable compared to without it.</br>
 
-I'll be doing some stress testing in the very near future to test the limits of the new implementation.
+My next step is to look into more ways of decreasing time spent on the CPU side submitting Mesh data to the GPU.  As the number of Meshes grows, I'll need a way to batch them to reduce total calls made to expensive Vulkan functions.</br>
+
+I'll be doing some stress testing in the very near future to test the limits of the new implementation, in addition to doing some research on batching best practices.
 
 ## Oct. 4th, 2025 - Multiple Viewport Rendering
 
