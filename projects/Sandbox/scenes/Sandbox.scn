@@ -2484,6 +2484,14 @@
                     },
                     "type": "Mesh",
                     "uboVec4s": {}
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "MoveCamera (Lua)",
+                    "id": 60,
+                    "scriptParameters": [],
+                    "type": "Script"
                 }
             ],
             "id": 21,

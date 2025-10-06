@@ -49,9 +49,14 @@ public:
 		FL::AddProfilerProcess("GameLoop (variable executions)");		
 		FL::AddProfilerProcess("Not GameLoop");
 		FL::AddProfilerProcess("Collision Testing");	
+		FL::CreateSceneBackup(); // Backup existing scene save
 		m_startedScenePath = FL::GetLoadedScenePath();
 		m_startedPersistantScenePath = FL::GetLoadedProject().GetPersistantGameObjectsScenePath();
-		FL::CreateSceneBackup();
+		FL::SaveScene(FL::GetLoadedScene(), "..\\engine\\tempFiles\\" + FL::GetLoadedScene()->GetName() + "_start_snapshot.scn");
+		if (m_startedPersistantScenePath != "" && FL::GetLoadedProject().GetPersistantGameObjectScene() != nullptr)
+		{
+			FL::F_LoadedProject.SavePersistantScene("..\\engine\\tempFiles\\" + FL::GetLoadedProject().GetPersistantGameObjectScene()->GetName() + "_start_snapshot.scn");
+		}	
 		FL::GameLoop::Start();
 	};
 	void Stop()
@@ -62,9 +67,9 @@ public:
 		FL::GameLoop::Stop();
 		if (m_startedPersistantScenePath != "")
 		{
-			FL::GetLoadedProject().LoadPersistantScene("..\\engine\\tempFiles\\" + FL::GetFilenameFromPath(m_startedPersistantScenePath, true));
+			FL::GetLoadedProject().LoadPersistantScene("..\\engine\\tempFiles\\" + FL::GetFilenameFromPath(m_startedPersistantScenePath, false) + "_start_snapshot.scn");
 		}
-		FL::LoadScene("..\\engine\\tempFiles\\" + FL::GetFilenameFromPath(m_startedScenePath, true), m_startedScenePath);		
+		FL::LoadScene("..\\engine\\tempFiles\\" + FL::GetFilenameFromPath(m_startedScenePath, false) + "_start_snapshot.scn", m_startedScenePath);
 	};
 	void Update()
 	{

@@ -15,18 +15,21 @@ namespace FlatEngine
 	class ThreadPool
 	{
     public:
-        ThreadPool(size_t num_threads = std::thread::hardware_concurrency());
+        ThreadPool(size_t threadCount = std::thread::hardware_concurrency());
         ~ThreadPool();
 
         void EnqueueTask(std::function<void()> task);
-        void JoinTasks();
+        void JoinThreads();
 
     private:
+        void InitThreads();
+
         std::vector<std::thread> m_threads;
+        size_t m_threadCount;
         std::queue<std::function<void()>> m_tasks;
         std::mutex m_queueMutex;                      // Mutex to synchronize access to shared data
         std::condition_variable m_conditionVariable;  // Condition variable to signal changes in the state of the tasks queue
-        bool m_b_stop = false;
+        volatile bool m_b_stop = false;
 	};
 }
 

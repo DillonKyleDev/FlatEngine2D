@@ -2478,12 +2478,20 @@
                     "_isCollapsed": false,
                     "id": 59,
                     "materialName": "Unlit",
-                    "modelPath": "..\\projects\\Sandbox\\models\\cylinder.obj",
+                    "modelPath": "..\\projects\\Sandbox\\models\\cone.obj",
                     "textures": {
                         "0": "..\\projects\\Sandbox\\images\\colors\\orange.png"
                     },
                     "type": "Mesh",
                     "uboVec4s": {}
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "MoveCamera (Lua)",
+                    "id": 60,
+                    "scriptParameters": [],
+                    "type": "Script"
                 }
             ],
             "id": 21,

@@ -184,11 +184,18 @@ namespace FlatEngine
 		F_VulkanManager->AddSceneViewMaterialMesh(m_materialName, GetID(), this);
 		F_VulkanManager->AddGameViewMaterialMesh(m_materialName, GetID(), this);
 
-		std::map<uint32_t, std::string> uboVec4Names = m_sceneViewMaterial->GetUBOVec4Names();
-
-		for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
+		if (m_sceneViewMaterial != nullptr)
 		{
-			SetUBOVec4(iter->second, Vector4());
+			std::map<uint32_t, std::string> uboVec4Names = m_sceneViewMaterial->GetUBOVec4Names();
+
+			for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)
+			{
+				SetUBOVec4(iter->second, Vector4());
+			}
+		}
+		else
+		{
+			LogError("Material not found: " + materialName);
 		}
 	}
 

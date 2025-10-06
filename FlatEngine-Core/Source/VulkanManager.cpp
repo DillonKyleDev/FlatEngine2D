@@ -4,6 +4,7 @@
 #include "Material.h"
 #include "Project.h"
 #include "FlatEngine.h"
+#include "ThreadPool.h"
 
 #include "SDL_vulkan.h"
 #include <glm.hpp>
