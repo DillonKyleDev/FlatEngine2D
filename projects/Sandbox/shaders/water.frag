@@ -12,6 +12,7 @@ layout(binding = 1) uniform sampler2D texSampler;
 
 void main() {            
     outColor = texture(texSampler, fragTexCoord);
-    float intensity = clamp(fragColor.x + .5, 0.5, 1.5);
-    outColor.xyz *= intensity; 
+    float intensity = clamp(fragColor.x + .5, 0.6, 1.2);
+    outColor.xyzw *= intensity; 
+    clamp(outColor.z, 0.4, 1);
 }

@@ -79,7 +79,7 @@
                     "yPosition": 0.0,
                     "yRotation": 0.0,
                     "yScale": 1.0,
-                    "zPosition": 0.0,
+                    "zPosition": 2.0,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
@@ -98,7 +98,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
-            "spawnLocationZ": 0.0,
+            "spawnLocationZ": 2.0,
             "tags": [
                 {
                     "Ball": false
@@ -241,7 +241,7 @@
                     "yPosition": -66.0,
                     "yRotation": 0.0,
                     "yScale": 0.20000000298023224,
-                    "zPosition": 57.400001525878906,
+                    "zPosition": 17.0,
                     "zRotation": 90.0,
                     "zScale": 0.20000000298023224
                 },
@@ -250,6 +250,7 @@
                     "_isActive": true,
                     "_isCollapsed": false,
                     "_isPrimaryCamera": true,
+                    "farClippingDistance": 100.0,
                     "followSmoothing": 0.10000000149011612,
                     "following": -1,
                     "frustrumAlpha": 255.0,
@@ -259,6 +260,8 @@
                     "height": 30.0,
                     "horizontalViewAngle": 90.0,
                     "id": 3,
+                    "nearClippingDistance": 0.009999999776482582,
+                    "perspectiveAngle": 40.0,
                     "type": "Camera",
                     "verticalViewAngle": 0.0,
                     "width": 50.0,
@@ -283,7 +286,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": -66.0,
-            "spawnLocationZ": 57.400001525878906,
+            "spawnLocationZ": 17.0,
             "tags": [
                 {
                     "Ball": false
@@ -438,8 +441,8 @@
                     "colorY": 1.0,
                     "colorZ": 1.0,
                     "directionX": 0.0,
-                    "directionY": -100.0,
-                    "directionZ": -100.0,
+                    "directionY": -82.80000305175781,
+                    "directionZ": -32.29999923706055,
                     "id": 8,
                     "lightType": 2,
                     "type": "Light"
@@ -522,7 +525,7 @@
             "children": [],
             "collidesTags": [
                 {
-                    "Ball": false
+                    "Ball": true
                 },
                 {
                     "Collectable": false
@@ -586,41 +589,290 @@
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "id": 9,
+                    "id": 11,
                     "type": "Transform",
                     "xPosition": 0.0,
                     "xRotation": 0.0,
-                    "xScale": 1.0,
+                    "xScale": 20.0,
                     "yPosition": 0.0,
                     "yRotation": 0.0,
-                    "yScale": 1.0,
-                    "zPosition": 0.0,
+                    "yScale": 2.0,
+                    "zPosition": -1.0,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "id": 10,
+                    "id": 12,
                     "materialName": "Unlit",
-                    "modelPath": "..\\projects\\Sandbox\\models\\cone.obj",
+                    "modelPath": "..\\projects\\Sandbox\\models\\cube.obj",
                     "textures": {
-                        "0": "..\\engine\\images\\resources\\resourceNotPresent.png"
+                        "0": "..\\projects\\Sandbox\\images\\colors\\rose.png"
                     },
                     "type": "Mesh",
                     "uboVec4s": {}
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_lockedRotation": false,
+                    "_lockedXAxis": false,
+                    "_lockedYAxis": false,
+                    "angularDamping": 0.0,
+                    "bodyType": 0,
+                    "gravityScale": 1.0,
+                    "id": 13,
+                    "linearDamping": 0.0,
+                    "shapes": [
+                        {
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
+                            "_horizontal": false,
+                            "_isLoop": false,
+                            "_isSensor": false,
+                            "capsuleLength": 4.0,
+                            "cornerRadius": 0.0,
+                            "density": 1.0,
+                            "friction": 0.30000001192092896,
+                            "height": 2.0,
+                            "points": [],
+                            "radius": 1.0,
+                            "restitution": 0.30000001192092896,
+                            "rollingResistance": 0.0,
+                            "rotationOffsetCos": 1.0,
+                            "rotationOffsetSin": 0.0,
+                            "shape": 1,
+                            "tangentSpeed": 0.0,
+                            "width": 40.0,
+                            "xOffset": 0.0,
+                            "yOffset": 0.0
+                        }
+                    ],
+                    "type": "Body"
                 }
             ],
-            "id": 4,
-            "name": "Mesh",
+            "id": 5,
+            "name": "Ground",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
-            "spawnLocationZ": 0.0,
+            "spawnLocationZ": -1.0,
             "tags": [
                 {
                     "Ball": false
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": true
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": true,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": true
+                },
+                {
+                    "Collectable": false
+                },
+                {
+                    "Cup": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "EnemyDamage": false
+                },
+                {
+                    "EnemyTrigger": false
+                },
+                {
+                    "EnvironmentalDamage": false
+                },
+                {
+                    "EnvironmentalTrigger": false
+                },
+                {
+                    "InteractableObject": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "NpcTrigger": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "PlayerDamage": false
+                },
+                {
+                    "PlayerTrigger": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Projectile": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": true
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 14,
+                    "type": "Transform",
+                    "xPosition": 0.0,
+                    "xRotation": 0.0,
+                    "xScale": 1.0,
+                    "yPosition": 0.0,
+                    "yRotation": -9.454909324645996,
+                    "yScale": 1.0,
+                    "zPosition": 1.399999976158142,
+                    "zRotation": 0.0,
+                    "zScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 15,
+                    "materialName": "Lit",
+                    "modelPath": "..\\projects\\Sandbox\\models\\icoSphere.obj",
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\colors\\orange.png"
+                    },
+                    "type": "Mesh",
+                    "uboVec4s": {
+                        "Smoothness": {
+                            "w": 0.0,
+                            "x": 0.029999999329447746,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_lockedRotation": false,
+                    "_lockedXAxis": false,
+                    "_lockedYAxis": false,
+                    "angularDamping": 0.0,
+                    "bodyType": 2,
+                    "gravityScale": 1.0,
+                    "id": 16,
+                    "linearDamping": 0.0,
+                    "shapes": [
+                        {
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
+                            "_horizontal": false,
+                            "_isLoop": false,
+                            "_isSensor": false,
+                            "capsuleLength": 4.0,
+                            "cornerRadius": 0.0,
+                            "density": 1.0,
+                            "friction": 0.800000011920929,
+                            "height": 1.0,
+                            "points": [],
+                            "radius": 1.0,
+                            "restitution": 0.800000011920929,
+                            "rollingResistance": 0.0,
+                            "rotationOffsetCos": 1.0,
+                            "rotationOffsetSin": 0.0,
+                            "shape": 2,
+                            "tangentSpeed": 0.0,
+                            "width": 1.0,
+                            "xOffset": 0.0,
+                            "yOffset": 0.0
+                        }
+                    ],
+                    "type": "Body"
+                }
+            ],
+            "id": 6,
+            "name": "IcoSphere",
+            "parent": -1,
+            "prefabName": "IcoSphere",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 0.0,
+            "spawnLocationZ": 1.399999976158142,
+            "tags": [
+                {
+                    "Ball": true
                 },
                 {
                     "Collectable": false

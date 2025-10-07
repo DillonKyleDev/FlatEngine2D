@@ -192,8 +192,16 @@ namespace FlatEngine
 
 	void Shape::RecreateShape()
 	{
-		DestroyShape();		
-		CreateShape();
+		DestroyShape();	
+
+		if (m_parentBody != nullptr)
+		{
+			CreateBodyShape();
+		}
+		else
+		{
+			CreateShape();
+		}
 	}
 
 	void Shape::DestroyShape()

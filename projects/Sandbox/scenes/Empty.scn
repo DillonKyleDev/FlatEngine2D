@@ -148,6 +148,7 @@
             "prefabName": "",
             "spawnLocationX": 0.004527406767010689,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 0.9999110698699951,
             "tags": [
                 {
                     "Ball": false
@@ -341,6 +342,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": -1.0,
+            "spawnLocationZ": -1.0,
             "tags": [
                 {
                     "Ball": false
@@ -506,6 +508,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": -1.0,
             "tags": [
                 {
                     "Ball": false
@@ -693,6 +696,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 0.30000001192092896,
             "tags": [
                 {
                     "Ball": false
@@ -880,6 +884,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 1.100000023841858,
             "tags": [
                 {
                     "Ball": false
@@ -1047,6 +1052,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 0.0,
             "tags": [
                 {
                     "Ball": false
@@ -1234,6 +1240,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 1.0,
             "tags": [
                 {
                     "Ball": false
@@ -1517,6 +1524,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 0.8999999761581421,
             "tags": [
                 {
                     "Ball": false
@@ -1711,6 +1719,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 3.0,
             "tags": [
                 {
                     "Ball": false
@@ -1862,6 +1871,7 @@
                     "_isActive": true,
                     "_isCollapsed": false,
                     "_isPrimaryCamera": true,
+                    "farClippingDistance": 100.0,
                     "followSmoothing": 0.10000000149011612,
                     "following": -1,
                     "frustrumAlpha": 255.0,
@@ -1871,6 +1881,8 @@
                     "height": 30.0,
                     "horizontalViewAngle": 180.0,
                     "id": 48,
+                    "nearClippingDistance": 0.009999999776482582,
+                    "perspectiveAngle": 90.0,
                     "type": "Camera",
                     "verticalViewAngle": 10.0,
                     "width": 50.0,
@@ -1895,6 +1907,7 @@
             "prefabName": "",
             "spawnLocationX": 3.299999952316284,
             "spawnLocationY": 0.0,
+            "spawnLocationZ": 1.7999999523162842,
             "tags": [
                 {
                     "Ball": false

@@ -2482,6 +2482,7 @@
                     "height": 30.0,
                     "horizontalViewAngle": 0.0,
                     "id": 58,
+                    "perspectiveAngle": 90.0,
                     "type": "Camera",
                     "verticalViewAngle": 0.0,
                     "width": 50.0,
@@ -2747,7 +2748,7 @@
             "children": [],
             "collidesTags": [
                 {
-                    "Ball": false
+                    "Ball": true
                 },
                 {
                     "Collectable": false
@@ -2801,7 +2802,7 @@
                     "Table": false
                 },
                 {
-                    "Terrain": false
+                    "Terrain": true
                 },
                 {
                     "Wall": false
@@ -2817,7 +2818,7 @@
                     "xRotation": 0.0,
                     "xScale": 1.0,
                     "yPosition": -2.4000000953674316,
-                    "yRotation": -9.09044361114502,
+                    "yRotation": -9.454909324645996,
                     "yScale": 1.0,
                     "zPosition": 0.0,
                     "zRotation": 0.0,
@@ -2863,11 +2864,11 @@
                             "capsuleLength": 4.0,
                             "cornerRadius": 0.0,
                             "density": 1.0,
-                            "friction": 0.30000001192092896,
+                            "friction": 0.800000011920929,
                             "height": 1.0,
                             "points": [],
                             "radius": 1.0,
-                            "restitution": 0.30000001192092896,
+                            "restitution": 0.800000011920929,
                             "rollingResistance": 0.0,
                             "rotationOffsetCos": 1.0,
                             "rotationOffsetSin": 0.0,
@@ -2890,7 +2891,7 @@
             "spawnLocationZ": 0.0,
             "tags": [
                 {
-                    "Ball": false
+                    "Ball": true
                 },
                 {
                     "Collectable": false

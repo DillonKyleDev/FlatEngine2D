@@ -1,0 +1,22 @@
+{
+    "colorBlendAttachmentData": {
+        "alphaBlendOp": 0
+    },
+    "fragmentShaderPath": "../projects/Sandbox/shaders/compiledShaders/heightMapFrag.spv",
+    "inputAssemblyData": {
+        "_primitiveRestartEnable": false,
+        "topology": 3
+    },
+    "name": "HeightMap",
+    "rasterizerData": {
+        "cullMode": 2,
+        "lineWidth": 1.0,
+        "polygonMode": 0
+    },
+    "texturesShaderStageData": {
+        "0": 16,
+        "1": 1
+    },
+    "uboVec4Names": {},
+    "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/heightMapVert.spv"
+}

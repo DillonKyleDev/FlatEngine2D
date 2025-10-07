@@ -54,6 +54,9 @@ namespace FlatEngine
 			{ "_follow", m_b_shouldFollow },
 			{ "followSmoothing", m_followSmoothing },
 			{ "following", m_toFollowID },
+			{ "perspectiveAngle", m_perspectiveAngle },
+			{ "nearClippingDistance", m_nearClippingDistance },
+			{ "farClippingDistance", m_farClippingDistance },
 			{ "horizontalViewAngle", m_horizontalViewAngle },
 			{ "verticalViewAngle", m_verticalViewAngle }			
 		};

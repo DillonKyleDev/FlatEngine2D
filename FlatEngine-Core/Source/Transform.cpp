@@ -216,6 +216,13 @@ namespace FlatEngine
 
 	glm::mat4 Transform::GetRotationMatrix()
 	{
+		Body* body = m_parent->GetBody();
+
+		if (body != nullptr)
+		{
+			m_rotation.y = body->GetRotation();
+		}
+
 		glm::mat4 xRotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		glm::mat4 yRotation = glm::rotate(glm::mat4(1.0f), glm::radians(-m_rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		glm::mat4 zRotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));

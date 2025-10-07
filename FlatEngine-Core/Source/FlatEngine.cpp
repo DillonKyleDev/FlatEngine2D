@@ -3491,6 +3491,9 @@ namespace FlatEngine
 									CheckJsonFloat(componentJson, "frustrumBlue", objectName),
 									CheckJsonFloat(componentJson, "frustrumAlpha", objectName)
 								));
+								newCamera->SetPerspectiveAngle(CheckJsonFloat(componentJson, "perspectiveAngle", objectName));
+								newCamera->SetNearClippingDistance(CheckJsonFloat(componentJson, "nearClippingDistance", objectName));
+								newCamera->SetFarClippingDistance(CheckJsonFloat(componentJson, "farClippingDistance", objectName));
 								newCamera->SetHorizontalViewAngle(CheckJsonFloat(componentJson, "horizontalViewAngle", objectName));
 								newCamera->SetVerticalViewAngle(CheckJsonFloat(componentJson, "verticalViewAngle", objectName));
 								newCamera->SetShouldFollow(CheckJsonBool(componentJson, "_follow", objectName));

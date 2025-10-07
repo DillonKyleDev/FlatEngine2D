@@ -13,6 +13,9 @@ glslc.exe water.vert -o compiledShaders/waterVert.spv
 glslc.exe water.frag -o compiledShaders/waterFrag.spv
 glslc.exe textureWarp.vert -o compiledShaders/textureWarpVert.spv
 glslc.exe textureWarp.frag -o compiledShaders/textureWarpFrag.spv
-
+glslc.exe heightMap.vert -o compiledShaders/heightMapVert.spv
+glslc.exe heightMap.frag -o compiledShaders/heightMapFrag.spv
+glslc.exe colored.vert -o compiledShaders/coloredVert.spv
+glslc.exe colored.frag -o compiledShaders/coloredFrag.spv
 
 pause
