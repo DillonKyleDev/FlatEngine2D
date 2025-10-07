@@ -1092,13 +1092,13 @@
                     "type": "Transform",
                     "xPosition": 0.699999988079071,
                     "xRotation": 0.0,
-                    "xScale": 3.0,
+                    "xScale": 4.900000095367432,
                     "yPosition": -2.0999999046325684,
                     "yRotation": 0.0,
-                    "yScale": 3.0,
-                    "zPosition": -36.599998474121094,
-                    "zRotation": -13.5,
-                    "zScale": 3.0
+                    "yScale": 5.099999904632568,
+                    "zPosition": -42.099998474121094,
+                    "zRotation": 0.0,
+                    "zScale": 1.0
                 },
                 {
                     "_isActive": true,
@@ -1107,27 +1107,34 @@
                     "materialName": "Water",
                     "modelPath": "..\\projects\\Sandbox\\models\\water.obj",
                     "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\colors\\steel.png"
+                        "0": "..\\projects\\Sandbox\\images\\colors\\twilight.png"
                     },
                     "type": "Mesh",
-                    "uboVec4s": {}
+                    "uboVec4s": {
+                        "Time": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
                 },
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "attachedScript": "Texture (Lua)",
+                    "attachedScript": "Time (Lua)",
                     "id": 36,
                     "scriptParameters": [],
                     "type": "Script"
                 }
             ],
             "id": 10,
-            "name": "Waves",
+            "name": "Water",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.699999988079071,
             "spawnLocationY": -2.0999999046325684,
-            "spawnLocationZ": -36.599998474121094,
+            "spawnLocationZ": -42.099998474121094,
             "tags": [
                 {
                     "Ball": false
@@ -2288,7 +2295,7 @@
                     "xPosition": -5.900000095367432,
                     "xRotation": 0.0,
                     "xScale": 0.20000000298023224,
-                    "yPosition": 1.2000000476837158,
+                    "yPosition": 3.200000047683716,
                     "yRotation": 0.0,
                     "yScale": 0.20000000298023224,
                     "zPosition": 2.9000000953674316,
@@ -2328,14 +2335,6 @@
                     },
                     "type": "Mesh",
                     "uboVec4s": {}
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "attachedScript": "MoveCamera (Lua)",
-                    "id": 60,
-                    "scriptParameters": [],
-                    "type": "Script"
                 }
             ],
             "id": 21,
@@ -2343,7 +2342,7 @@
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": -5.900000095367432,
-            "spawnLocationY": 1.2000000476837158,
+            "spawnLocationY": 3.200000047683716,
             "spawnLocationZ": 2.9000000953674316,
             "tags": [
                 {
@@ -2482,14 +2481,14 @@
                     "id": 61,
                     "type": "Transform",
                     "xPosition": 0.0,
-                    "xRotation": 0.0,
-                    "xScale": 1.0,
+                    "xRotation": 90.0,
+                    "xScale": 1000.0,
                     "yPosition": 3.200000047683716,
                     "yRotation": 0.0,
-                    "yScale": 1.0,
+                    "yScale": 1000.0,
                     "zPosition": 0.0,
                     "zRotation": 0.0,
-                    "zScale": 1.0
+                    "zScale": 1000.0
                 },
                 {
                     "_isActive": true,
@@ -2498,7 +2497,7 @@
                     "materialName": "Unlit",
                     "modelPath": "..\\projects\\Sandbox\\models\\skySphere.obj",
                     "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\colors\\steel.png"
+                        "0": "..\\projects\\Sandbox\\images\\blueSky.png"
                     },
                     "type": "Mesh",
                     "uboVec4s": {}

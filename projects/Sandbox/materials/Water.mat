@@ -16,6 +16,8 @@
     "texturesShaderStageData": {
         "0": 16
     },
-    "uboVec4Names": {},
+    "uboVec4Names": {
+        "0": "Time"
+    },
     "vertexShaderPath": "../projects/Sandbox/shaders/compiledShaders/waterVert.spv"
 }

@@ -412,7 +412,7 @@
                     "_isCollapsed": false,
                     "id": 6,
                     "type": "Transform",
-                    "xPosition": -10.0,
+                    "xPosition": 0.0,
                     "xRotation": 0.0,
                     "xScale": 1.0,
                     "yPosition": 0.0,
@@ -439,182 +439,8 @@
             "name": "Monkey UV",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": -10.0,
-            "spawnLocationY": 0.0,
-            "spawnLocationZ": 0.0,
-            "tags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ]
-        },
-        {
-            "_isActive": true,
-            "_isPersistant": false,
-            "_isPrefab": false,
-            "children": [],
-            "collidesTags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ],
-            "components": [
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 8,
-                    "type": "Transform",
-                    "xPosition": 0.0,
-                    "xRotation": 0.0,
-                    "xScale": 1.0,
-                    "yPosition": 3.0,
-                    "yRotation": 0.0,
-                    "yScale": 1.0,
-                    "zPosition": 0.0,
-                    "zRotation": 0.0,
-                    "zScale": 1.0
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 9,
-                    "materialName": "Water",
-                    "modelPath": "..\\projects\\Sandbox\\models\\monkey.obj",
-                    "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\colors\\light.png"
-                    },
-                    "type": "Mesh",
-                    "uboVec4s": {}
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "attachedScript": "Texture (Lua)",
-                    "id": 43,
-                    "scriptParameters": [],
-                    "type": "Script"
-                }
-            ],
-            "id": 4,
-            "name": "Monkey Sin Wave",
-            "parent": -1,
-            "prefabName": "",
             "spawnLocationX": 0.0,
-            "spawnLocationY": 3.0,
+            "spawnLocationY": 0.0,
             "spawnLocationZ": 0.0,
             "tags": [
                 {
@@ -1266,11 +1092,11 @@
                     "type": "Transform",
                     "xPosition": 0.699999988079071,
                     "xRotation": 0.0,
-                    "xScale": 1.2999999523162842,
+                    "xScale": 4.900000095367432,
                     "yPosition": -2.0999999046325684,
-                    "yRotation": 180.0,
-                    "yScale": 0.7009999752044678,
-                    "zPosition": 15.899999618530273,
+                    "yRotation": 0.0,
+                    "yScale": 5.099999904632568,
+                    "zPosition": -42.099998474121094,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
@@ -1281,27 +1107,34 @@
                     "materialName": "Water",
                     "modelPath": "..\\projects\\Sandbox\\models\\water.obj",
                     "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\colors\\stream.png"
+                        "0": "..\\projects\\Sandbox\\images\\colors\\twilight.png"
                     },
                     "type": "Mesh",
-                    "uboVec4s": {}
+                    "uboVec4s": {
+                        "Time": {
+                            "w": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
                 },
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "attachedScript": "Texture (Lua)",
+                    "attachedScript": "Time (Lua)",
                     "id": 36,
                     "scriptParameters": [],
                     "type": "Script"
                 }
             ],
             "id": 10,
-            "name": "Waves",
+            "name": "Water",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.699999988079071,
             "spawnLocationY": -2.0999999046325684,
-            "spawnLocationZ": 15.899999618530273,
+            "spawnLocationZ": -42.099998474121094,
             "tags": [
                 {
                     "Ball": false
@@ -2294,22 +2127,23 @@
                     "type": "Transform",
                     "xPosition": 0.0,
                     "xRotation": 0.0,
-                    "xScale": 1.0,
+                    "xScale": 10.0,
                     "yPosition": 0.0,
                     "yRotation": 0.0,
-                    "yScale": 1.0,
-                    "zPosition": -7.800000190734863,
+                    "yScale": 10.0,
+                    "zPosition": -45.79999923706055,
                     "zRotation": 0.0,
-                    "zScale": 1.0
+                    "zScale": 10.0
                 },
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
                     "id": 56,
-                    "materialName": "Unlit",
+                    "materialName": "HeightMap",
                     "modelPath": "..\\projects\\Sandbox\\models\\water.obj",
                     "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\marble-heights.png"
+                        "0": "..\\projects\\Sandbox\\images\\marble-heights.png",
+                        "1": "..\\projects\\Sandbox\\images\\marble-heights.png"
                     },
                     "type": "Mesh",
                     "uboVec4s": {}
@@ -2321,7 +2155,7 @@
             "prefabName": "",
             "spawnLocationX": 0.0,
             "spawnLocationY": 0.0,
-            "spawnLocationZ": -7.800000190734863,
+            "spawnLocationZ": -45.79999923706055,
             "tags": [
                 {
                     "Ball": false
@@ -2458,14 +2292,14 @@
                     "_isCollapsed": false,
                     "id": 57,
                     "type": "Transform",
-                    "xPosition": -8.899999618530273,
+                    "xPosition": -5.900000095367432,
                     "xRotation": 0.0,
                     "xScale": 0.20000000298023224,
-                    "yPosition": -3.0999999046325684,
+                    "yPosition": 3.200000047683716,
                     "yRotation": 0.0,
                     "yScale": 0.20000000298023224,
                     "zPosition": 2.9000000953674316,
-                    "zRotation": 0.0,
+                    "zRotation": -150.5,
                     "zScale": 0.20000000298023224
                 },
                 {
@@ -2473,6 +2307,7 @@
                     "_isActive": true,
                     "_isCollapsed": false,
                     "_isPrimaryCamera": true,
+                    "farClippingDistance": 1000.0,
                     "followSmoothing": 0.10000000149011612,
                     "following": -1,
                     "frustrumAlpha": 255.0,
@@ -2480,8 +2315,9 @@
                     "frustrumGreen": 255.0,
                     "frustrumRed": 255.0,
                     "height": 30.0,
-                    "horizontalViewAngle": 0.0,
+                    "horizontalViewAngle": -150.5,
                     "id": 58,
+                    "nearClippingDistance": 0.009999999776482582,
                     "perspectiveAngle": 90.0,
                     "type": "Camera",
                     "verticalViewAngle": 0.0,
@@ -2499,22 +2335,14 @@
                     },
                     "type": "Mesh",
                     "uboVec4s": {}
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "attachedScript": "MoveCamera (Lua)",
-                    "id": 60,
-                    "scriptParameters": [],
-                    "type": "Script"
                 }
             ],
             "id": 21,
             "name": "Camera",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": -8.899999618530273,
-            "spawnLocationY": -3.0999999046325684,
+            "spawnLocationX": -5.900000095367432,
+            "spawnLocationY": 3.200000047683716,
             "spawnLocationZ": 2.9000000953674316,
             "tags": [
                 {
@@ -2653,245 +2481,38 @@
                     "id": 61,
                     "type": "Transform",
                     "xPosition": 0.0,
-                    "xRotation": 0.0,
-                    "xScale": 1.0,
-                    "yPosition": 0.0,
+                    "xRotation": 90.0,
+                    "xScale": 1000.0,
+                    "yPosition": 3.200000047683716,
                     "yRotation": 0.0,
-                    "yScale": 1.0,
+                    "yScale": 1000.0,
                     "zPosition": 0.0,
                     "zRotation": 0.0,
-                    "zScale": 1.0
+                    "zScale": 1000.0
                 },
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "attachedScript": "SpawnItems (Lua)",
                     "id": 62,
-                    "scriptParameters": [],
-                    "type": "Script"
+                    "materialName": "Unlit",
+                    "modelPath": "..\\projects\\Sandbox\\models\\skySphere.obj",
+                    "textures": {
+                        "0": "..\\projects\\Sandbox\\images\\blueSky.png"
+                    },
+                    "type": "Mesh",
+                    "uboVec4s": {}
                 }
             ],
             "id": 22,
-            "name": "Spawner",
+            "name": "Sky",
             "parent": -1,
             "prefabName": "",
             "spawnLocationX": 0.0,
-            "spawnLocationY": 0.0,
+            "spawnLocationY": 3.200000047683716,
             "spawnLocationZ": 0.0,
             "tags": [
                 {
                     "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ]
-        },
-        {
-            "_isActive": true,
-            "_isPersistant": false,
-            "_isPrefab": true,
-            "children": [],
-            "collidesTags": [
-                {
-                    "Ball": true
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": true
-                },
-                {
-                    "Wall": false
-                }
-            ],
-            "components": [
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 63,
-                    "type": "Transform",
-                    "xPosition": -5.5,
-                    "xRotation": 0.0,
-                    "xScale": 1.0,
-                    "yPosition": -2.4000000953674316,
-                    "yRotation": -9.454909324645996,
-                    "yScale": 1.0,
-                    "zPosition": 0.0,
-                    "zRotation": 0.0,
-                    "zScale": 1.0
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 64,
-                    "materialName": "Lit",
-                    "modelPath": "..\\projects\\Sandbox\\models\\icoSphere.obj",
-                    "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\colors\\orange.png"
-                    },
-                    "type": "Mesh",
-                    "uboVec4s": {
-                        "Smoothness": {
-                            "w": 0.0,
-                            "x": 0.029999999329447746,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "_lockedRotation": false,
-                    "_lockedXAxis": false,
-                    "_lockedYAxis": false,
-                    "angularDamping": 0.0,
-                    "bodyType": 2,
-                    "gravityScale": 1.0,
-                    "id": 65,
-                    "linearDamping": 0.0,
-                    "shapes": [
-                        {
-                            "_enableContactEvents": true,
-                            "_enableSensorEvents": true,
-                            "_horizontal": false,
-                            "_isLoop": false,
-                            "_isSensor": false,
-                            "capsuleLength": 4.0,
-                            "cornerRadius": 0.0,
-                            "density": 1.0,
-                            "friction": 0.800000011920929,
-                            "height": 1.0,
-                            "points": [],
-                            "radius": 1.0,
-                            "restitution": 0.800000011920929,
-                            "rollingResistance": 0.0,
-                            "rotationOffsetCos": 1.0,
-                            "rotationOffsetSin": 0.0,
-                            "shape": 2,
-                            "tangentSpeed": 0.0,
-                            "width": 1.0,
-                            "xOffset": 0.0,
-                            "yOffset": 0.0
-                        }
-                    ],
-                    "type": "Body"
-                }
-            ],
-            "id": 23,
-            "name": "IcoSphere",
-            "parent": -1,
-            "prefabName": "IcoSphere",
-            "spawnLocationX": -5.5,
-            "spawnLocationY": -2.4000000953674316,
-            "spawnLocationZ": 0.0,
-            "tags": [
-                {
-                    "Ball": true
                 },
                 {
                     "Collectable": false
