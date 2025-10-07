@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "TagList.h"
 #include "Vector2.h"
+#include "Vector3.h"
 #include "Physics.h"
 
 #include <string>
@@ -45,8 +46,8 @@ namespace FlatEngine
 		bool IsPrefabChild();
 		void SetPrefabName(std::string newPrefabName);
 		std::string GetPrefabName();
-		void SetPrefabSpawnLocation(Vector2 newSpawnLocation);
-		Vector2 GetPrefabSpawnLocation();
+		void SetPrefabSpawnLocation(Vector3 newSpawnLocation);
+		Vector3 GetPrefabSpawnLocation();
 		void SetID(long ID);
 		long GetID();
 		void SetName(std::string name);
@@ -135,7 +136,7 @@ namespace FlatEngine
 		bool m_b_isPrefab;
 		bool m_b_isPrefabsChild;
 		std::string m_prefabName;
-		Vector2 m_prefabSpawnLocation;
+		Vector3 m_prefabSpawnLocation;
 		TagList m_tagList;
 		long m_ID;
 		long m_parentID;

@@ -1058,7 +1058,7 @@ namespace FlatEngine
 		AddMappingContext(filePath);
 	}
 
-	GameObject* CreateAssetUsingFilePath(std::string filePath, Vector2 position)
+	GameObject* CreateAssetUsingFilePath(std::string filePath, Vector3 position)
 	{
 		std::string extension = std::filesystem::path(filePath).extension().string();
 
@@ -2077,7 +2077,7 @@ namespace FlatEngine
 		F_PrefabManager->InitializePrefabs();
 	}
 
-	GameObject *Instantiate(std::string prefabName, Vector2 position, Scene* scene, long parentID, long ID)
+	GameObject *Instantiate(std::string prefabName, Vector3 position, Scene* scene, long parentID, long ID)
 	{
 		return F_PrefabManager->Instantiate(prefabName, position, scene, parentID, ID);
 	}
@@ -3005,7 +3005,7 @@ namespace FlatEngine
 		}
 		
 		std::string objectName = currentObject.GetName();
-		Vector2 spawnLocation = currentObject.GetPrefabSpawnLocation();
+		Vector3 spawnLocation = currentObject.GetPrefabSpawnLocation();
 		if (currentObject.HasComponent("Transform"))
 		{
 			spawnLocation = currentObject.GetTransform()->GetPosition();
@@ -3017,6 +3017,7 @@ namespace FlatEngine
 			{ "prefabName", currentObject.GetPrefabName() },
 			{ "spawnLocationX", spawnLocation.x },
 			{ "spawnLocationY", spawnLocation.y },
+			{ "spawnLocationZ", spawnLocation.z },
 			{ "name", objectName },
 			{ "id", currentObject.GetID() },
 			{ "_isActive", currentObject.IsActive() },
@@ -3370,9 +3371,10 @@ namespace FlatEngine
 		bool b_isPrefab = CheckJsonBool(objectJson, "_isPrefab", objectName);
 		bool b_isPersistant = CheckJsonBool(objectJson, "_isPersistant", objectName);
 		std::string prefabName = CheckJsonString(objectJson, "prefabName", objectName);
-		Vector2 spawnLocation = Vector2(0, 0);
+		Vector3 spawnLocation = Vector3(0, 0, 0);
 		spawnLocation.x = CheckJsonFloat(objectJson, "spawnLocationX", objectName); // SetOrigin() is taken care of by Instantiate() using parentID
 		spawnLocation.y = CheckJsonFloat(objectJson, "spawnLocationY", objectName);
+		spawnLocation.z = CheckJsonFloat(objectJson, "spawnLocationZ", objectName);
 		long loadedID = CheckJsonLong(objectJson, "id", objectName);
 		long loadedParentID = CheckJsonLong(objectJson, "parent", objectName);
 		std::vector<long> loadedChildrenIDs = std::vector<long>();

@@ -6,6 +6,7 @@
 #include "LogicalDevice.h"
 #include "RenderPass.h"
 #include "Vector4.h"
+#include "WinSys.h"
 
 #include <memory>
 #include <string>
@@ -20,18 +21,18 @@ namespace FlatEngine
 	{
 	public:
 		Mesh(GameObject* parent, long myID = -1, long parentID = -1);
-		~Mesh();
+		~Mesh();		
 		std::string GetData();
 		void CleanupTextures();
+		void CleanupUniformBuffers();
 		void Cleanup();
 
+		void Init(WinSys* winSystem, LogicalDevice* logicalDevice);
 		GameObject* GetParentPtr();
 		bool Initialized();
 		bool MissingTextures();		
 		void SetModel(std::string modelPath);
-		Model& GetSceneViewModel();
-		Model& GetGameViewModel();
-		void CreateModelResources(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
+		std::shared_ptr<Model> GetModel();
 		void SetMaterial(std::string materialName);
 		std::shared_ptr<Material> GetSceneViewMaterial();
 		std::shared_ptr<Material> GetGameViewMaterial();
@@ -39,20 +40,22 @@ namespace FlatEngine
 		void CreateResources();
 		void AddTexture(std::string path, uint32_t index);
 		void AddTexture(Texture texture, uint32_t index);
-		void AddTextureLua(std::string path, int index);
-		//std::vector<Texture>& GetTextures();
+		void AddTextureLua(std::string path, int index);		
 		std::map<uint32_t, Texture>& GetTextures();
 		void CreateTextureResources();
 		std::vector<VkDescriptorSet>& GetSceneViewDescriptorSets();
 		std::vector<VkDescriptorSet>& GetGameViewDescriptorSets();
 		std::vector<VkDescriptorSet>& GetEmptySceneViewDescriptorSets();
 		std::vector<VkDescriptorSet>& GetEmptyGameViewDescriptorSets();
+		void CreateUniformBuffers();
+		void UpdateUniformBuffer(ViewportType viewportType, bool b_orthographic);
+		std::vector<VkBuffer>& GetSceneViewUniformBuffers();
+		std::vector<VkBuffer>& GetGameViewUniformBuffers();		
 		std::map<std::string, glm::vec4>& GetUBOVec4s();
 		void SetUBOVec4(std::string name, Vector4 value);
 
 	private:
-		Model m_sceneViewModel; // Maybe just have individual m_uniformBuffersMapped instead of 2 separate Models
-		Model m_gameViewModel;
+		std::shared_ptr<Model> m_model;
 		std::string m_materialName;
 		std::shared_ptr<Material> m_sceneViewMaterial;		
 		std::shared_ptr<Material> m_gameViewMaterial;
@@ -61,6 +64,12 @@ namespace FlatEngine
 		std::vector<VkDescriptorSet> m_gameViewDescriptorSets;
 		std::vector<VkDescriptorSet> m_emptySceneViewDescriptorSets;
 		std::vector<VkDescriptorSet> m_emptyGameViewDescriptorSets;
+		std::vector<VkBuffer> m_sceneViewUniformBuffers;
+		std::vector<VkDeviceMemory> m_sceneViewUniformBuffersMemory;
+		std::vector<void*> m_sceneViewUniformBuffersMapped;
+		std::vector<VkBuffer> m_gameViewUniformBuffers;
+		std::vector<VkDeviceMemory> m_gameViewUniformBuffersMemory;
+		std::vector<void*> m_gameViewUniformBuffersMapped;
 		int m_allocationPoolIndex;
 		bool m_b_initialized;
 		bool m_b_missingTextures;
@@ -71,5 +80,6 @@ namespace FlatEngine
 		// handles
 		GameObject* m_parent;
 		LogicalDevice* m_logicalDevice;
+		WinSys* m_winSystem;
 	};
 }

@@ -229,7 +229,7 @@ namespace FlatEngine
 		}
 	}
 
-	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures)
+	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures)
 	{
 		if (m_type != AllocatorType::Null)
 		{
@@ -257,12 +257,12 @@ namespace FlatEngine
 				std::vector<VkWriteDescriptorSet> descriptorWrites{};
 				descriptorWrites.resize(newSize);
 
-				if (model.GetModelPath() != "")
+				if (uniformBuffers.size())
 				{
 					descriptorWrites.resize(newSize + (size_t)1);
 
 					VkDescriptorBufferInfo bufferInfo{};
-					bufferInfo.buffer = model.GetUniformBuffers()[i];
+					bufferInfo.buffer = uniformBuffers[i];
 					bufferInfo.offset = 0;
 					bufferInfo.range = sizeof(CustomUBO);
 

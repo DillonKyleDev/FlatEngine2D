@@ -31,7 +31,7 @@ namespace FlatEngine
 		m_b_isPrefab = false;
 		m_prefabName = "";
 		m_b_isPrefabsChild = false;
-		m_prefabSpawnLocation = Vector2();
+		m_prefabSpawnLocation = Vector3(0,0,0);
 		m_tagList = TagList(m_ID);
 		m_parentID = newParentID;
 		m_name = "GameObject(" + std::to_string(m_ID) + ")";
@@ -77,12 +77,12 @@ namespace FlatEngine
 		return m_prefabName;
 	}
 
-	void GameObject::SetPrefabSpawnLocation(Vector2 spawnLocation)
+	void GameObject::SetPrefabSpawnLocation(Vector3 spawnLocation)
 	{
 		m_prefabSpawnLocation = spawnLocation;
 	}
 
-	Vector2 GameObject::GetPrefabSpawnLocation()
+	Vector3 GameObject::GetPrefabSpawnLocation()
 	{
 		return m_prefabSpawnLocation;
 	}
@@ -738,6 +738,7 @@ namespace FlatEngine
 		if (meshPtr != nullptr)
 		{
 			m_components.push_back(meshPtr);
+			meshPtr->Init(&F_VulkanManager->GetWinSystem(), &F_VulkanManager->GetLogicalDevice());
 		}
 		return meshPtr;
 	}

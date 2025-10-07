@@ -14,17 +14,20 @@ function Start()
      -- required to access instance data
      local data = GetInstanceData("SpawnItems", my_id)
 
-     for i = 0, 10, 1
+     for i = 0, 50, 1
      do
-          local object = CreateGameObject()
-          local mesh = object:AddMesh()
-          mesh:AddTexture("../engine/images/colors/green.png", 0)
-          mesh:SetMaterial("Unlit")
-          mesh:SetModel("../engine/models/monkey.obj")
-          mesh:CreateResources()
-          local transform = object:GetTransform()
-          local pos = Vector3:new(RandomFloat(-10.0,10.0),RandomFloat(-10.0,10.0),RandomFloat(-10.0,10.0))
-          transform:SetPosition(pos)
+          -- local object = CreateGameObject()
+          -- local mesh = object:AddMesh()
+          -- mesh:AddTexture("../engine/images/colors/green.png", 0)
+          -- mesh:SetMaterial("Unlit")
+          -- mesh:SetModel("../engine/models/monkey.obj")
+          -- mesh:CreateResources()
+          -- local transform = object:GetTransform()
+          -- local pos = Vector3:new(RandomFloat(-10.0,10.0),RandomFloat(-10.0,10.0),RandomFloat(-10.0,10.0))
+          -- transform:SetPosition(pos)
+          local force = Vector2:new(RandomFloat(-1000.0,1000.0),RandomFloat(5000.0,7000.0))
+          local ball = Instantiate("IcoSphere", Vector3:new(0,0,0))
+          ball:GetBody():ApplyForceToCenter(force)
      end
 end
 

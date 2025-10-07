@@ -1,7 +1,5 @@
 #include "Model.h"
 #include "VulkanManager.h"
-#include "Camera.h"
-#include "Transform.h"
 #include "FlatEngine.h"
 
 #define TINYOBJLOADER_IMPLEMENTATION // Loading obj files
@@ -15,7 +13,10 @@ namespace FlatEngine
 {
     Model::Model()
     {
-        m_winSystem = &F_VulkanManager->GetWinSystem();
+        m_winSystem = VK_NULL_HANDLE;
+        m_physicalDevice = nullptr;
+        m_logicalDevice = nullptr;
+        m_commandPool = nullptr;
         m_modelPath = "";
         m_vertices = std::vector<Vertex>();
         m_indices = std::vector<uint32_t>();
@@ -23,47 +24,28 @@ namespace FlatEngine
         m_indexBuffer = VK_NULL_HANDLE;
         m_indexBufferMemory = VK_NULL_HANDLE;
         m_vertexBufferMemory = VK_NULL_HANDLE;
-        m_uniformBuffers = std::vector<VkBuffer>();
-        m_uniformBuffersMemory = std::vector<VkDeviceMemory>();
-        m_uniformBuffersMapped = std::vector<void*>();
     }
 
     Model::~Model()
     {
     }
 
-    void Model::CleanupUniformBuffers(LogicalDevice& logicalDevice)
-    {
-        for (size_t i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
-        {
-            F_VulkanManager->QueueBufferDeletion(m_uniformBuffers[i]);
-            F_VulkanManager->QueueDeviceMemoryDeletion(m_uniformBuffersMemory[i]);
-            //vkDestroyBuffer(logicalDevice.GetDevice(), m_uniformBuffers[i], nullptr);
-            //vkFreeMemory(logicalDevice.GetDevice(), m_uniformBuffersMemory[i], nullptr);
-        }
-    }
-
-    void Model::CleanupIndexBuffers(LogicalDevice& logicalDevice)
+    void Model::CleanupIndexBuffers()
     {
         F_VulkanManager->QueueBufferDeletion(m_indexBuffer);
         F_VulkanManager->QueueDeviceMemoryDeletion(m_indexBufferMemory);
-        //vkDestroyBuffer(logicalDevice.GetDevice(), m_indexBuffer, nullptr);
-        //vkFreeMemory(logicalDevice.GetDevice(), m_indexBufferMemory, nullptr);
     }
 
-    void Model::CleanupVertexBuffers(LogicalDevice& logicalDevice)
+    void Model::CleanupVertexBuffers()
     {
         F_VulkanManager->QueueBufferDeletion(m_vertexBuffer);
         F_VulkanManager->QueueDeviceMemoryDeletion(m_vertexBufferMemory);
-        //vkDestroyBuffer(logicalDevice.GetDevice(), m_vertexBuffer, nullptr);
-        //vkFreeMemory(logicalDevice.GetDevice(), m_vertexBufferMemory, nullptr);
     }
 
-    void Model::Cleanup(LogicalDevice& logicalDevice)
+    void Model::Cleanup()
     {
-        CleanupUniformBuffers(logicalDevice);
-        CleanupIndexBuffers(logicalDevice);
-        CleanupVertexBuffers(logicalDevice);
+        CleanupIndexBuffers();
+        CleanupVertexBuffers();
     }
 
 
@@ -77,118 +59,139 @@ namespace FlatEngine
         return m_modelPath;
     }
 
-    void Model::LoadModel()
+    void Model::Init(WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, VkCommandPool* commandPool)
+    {
+        m_winSystem = winSystem;
+        m_physicalDevice = physicalDevice;
+        m_logicalDevice = logicalDevice;
+        m_commandPool = commandPool;
+    }
+
+    void Model::LoadModel(std::string path)
     {
         // Refer to - https://vulkan-tutorial.com/en/Loading_models
 
-        tinyobj::attrib_t attrib;
-        std::vector<tinyobj::shape_t> shapes;
-        std::vector<tinyobj::material_t> materials;
-        std::string warn, err;
-
-        std::unordered_map<Vertex, uint32_t> uniqueVertices{};
-
-        if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, m_modelPath.c_str()))
+        if (path != "")
         {
-            throw std::runtime_error(warn + err);
-        }
+            m_modelPath = path;
 
-        m_vertices.clear();
-        m_indices.clear();
+            tinyobj::attrib_t attrib;
+            std::vector<tinyobj::shape_t> shapes;
+            std::vector<tinyobj::material_t> materials;
+            std::string warn, err;
 
-        for (const auto& shape : shapes)
-        {
-            // For mesh inputs (triangles)
-            if (shape.mesh.indices.size())
+            std::unordered_map<Vertex, uint32_t> uniqueVertices{};
+
+            if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, m_modelPath.c_str()))
             {
-                for (const auto& index : shape.mesh.indices)
-                {
-                    Vertex vertex{};
-
-                    vertex.pos =
-                    {
-                        attrib.vertices[3 * index.vertex_index + 0],
-                        attrib.vertices[3 * index.vertex_index + 1],
-                        attrib.vertices[3 * index.vertex_index + 2]
-                    };
-
-                    vertex.texCoord =
-                    {
-                        attrib.texcoords[2 * index.texcoord_index + 0],
-                        1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
-                    };
-
-                    vertex.color = { 1.0f, 1.0f, 1.0f };
-
-                    vertex.normal =
-                    {
-                        attrib.normals[3 * index.normal_index + 0],
-                        attrib.normals[3 * index.normal_index + 1],
-                        attrib.normals[3 * index.normal_index + 2]
-                    };
-
-                    // Keep only unique vertices
-                    if (uniqueVertices.count(vertex) == 0)
-                    {
-                        uniqueVertices[vertex] = static_cast<uint32_t>(m_vertices.size());
-                        m_vertices.push_back(vertex);
-                    }
-
-                    m_indices.push_back(uniqueVertices[vertex]);
-
-                    //m_indices.push_back(static_cast<uint32_t>(m_vertices.size()));
-                    //m_vertices.push_back(vertex);
-                }
+                throw std::runtime_error(warn + err);
             }
-            // For line inputs.. TODO: Should query topology member in PipelineManager and switch
-            else
+
+            m_vertices.clear();
+            m_indices.clear();
+
+            for (const auto& shape : shapes)
             {
-                for (const auto& index : shape.lines.indices)
+                // For mesh inputs (triangles)
+                if (shape.mesh.indices.size())
                 {
-                    Vertex vertex{};
-
-                    vertex.pos =
+                    for (const auto& index : shape.mesh.indices)
                     {
-                        attrib.vertices[3 * index.vertex_index + 0],
-                        attrib.vertices[3 * index.vertex_index + 1],
-                        attrib.vertices[3 * index.vertex_index + 2]
-                    };
+                        Vertex vertex{};
 
-                    if (attrib.texcoords.size())
-                    {
+                        vertex.pos =
+                        {
+                            attrib.vertices[3 * index.vertex_index + 0],
+                            attrib.vertices[3 * index.vertex_index + 1],
+                            attrib.vertices[3 * index.vertex_index + 2]
+                        };
+
                         vertex.texCoord =
                         {
                             attrib.texcoords[2 * index.texcoord_index + 0],
                             1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
                         };
-                    }
 
-                    vertex.color = { 1.0f, 1.0f, 1.0f };
+                        vertex.color = { 1.0f, 1.0f, 1.0f };
 
-                    if (attrib.normals.size())
-                    {
                         vertex.normal =
                         {
                             attrib.normals[3 * index.normal_index + 0],
                             attrib.normals[3 * index.normal_index + 1],
                             attrib.normals[3 * index.normal_index + 2]
                         };
-                    }
 
-                    // Keep only unique vertices
-                    if (uniqueVertices.count(vertex) == 0)
+                        // Keep only unique vertices
+                        if (uniqueVertices.count(vertex) == 0)
+                        {
+                            uniqueVertices[vertex] = static_cast<uint32_t>(m_vertices.size());
+                            m_vertices.push_back(vertex);
+                        }
+
+                        m_indices.push_back(uniqueVertices[vertex]);
+
+                        //m_indices.push_back(static_cast<uint32_t>(m_vertices.size()));
+                        //m_vertices.push_back(vertex);
+                    }
+                }
+                // For line inputs.. TODO: Should query topology member in PipelineManager and switch
+                else
+                {
+                    for (const auto& index : shape.lines.indices)
                     {
-                        uniqueVertices[vertex] = static_cast<uint32_t>(m_vertices.size());
-                        m_vertices.push_back(vertex);
-                    }
+                        Vertex vertex{};
 
-                    m_indices.push_back(uniqueVertices[vertex]);
+                        vertex.pos =
+                        {
+                            attrib.vertices[3 * index.vertex_index + 0],
+                            attrib.vertices[3 * index.vertex_index + 1],
+                            attrib.vertices[3 * index.vertex_index + 2]
+                        };
+
+                        if (attrib.texcoords.size())
+                        {
+                            vertex.texCoord =
+                            {
+                                attrib.texcoords[2 * index.texcoord_index + 0],
+                                1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
+                            };
+                        }
+
+                        vertex.color = { 1.0f, 1.0f, 1.0f };
+
+                        if (attrib.normals.size())
+                        {
+                            vertex.normal =
+                            {
+                                attrib.normals[3 * index.normal_index + 0],
+                                attrib.normals[3 * index.normal_index + 1],
+                                attrib.normals[3 * index.normal_index + 2]
+                            };
+                        }
+
+                        // Keep only unique vertices
+                        if (uniqueVertices.count(vertex) == 0)
+                        {
+                            uniqueVertices[vertex] = static_cast<uint32_t>(m_vertices.size());
+                            m_vertices.push_back(vertex);
+                        }
+
+                        m_indices.push_back(uniqueVertices[vertex]);
+                    }
                 }
             }
+
+            CreateResources();
         }
     }
 
-    void Model::CreateVertexBuffer(VkCommandPool& commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
+    void Model::CreateResources()
+    {
+        CreateVertexBuffer();
+        CreateIndexBuffer();
+    }
+
+    void Model::CreateVertexBuffer()
     {
         // Create staging buffer for control from the cpu
         // Refer to - https://vulkan-tutorial.com/en/Vertex_buffers/Staging_buffer
@@ -200,22 +203,22 @@ namespace FlatEngine
         m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
         void* data;
-        vkMapMemory(logicalDevice.GetDevice(), stagingBufferMemory, 0, bufferSize, 0, &data);
+        vkMapMemory(m_logicalDevice->GetDevice(), stagingBufferMemory, 0, bufferSize, 0, &data);
         memcpy(data, m_vertices.data(), (size_t)bufferSize);
-        vkUnmapMemory(logicalDevice.GetDevice(), stagingBufferMemory);
+        vkUnmapMemory(m_logicalDevice->GetDevice(), stagingBufferMemory);
 
         // Create device local vertex buffer for actual buffer
         m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_vertexBuffer, m_vertexBufferMemory);
 
         // We can now call copyBuffer function to move the vertex data to the device local buffer:
-        m_winSystem->CopyBuffer(stagingBuffer, m_vertexBuffer, bufferSize, commandPool);
+        m_winSystem->CopyBuffer(stagingBuffer, m_vertexBuffer, bufferSize, *m_commandPool);
 
         // After copying the data from the staging buffer to the device buffer, we should clean it up:
-        vkDestroyBuffer(logicalDevice.GetDevice(), stagingBuffer, nullptr);
-        vkFreeMemory(logicalDevice.GetDevice(), stagingBufferMemory, nullptr);
+        vkDestroyBuffer(m_logicalDevice->GetDevice(), stagingBuffer, nullptr);
+        vkFreeMemory(m_logicalDevice->GetDevice(), stagingBufferMemory, nullptr);
     }
 
-    void Model::CreateIndexBuffer(VkCommandPool& commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
+    void Model::CreateIndexBuffer()
     {
         // Refer to - https://vulkan-tutorial.com/en/Vertex_buffers/Index_buffer
 
@@ -226,148 +229,16 @@ namespace FlatEngine
         m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
         void* data;
-        vkMapMemory(logicalDevice.GetDevice(), stagingBufferMemory, 0, bufferSize, 0, &data);
+        vkMapMemory(m_logicalDevice->GetDevice(), stagingBufferMemory, 0, bufferSize, 0, &data);
         memcpy(data, m_indices.data(), (size_t)bufferSize);
-        vkUnmapMemory(logicalDevice.GetDevice(), stagingBufferMemory);
+        vkUnmapMemory(m_logicalDevice->GetDevice(), stagingBufferMemory);
 
         m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_indexBuffer, m_indexBufferMemory);
 
-        m_winSystem->CopyBuffer(stagingBuffer, m_indexBuffer, bufferSize, commandPool);
+        m_winSystem->CopyBuffer(stagingBuffer, m_indexBuffer, bufferSize, *m_commandPool);
 
-        vkDestroyBuffer(logicalDevice.GetDevice(), stagingBuffer, nullptr);
-        vkFreeMemory(logicalDevice.GetDevice(), stagingBufferMemory, nullptr);
-    }
-
-    void Model::CreateUniformBuffers(PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
-    {
-        // Refer to - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
-
-        VkDeviceSize bufferSize = sizeof(CustomUBO);
-
-        m_uniformBuffers.resize(VM_MAX_FRAMES_IN_FLIGHT);
-        m_uniformBuffersMemory.resize(VM_MAX_FRAMES_IN_FLIGHT);
-        m_uniformBuffersMapped.resize(VM_MAX_FRAMES_IN_FLIGHT);
-
-        for (size_t i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
-        {
-            m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_uniformBuffers[i], m_uniformBuffersMemory[i]);
-
-            vkMapMemory(logicalDevice.GetDevice(), m_uniformBuffersMemory[i], 0, bufferSize, 0, &m_uniformBuffersMapped[i]);
-        }
-    }
-
-    void Model::UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewportType, bool b_orthographic)
-    {        
-        GameObject* parent = mesh->GetParentPtr();
-        Transform* transform = parent->GetTransform();
-        Vector3 meshPosition = transform->GetPosition();
-        glm::mat4 meshScale = transform->GetScaleMatrix();
-        glm::mat4 meshRotation = transform->GetRotationMatrix();
-        Camera* primaryCamera = nullptr;
-        Vector3 cameraPosition = Vector3();
-        std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
-        std::map<uint32_t, std::string> materialVec4s;
-
-        switch (viewportType)
-        {
-        case ViewportType::SceneView:
-        {
-            primaryCamera = F_sceneViewCameraObject->GetCamera();
-            if (primaryCamera != nullptr)
-            {
-                cameraPosition = F_sceneViewCameraObject->GetTransform()->GetPosition();
-            }
-
-            materialVec4s = mesh->GetSceneViewMaterial()->GetUBOVec4Names();
-            break;
-        }
-        case ViewportType::GameView:
-        {
-            primaryCamera = GetPrimaryCamera();
-            if (primaryCamera != nullptr)
-            {
-                cameraPosition = primaryCamera->GetParent()->GetTransform()->GetPosition();
-            }
-            else
-            {
-                primaryCamera = F_sceneViewCameraObject->GetCamera();
-                cameraPosition = F_sceneViewCameraObject->GetTransform()->GetPosition();
-            }
-
-            materialVec4s = mesh->GetGameViewMaterial()->GetUBOVec4Names();
-            break;
-        }
-        default:
-            break;
-        }
-                 
-        
-        if (primaryCamera != nullptr)
-        {            
-            //glm::mat4 cameraRotation = primaryCamera->GetParentPtr()->GetTransform()->GetRotationMatrix();
-
-            bool b_forceZUp = primaryCamera->ForceZUp();
-            //glm::vec4 lookDir = cameraRotation * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
-            glm::vec4 lookDir = primaryCamera->GetLookDirection();
-            glm::vec4 up;
-
-            if (b_forceZUp)
-            {
-                up = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
-            }
-            else
-            {
-                up = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
-            }
-            
-            glm::vec4 meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);
-            glm::vec4 viewportCameraPos = glm::vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0);
-            glm::mat4 model = meshRotation * meshScale;
-            glm::vec4 cameraLookDir = glm::vec4(lookDir.x, lookDir.y, lookDir.z, 0);
-            glm::mat4 view = glm::lookAt(cameraPosition.GetGLMVec3(), glm::vec3(cameraPosition.x + cameraLookDir.x, cameraPosition.y + cameraLookDir.y, cameraPosition.z + cameraLookDir.z), glm::vec3(up));            
-
-            glm::mat4 projection;
-            if (b_orthographic)
-            {
-                projection = glm::ortho(0.0f, 1.0f, 1.0f, 0.0f, 10.0f, 100000.0f);
-            }
-            else
-            {
-                float nearClip = primaryCamera->GetNearClippingDistance();
-                float farClip = primaryCamera->GetFarClippingDistance();
-                float perspectiveAngle = primaryCamera->GetPerspectiveAngle();
-                float aspectRatio = (float)(winSystem.GetExtent().width / winSystem.GetExtent().height);
-                projection = glm::perspective(glm::radians(perspectiveAngle), aspectRatio, nearClip, farClip);
-                projection[1][1] *= -1;
-            }
-
-            CustomUBO ubo{};
-
-            BaseUBO base{};
-            base.meshPosition = meshPos;
-            base.cameraPosition = viewportCameraPos;
-            base.model = model;
-            base.view = view;            
-            base.projection = projection;
-            ubo.BaseUBO = base;
-
-            int vec4Counter = 0;
-            for (std::map<uint32_t, std::string>::iterator materialVec4 = materialVec4s.begin(); materialVec4 != materialVec4s.end(); materialVec4++)
-            {               
-                if (materialVec4->first <= 32 && uboVec4s.count(materialVec4->second)) // FIX ME: 32 is the size of the uboVec4s array passed to the shaders
-                {
-                    ubo.vec4s[materialVec4->first] = uboVec4s.at(materialVec4->second);
-                    vec4Counter++;
-                }
-            }                              
-
-            memcpy(m_uniformBuffersMapped[VM_currentFrame], &ubo, sizeof(ubo));
-        }
-    }
-
-    std::vector<VkBuffer>& Model::GetUniformBuffers()
-    {
-        return m_uniformBuffers;
+        vkDestroyBuffer(m_logicalDevice->GetDevice(), stagingBuffer, nullptr);
+        vkFreeMemory(m_logicalDevice->GetDevice(), stagingBufferMemory, nullptr);
     }
 
     VkBuffer& Model::GetVertexBuffer()
@@ -380,23 +251,8 @@ namespace FlatEngine
         return m_indexBuffer;
     }
 
-    std::vector<Vertex> Model::GetVertices()
-    {
-        return m_vertices;
-    }
-
-    void Model::SetVertices(std::vector<Vertex> vertices)
-    {
-        m_vertices = vertices;
-    }
-
     std::vector<uint32_t> Model::GetIndices()
     {
         return m_indices;
-    }
-
-    void Model::SetIndices(std::vector<uint32_t> indices)
-    {
-        m_indices = indices;
     }
 }

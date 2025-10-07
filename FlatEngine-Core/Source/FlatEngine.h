@@ -345,7 +345,7 @@ namespace FlatEngine
 	// Prefabs
 	extern void CreatePrefab(std::string path, GameObject& gameObject);
 	extern void InitializePrefabs();
-	extern GameObject *Instantiate(std::string prefabName, Vector2 position, Scene* scene, long parentID = -1, long ID = -1);
+	extern GameObject *Instantiate(std::string prefabName, Vector3 position, Scene* scene, long parentID = -1, long ID = -1);
 
 	// Logging Prettification
 	extern void LogError(std::string line = "", std::string from = "[C++]");
@@ -400,7 +400,7 @@ namespace FlatEngine
 	extern void AddMappingContext(std::string path);
 	extern void CreateNewMappingContextFile(std::string fileName, std::string path = "");
 	extern void CreateNewTileSetFile(std::string fileName, std::string path);
-	extern GameObject* CreateAssetUsingFilePath(std::string filePath, Vector2 position);
+	extern GameObject* CreateAssetUsingFilePath(std::string filePath, Vector3 position);
 
 	// Animation
 	extern void SaveAnimationFile(std::shared_ptr<Animation::S_AnimationProperties> propertiesObject, std::string path);

@@ -23,7 +23,7 @@ namespace FlatEngine
 
 		void Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool = 100);
 		void SetFreed(uint32_t freedFrom);
-		void AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures);
+		void AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures);
 		void ConfigureDescriptorSetLayout(std::vector<VkDescriptorSetLayoutBinding> bindings, VkDescriptorSetLayoutCreateInfo layoutInfo);
 		void CreateDescriptorSetLayout();
 		void CleanupDescriptorSetLayout();

@@ -494,7 +494,7 @@ namespace FlatGui
 				{
 					currentObject.SetIsPrefab(false);
 					currentObject.SetPrefabName("");
-					currentObject.SetPrefabSpawnLocation(Vector2(0, 0));
+					currentObject.SetPrefabSpawnLocation(Vector3(0, 0, 0));
 					ImGui::CloseCurrentPopup();
 				}
 				if (ImGui::MenuItem("Create New Prefab"))
@@ -593,7 +593,7 @@ namespace FlatGui
 				{
 					currentObject.SetIsPrefab(false);
 					currentObject.SetPrefabName("");
-					currentObject.SetPrefabSpawnLocation(Vector2(0, 0));
+					currentObject.SetPrefabSpawnLocation(Vector3(0, 0, 0));
 					ImGui::CloseCurrentPopup();
 				}
 				ImGui::EndPopup();

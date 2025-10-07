@@ -71,7 +71,7 @@ namespace FlatEngine
 		object.tagList = tags;
 
 
-		float objectRotation = 0;
+		Vector3 objectRotation = Vector3();
 		// Loop through the components in this PrefabsJson
 		for (int j = 0; j < objectJson["components"].size(); j++)
 		{
@@ -93,11 +93,10 @@ namespace FlatEngine
 				transform->id = componentID;
 				transform->b_isActive = b_isActive;
 				transform->b_isCollapsed = b_isCollapsed;
-				transform->ownerId = object.ID;
-				transform->rotation = CheckJsonFloat(componentJson, "rotation", objectName);
-				transform->position = Vector2(CheckJsonFloat(componentJson, "xPos", objectName), CheckJsonFloat(componentJson, "yPos", objectName));
-				transform->scale = Vector2(CheckJsonFloat(componentJson, "xScale", objectName), CheckJsonFloat(componentJson, "yScale", objectName));
-				transform->rotation = CheckJsonFloat(componentJson, "rotation", objectName);
+				transform->ownerId = object.ID;				
+				transform->position = Vector3(CheckJsonFloat(componentJson, "xPosition", objectName), CheckJsonFloat(componentJson, "yPosition", objectName), CheckJsonFloat(componentJson, "zPosition", objectName));
+				transform->scale = Vector3(CheckJsonFloat(componentJson, "xScale", objectName), CheckJsonFloat(componentJson, "yScale", objectName), CheckJsonFloat(componentJson, "zScale", objectName));				
+				transform->rotation = Vector3(CheckJsonFloat(componentJson, "xRotation", objectName), CheckJsonFloat(componentJson, "yRotation", objectName), CheckJsonFloat(componentJson, "zRotation", objectName));
 				objectRotation = transform->rotation;
 
 				prefab.components.emplace(componentID, transform);
@@ -487,6 +486,63 @@ namespace FlatEngine
 
 				prefab.components.emplace(componentID, tileMap);
 			}
+			else if (type == "Mesh")
+			{
+				std::shared_ptr<MeshPrefabData> mesh = std::make_shared<MeshPrefabData>();
+				mesh->b_isActive = CheckJsonBool(componentJson, "_isActive", objectName);
+				mesh->type = "Mesh";
+				mesh->ownerId = object.ID;
+				mesh->id = componentID;
+				mesh->b_isActive = b_isActive;
+				mesh->b_isCollapsed = b_isCollapsed;
+				mesh->materialName = CheckJsonString(componentJson, "materialName", objectName);
+				mesh->modelPath = CheckJsonString(componentJson, "modelPath", objectName);
+				mesh->materialName = CheckJsonString(componentJson, "materialName", objectName);
+
+				if (JsonContains(componentJson, "textures", objectName))
+				{
+					json texturesShaderData = componentJson["textures"];
+
+					if (texturesShaderData.size())
+					{
+						for (auto item = texturesShaderData.begin(); item != texturesShaderData.end(); ++item)
+						{
+							try
+							{
+								mesh->texturesByIndex.emplace((uint32_t)std::stoi(item.key()), item.value());
+							}
+							catch (const json::out_of_range& e)
+							{
+								LogError(e.what());
+							}
+						}
+					}
+				}
+
+				std::shared_ptr<Material> material = F_VulkanManager->GetMaterial(mesh->materialName);
+				if (material != nullptr)
+				{
+					if (JsonContains(componentJson, "uboVec4s", objectName))
+					{
+						std::map<uint32_t, std::string>& uboVec4Names = material->GetUBOVec4Names();
+						for (std::map<uint32_t, std::string>::iterator uboVec4Name = uboVec4Names.begin(); uboVec4Name != uboVec4Names.end(); uboVec4Name++)
+						{
+							try
+							{
+								json uboVec4Data = componentJson["uboVec4s"][uboVec4Name->second];
+								Vector4 uboVec4 = Vector4(CheckJsonFloat(uboVec4Data, "x", objectName), CheckJsonFloat(uboVec4Data, "y", objectName), CheckJsonFloat(uboVec4Data, "z", objectName), CheckJsonFloat(uboVec4Data, "w", objectName));
+								mesh->uboVec4s.emplace(uboVec4Name->second, uboVec4);
+							}
+							catch (const json::out_of_range& e)
+							{
+								LogError(e.what());
+							}
+						}
+					}
+				}
+
+				prefab.components.emplace(componentID, mesh);
+			}
 		}
 
 		// Save copy of the root object
@@ -515,7 +571,7 @@ namespace FlatEngine
 		gameObject.SetIsPrefab(false);
 		gameObject.SetPrefabName("");
 		gameObject.SetParentID(-1);
-		gameObject.SetPrefabSpawnLocation(Vector2(0, 0));
+		gameObject.SetPrefabSpawnLocation(Vector3(0, 0, 0));
 
 		prefabObjectJsonArray.push_back(CreateJsonFromObject(gameObject));
 
@@ -577,7 +633,7 @@ namespace FlatEngine
 		printf("Prefabs initialized.\n");
 	}
 
-	GameObject* PrefabManager::InstantiateSelfAndChildren(long parentID, long childIDToFind, Prefab prefab, Scene* scene, Vector2 spawnLocation)
+	GameObject* PrefabManager::InstantiateSelfAndChildren(long parentID, long childIDToFind, Prefab prefab, Scene* scene, Vector3 spawnLocation)
 	{
 		GameObject* self = CreateGameObject(parentID, -1, scene);
 
@@ -608,17 +664,17 @@ namespace FlatEngine
 						Transform* transform = self->GetTransform();
 						transform->SetActive(transformData->b_isActive);
 						transform->SetCollapsed(transformData->b_isCollapsed);
-						//transform->SetScale(transformData->scale);
-						transform->SetZRotation(transformData->rotation);						
+						transform->SetScale(transformData->scale);
+						transform->SetRotation(transformData->rotation);						
 
 						if (parentID != -1)
 						{
 							Vector3 parentPosition = GetObjectByID(parentID)->GetTransform()->GetAbsolutePosition();							
-							//transform->SetPosition(transformData->position);
+							transform->SetPosition(transformData->position);
 						}
 						else
 						{							
-							//transform->SetPosition(spawnLocation);
+							transform->SetPosition(spawnLocation);
 						}
 					}
 					else if (prefab.components.at(componentID)->type == "Sprite")
@@ -798,6 +854,24 @@ namespace FlatEngine
 							tileMap->SetCollisionAreaValues(areaName, collisionAreaPair.second);
 						}
 					}
+					else if (prefab.components.at(componentID)->type == "Mesh")
+					{
+						std::shared_ptr<MeshPrefabData> meshData = std::static_pointer_cast<MeshPrefabData>(prefab.components.at(componentID));
+						Mesh* mesh = self->AddMesh(-1, meshData->b_isActive, meshData->b_isCollapsed);
+						mesh->SetMaterial(meshData->materialName);
+						mesh->SetModel(meshData->modelPath);
+
+						for (std::map<uint32_t, Texture>::iterator texture = meshData->texturesByIndex.begin(); texture != meshData->texturesByIndex.end(); texture++)
+						{
+							mesh->AddTexture(texture->second, texture->first);
+						}
+						for (std::map<std::string, Vector4>::iterator uboVec4 = meshData->uboVec4s.begin(); uboVec4 != meshData->uboVec4s.end(); uboVec4++)
+						{
+							mesh->SetUBOVec4(uboVec4->first, uboVec4->second);
+						}			
+
+						mesh->CreateResources();
+					}
 				}
 			}
 
@@ -850,7 +924,7 @@ namespace FlatEngine
 		return self;
 	}
 
-	GameObject *PrefabManager::Instantiate(std::string prefabName, Vector2 spawnLocation, Scene* scene, long parentID, long ID)
+	GameObject *PrefabManager::Instantiate(std::string prefabName, Vector3 spawnLocation, Scene* scene, long parentID, long ID)
 	{
 		GameObject* rootObject = nullptr;
 

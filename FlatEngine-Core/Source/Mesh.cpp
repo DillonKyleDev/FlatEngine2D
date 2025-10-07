@@ -1,6 +1,10 @@
 #include "Mesh.h"
 #include "FlatEngine.h"
 #include "VulkanManager.h"
+#include "Vector3.h"
+#include "WinSys.h"
+#include "Transform.h"
+#include "Camera.h"
 
 #include "json.hpp"
 using json = nlohmann::json;
@@ -15,8 +19,7 @@ namespace FlatEngine
 		SetParentID(parentID);
 		SetType(T_Mesh);
 
-		m_sceneViewModel = Model();
-		m_gameViewModel = Model();
+		m_model = nullptr;
 		m_sceneViewMaterial = F_VulkanManager->GetMaterial("fl_empty");
 		m_gameViewMaterial = F_VulkanManager->GetMaterial("fl_empty");
 		m_sceneViewDescriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
@@ -32,7 +35,8 @@ namespace FlatEngine
 
 		// handles		
 		m_parent = parent;
-		m_logicalDevice = &F_VulkanManager->GetLogicalDevice();
+		m_winSystem = nullptr;
+		m_logicalDevice = nullptr;
 	}
 
 	Mesh::~Mesh()
@@ -71,6 +75,12 @@ namespace FlatEngine
 			}
 		}
 
+		std::string modelPath = "";
+		if (m_model != nullptr)
+		{
+			modelPath = m_model->GetModelPath();
+		}
+
 		json jsonData = {
 			{ "type", "Mesh"},
 			{ "id", GetID() },
@@ -78,7 +88,7 @@ namespace FlatEngine
 			{ "_isActive", IsActive() },
 			{ "textures", texturesData },
 			{ "materialName", m_materialName },
-			{ "modelPath", m_sceneViewModel.GetModelPath() },
+			{ "modelPath", modelPath },
 			{ "uboVec4s", uboVec4s }
 		};
 
@@ -102,11 +112,29 @@ namespace FlatEngine
 		}
 	}
 
+	void Mesh::CleanupUniformBuffers()
+	{
+		for (size_t i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
+		{
+			F_VulkanManager->QueueBufferDeletion(m_sceneViewUniformBuffers[i]);
+			F_VulkanManager->QueueDeviceMemoryDeletion(m_sceneViewUniformBuffersMemory[i]);
+			F_VulkanManager->QueueBufferDeletion(m_gameViewUniformBuffers[i]);
+			F_VulkanManager->QueueDeviceMemoryDeletion(m_gameViewUniformBuffersMemory[i]);
+		}
+	}
+
 	void Mesh::Cleanup()
 	{				
-		CleanupTextures();		
-		m_sceneViewModel.Cleanup(*m_logicalDevice);
-		m_gameViewModel.Cleanup(*m_logicalDevice);
+		CleanupTextures();	
+		CleanupUniformBuffers();
+	}
+
+	void Mesh::Init(WinSys* winSystem, LogicalDevice* logicalDevice)
+	{
+		m_winSystem = winSystem;
+		m_logicalDevice = logicalDevice;
+
+		CreateUniformBuffers();
 	}
 
 
@@ -127,51 +155,19 @@ namespace FlatEngine
 
 	void Mesh::SetModel(std::string modelPath)
 	{
-		if (m_sceneViewModel.GetModelPath() != "")
-		{
-			m_sceneViewModel.Cleanup(*m_logicalDevice);
-			m_gameViewModel.Cleanup(*m_logicalDevice);
-		}
-
-		m_sceneViewModel.SetModelPath(modelPath);
-		m_gameViewModel.SetModelPath(modelPath);
-
-		if (modelPath != "")
-		{
-			CreateModelResources(FlatEngine::F_VulkanManager->GetCommandPool(), FlatEngine::F_VulkanManager->GetPhysicalDevice(), FlatEngine::F_VulkanManager->GetLogicalDevice());
-		}
-	}
-
-	Model& Mesh::GetSceneViewModel()
-	{
-		return m_sceneViewModel;
-	}
-
-	Model& Mesh::GetGameViewModel()
-	{
-		return m_gameViewModel;
-	}
-
-	void Mesh::CreateModelResources(VkCommandPool commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice)
-	{
-		std::shared_ptr<Model> loadedModel = F_VulkanManager->GetModel(m_sceneViewModel.GetModelPath());
+		std::shared_ptr<Model> loadedModel = F_VulkanManager->GetModel(modelPath);
 
 		if (loadedModel == nullptr)
 		{
-			loadedModel = F_VulkanManager->LoadModel(m_sceneViewModel.GetModelPath());
+			loadedModel = F_VulkanManager->LoadModel(modelPath);
 		}
 
-		m_sceneViewModel.SetVertices(loadedModel->GetVertices());
-		m_sceneViewModel.SetIndices(loadedModel->GetIndices());
-		m_sceneViewModel.CreateVertexBuffer(commandPool, physicalDevice, logicalDevice);
-		m_sceneViewModel.CreateIndexBuffer(commandPool, physicalDevice, logicalDevice);
-		m_sceneViewModel.CreateUniformBuffers(physicalDevice, logicalDevice);
+		m_model = loadedModel;
+	}
 
-		m_gameViewModel.SetVertices(loadedModel->GetVertices());
-		m_gameViewModel.SetIndices(loadedModel->GetIndices());
-		m_gameViewModel.CreateVertexBuffer(commandPool, physicalDevice, logicalDevice);
-		m_gameViewModel.CreateIndexBuffer(commandPool, physicalDevice, logicalDevice);
-		m_gameViewModel.CreateUniformBuffers(physicalDevice, logicalDevice);
+	std::shared_ptr<Model> Mesh::GetModel()
+	{
+		return m_model;
 	}
 
 	void Mesh::SetMaterial(std::string materialName)
@@ -224,7 +220,7 @@ namespace FlatEngine
 		m_b_missingTextures = false;
 		m_b_initialized = true;
 
-		if (m_sceneViewMaterial != nullptr && m_sceneViewModel.GetModelPath() != "")
+		if (m_sceneViewMaterial != nullptr && m_model != nullptr)
 		{
 			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = m_sceneViewMaterial->GetTexturesShaderStages()->begin(); iter != m_sceneViewMaterial->GetTexturesShaderStages()->end(); iter++)
 			{
@@ -239,24 +235,19 @@ namespace FlatEngine
 
 			CreateTextureResources();
 
-			if (m_sceneViewModel.GetModelPath() != "")
-			{
-				CreateModelResources(F_VulkanManager->GetCommandPool(), F_VulkanManager->GetPhysicalDevice(), F_VulkanManager->GetLogicalDevice());
-			}
-
 			if (m_sceneViewMaterial != nullptr)
 			{
-				m_sceneViewMaterial->CreateDescriptorSets(m_sceneViewDescriptorSets, m_sceneViewModel, m_texturesByIndex);
+				m_sceneViewMaterial->CreateDescriptorSets(m_sceneViewDescriptorSets, m_sceneViewUniformBuffers, m_texturesByIndex);
 			}	
 			if (m_gameViewMaterial != nullptr)
 			{
-				m_gameViewMaterial->CreateDescriptorSets(m_gameViewDescriptorSets, m_gameViewModel, m_texturesByIndex);
+				m_gameViewMaterial->CreateDescriptorSets(m_gameViewDescriptorSets, m_gameViewUniformBuffers, m_texturesByIndex);
 			}
 
 			// Create empty material descriptor sets for Scene View and Game View
 			std::map<uint32_t, Texture> emptyTextures = std::map<uint32_t, Texture>();
-			F_VulkanManager->GetMaterial("fl_empty", ViewportType::SceneView)->CreateDescriptorSets(m_emptySceneViewDescriptorSets, m_sceneViewModel, emptyTextures);
-			F_VulkanManager->GetMaterial("fl_empty", ViewportType::GameView)->CreateDescriptorSets(m_emptyGameViewDescriptorSets, m_gameViewModel, emptyTextures);
+			F_VulkanManager->GetMaterial("fl_empty", ViewportType::SceneView)->CreateDescriptorSets(m_emptySceneViewDescriptorSets, m_sceneViewUniformBuffers, emptyTextures);
+			F_VulkanManager->GetMaterial("fl_empty", ViewportType::GameView)->CreateDescriptorSets(m_emptyGameViewDescriptorSets, m_gameViewUniformBuffers, emptyTextures);
 		}
 		else
 		{
@@ -343,6 +334,160 @@ namespace FlatEngine
 	std::vector<VkDescriptorSet>& Mesh::GetEmptyGameViewDescriptorSets()
 	{
 		return m_emptyGameViewDescriptorSets;
+	}
+
+	void Mesh::CreateUniformBuffers()
+	{
+		// Refer to - https://vulkan-tutorial.com/en/Uniform_buffers/Descriptor_layout_and_buffer
+
+		VkDeviceSize bufferSize = sizeof(CustomUBO);
+
+		m_sceneViewUniformBuffers.resize(VM_MAX_FRAMES_IN_FLIGHT);
+		m_sceneViewUniformBuffersMemory.resize(VM_MAX_FRAMES_IN_FLIGHT);
+		m_sceneViewUniformBuffersMapped.resize(VM_MAX_FRAMES_IN_FLIGHT);
+
+		m_gameViewUniformBuffers.resize(VM_MAX_FRAMES_IN_FLIGHT);
+		m_gameViewUniformBuffersMemory.resize(VM_MAX_FRAMES_IN_FLIGHT);
+		m_gameViewUniformBuffersMapped.resize(VM_MAX_FRAMES_IN_FLIGHT);
+
+		for (size_t i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
+		{
+			m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_sceneViewUniformBuffers[i], m_sceneViewUniformBuffersMemory[i]);
+			vkMapMemory(m_logicalDevice->GetDevice(), m_sceneViewUniformBuffersMemory[i], 0, bufferSize, 0, &m_sceneViewUniformBuffersMapped[i]);
+
+			m_winSystem->CreateBuffer(bufferSize, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, m_gameViewUniformBuffers[i], m_gameViewUniformBuffersMemory[i]);
+			vkMapMemory(m_logicalDevice->GetDevice(), m_gameViewUniformBuffersMemory[i], 0, bufferSize, 0, &m_gameViewUniformBuffersMapped[i]);
+		}
+	}
+
+	void Mesh::UpdateUniformBuffer(ViewportType viewportType, bool b_orthographic)
+	{
+		Transform* transform = m_parent->GetTransform();
+		Vector3 meshPosition = transform->GetPosition();
+		glm::mat4 meshScale = transform->GetScaleMatrix();
+		glm::mat4 meshRotation = transform->GetRotationMatrix();
+		Camera* primaryCamera = nullptr;
+		Vector3 cameraPosition = Vector3();		
+		std::map<uint32_t, std::string> materialVec4s;
+
+		switch (viewportType)
+		{
+		case ViewportType::SceneView:
+		{
+			primaryCamera = F_sceneViewCameraObject->GetCamera();
+			if (primaryCamera != nullptr)
+			{
+				cameraPosition = F_sceneViewCameraObject->GetTransform()->GetPosition();
+			}
+
+			materialVec4s = m_sceneViewMaterial->GetUBOVec4Names();
+			break;
+		}
+		case ViewportType::GameView:
+		{
+			primaryCamera = GetPrimaryCamera();
+			if (primaryCamera != nullptr)
+			{
+				cameraPosition = primaryCamera->GetParent()->GetTransform()->GetPosition();
+			}
+			else
+			{
+				primaryCamera = F_sceneViewCameraObject->GetCamera();
+				cameraPosition = F_sceneViewCameraObject->GetTransform()->GetPosition();
+			}
+
+			materialVec4s = m_gameViewMaterial->GetUBOVec4Names();
+			break;
+		}
+		default:
+			break;
+		}
+
+
+		if (primaryCamera != nullptr)
+		{
+			//glm::mat4 cameraRotation = primaryCamera->GetParentPtr()->GetTransform()->GetRotationMatrix();
+			bool b_forceZUp = primaryCamera->ForceZUp();
+			//glm::vec4 lookDir = cameraRotation * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+			glm::vec4 lookDir = primaryCamera->GetLookDirection();
+			glm::vec4 up;
+
+			if (b_forceZUp)
+			{
+				up = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+			}
+			else
+			{
+				up = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+			}
+
+			glm::vec4 meshPos = glm::vec4(meshPosition.x, meshPosition.y, meshPosition.z, 0);
+			glm::vec4 viewportCameraPos = glm::vec4(cameraPosition.x, cameraPosition.y, cameraPosition.z, 0);
+			glm::mat4 model = meshRotation * meshScale;
+			glm::vec4 cameraLookDir = glm::vec4(lookDir.x, lookDir.y, lookDir.z, 0);
+			glm::mat4 view = glm::lookAt(cameraPosition.GetGLMVec3(), glm::vec3(cameraPosition.x + cameraLookDir.x, cameraPosition.y + cameraLookDir.y, cameraPosition.z + cameraLookDir.z), glm::vec3(up));
+
+			glm::mat4 projection;
+			if (b_orthographic)
+			{
+				projection = glm::ortho(0.0f, 1.0f, 1.0f, 0.0f, 10.0f, 100000.0f);
+			}
+			else
+			{
+				float nearClip = primaryCamera->GetNearClippingDistance();
+				float farClip = primaryCamera->GetFarClippingDistance();
+				float perspectiveAngle = primaryCamera->GetPerspectiveAngle();
+				float aspectRatio = (float)(m_winSystem->GetExtent().width / m_winSystem->GetExtent().height);
+				projection = glm::perspective(glm::radians(perspectiveAngle), aspectRatio, nearClip, farClip);
+				projection[1][1] *= -1;
+			}
+
+			CustomUBO ubo{};
+
+			BaseUBO base{};
+			base.meshPosition = meshPos;
+			base.cameraPosition = viewportCameraPos;
+			base.model = model;
+			base.view = view;
+			base.projection = projection;
+			ubo.BaseUBO = base;
+
+			int vec4Counter = 0;
+			for (std::map<uint32_t, std::string>::iterator materialVec4 = materialVec4s.begin(); materialVec4 != materialVec4s.end(); materialVec4++)
+			{
+				if (materialVec4->first <= 32 && m_uboVec4s.count(materialVec4->second)) // FIX ME: 32 is the size of the m_uboVec4s array passed to the shaders
+				{
+					ubo.vec4s[materialVec4->first] = m_uboVec4s.at(materialVec4->second);
+					vec4Counter++;
+				}
+			}
+
+			switch (viewportType)
+			{
+			case ViewportType::SceneView:
+			{
+				memcpy(m_sceneViewUniformBuffersMapped[VM_currentFrame], &ubo, sizeof(ubo));
+				break;
+			}
+			case ViewportType::GameView:
+			{
+				memcpy(m_gameViewUniformBuffersMapped[VM_currentFrame], &ubo, sizeof(ubo));
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	}
+
+	std::vector<VkBuffer>& Mesh::GetSceneViewUniformBuffers()
+	{
+		return m_sceneViewUniformBuffers;
+	}
+
+	std::vector<VkBuffer>& Mesh::GetGameViewUniformBuffers()
+	{
+		return m_gameViewUniformBuffers;
 	}
 
 	std::map<std::string, glm::vec4>& Mesh::GetUBOVec4s()

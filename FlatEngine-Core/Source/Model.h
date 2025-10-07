@@ -16,25 +16,20 @@ namespace FlatEngine
 	public:
 		Model();
 		~Model();
-		void CleanupUniformBuffers(LogicalDevice& logicalDevice);
-		void CleanupIndexBuffers(LogicalDevice& logicalDevice);
-		void CleanupVertexBuffers(LogicalDevice& logicalDevice);
-		void Cleanup(LogicalDevice& logicalDevice);
+		void CleanupIndexBuffers();
+		void CleanupVertexBuffers();
+		void Cleanup();
 
 		void SetModelPath(std::string path);
 		std::string GetModelPath();
-		void LoadModel();
-		void CreateVertexBuffer(VkCommandPool& commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
-		void CreateIndexBuffer(VkCommandPool& commandPool, PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
-		void CreateUniformBuffers(PhysicalDevice& physicalDevice, LogicalDevice& logicalDevice);
-		void UpdateUniformBuffer(WinSys& winSystem, Mesh* mesh, ViewportType viewportType, bool b_orthographic);
-		std::vector<VkBuffer>& GetUniformBuffers();
+		void Init(WinSys* winSystem, PhysicalDevice* physicalDevice, LogicalDevice* logicalDevice, VkCommandPool* commandPool );
+		void LoadModel(std::string path);
+		void CreateResources();
+		void CreateVertexBuffer();
+		void CreateIndexBuffer();
 		VkBuffer& GetVertexBuffer();
 		VkBuffer& GetIndexBuffer();
-		std::vector<Vertex> GetVertices();
-		void SetVertices(std::vector<Vertex> vertices);
 		std::vector<uint32_t> GetIndices();
-		void SetIndices(std::vector<uint32_t> indices);
 
 	private:
 		std::string m_modelPath;
@@ -44,10 +39,10 @@ namespace FlatEngine
 		VkBuffer m_indexBuffer;
 		VkDeviceMemory m_vertexBufferMemory;
 		VkDeviceMemory m_indexBufferMemory;
-		std::vector<VkBuffer> m_uniformBuffers;
-		std::vector<VkDeviceMemory> m_uniformBuffersMemory;
-		std::vector<void*> m_uniformBuffersMapped;
 		WinSys* m_winSystem;
+		PhysicalDevice* m_physicalDevice;
+		LogicalDevice* m_logicalDevice;
+		VkCommandPool* m_commandPool;
 	};
 }
 

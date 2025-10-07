@@ -389,7 +389,7 @@ namespace FlatGui
 						{
 							if (ImGui::MenuItem(pair.first.c_str()))
 							{
-								GameObject *instantiatedObject = FL::Instantiate(pair.first, Vector2(0, 0), FL::GetLoadedScene(), -1);
+								GameObject *instantiatedObject = FL::Instantiate(pair.first, Vector3(0, 0, 0), FL::GetLoadedScene(), -1);
 								SetFocusedGameObjectID(instantiatedObject->GetID());
 							}
 						}

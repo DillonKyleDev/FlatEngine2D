@@ -220,9 +220,9 @@ namespace FlatEngine
 		return m_allocator.CreateDescriptorPool();
 	}
 
-	void Material::CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& meshTextures)
+	void Material::CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, Texture>& meshTextures)
 	{
-		m_allocator.AllocateDescriptorSets(descriptorSets, model, m_texturesStageFlags, meshTextures);
+		m_allocator.AllocateDescriptorSets(descriptorSets, uniformBuffers, m_texturesStageFlags, meshTextures);
 	}
 
 	Allocator& Material::GetAllocator()

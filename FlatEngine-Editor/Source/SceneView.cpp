@@ -108,6 +108,7 @@ namespace FlatGui
 				}
 				ImGui::EndDragDropTarget();
 			}
+			// FIND WAY TO DO THIS IN 3D
 			// Create a GameObject from a file in the Explorer by dragging it into the Scene View space
 			if (droppedValue != -1 && FL::F_selectedFiles.size() >= droppedValue)
 			{
@@ -115,11 +116,11 @@ namespace FlatGui
 				Vector2 mousePosInGrid = Vector2((inputOutput.MousePos.x - FG_sceneViewCenter.x) / FG_sceneViewGridStep.x, -(inputOutput.MousePos.y - FG_sceneViewCenter.y) / FG_sceneViewGridStep.y);
 				std::string filePath = FL::F_selectedFiles[droppedValue - 1];			
 			
-				GameObject* newObject = FL::CreateAssetUsingFilePath(filePath, mousePosInGrid);
-				if (newObject != nullptr)
-				{
-					SetFocusedGameObjectID(newObject->GetID());
-				}
+				//GameObject* newObject = FL::CreateAssetUsingFilePath(filePath, mousePosInGrid);
+				//if (newObject != nullptr)
+				//{
+				//	SetFocusedGameObjectID(newObject->GetID());
+				//}
 			}
 			
 			Scene* loadedScene = FL::F_SceneManager.GetLoadedScene();

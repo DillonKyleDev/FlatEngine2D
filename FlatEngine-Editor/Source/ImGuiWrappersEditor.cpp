@@ -2713,11 +2713,16 @@ namespace FlatGui
 	void RenderMeshComponent(Mesh* mesh)
 	{
 		bool b_isActive = mesh->IsActive();		
-		long ID = mesh->GetID();				
-		std::string modelFileName = FL::GetFilenameFromPath(mesh->GetSceneViewModel().GetModelPath(), true);
+		long ID = mesh->GetID();		
+		std::shared_ptr<Model> model = mesh->GetModel();
+		std::string modelFileName = "";
+		if (model != nullptr)
+		{
+			modelFileName = FL::GetFilenameFromPath(model->GetModelPath(), true);
+		}
 		std::shared_ptr<Material> material = mesh->GetSceneViewMaterial();
 		std::string materialName = "";
-		// UBO Data
+		
 		std::map<std::string, glm::vec4>& uboVec4s = mesh->GetUBOVec4s();
 
 

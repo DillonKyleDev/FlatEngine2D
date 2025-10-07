@@ -370,7 +370,7 @@ namespace FlatEngine
 		{
 			return GetMappingContext(contextName);
 		};
-		F_Lua["Instantiate"] = [](std::string prefabName, Vector2 position)
+		F_Lua["Instantiate"] = [](std::string prefabName, Vector3 position)
 		{
 			// track what GameObject called Instantiate() so we can set the Lua state back to that GameObject after Instantiate() initializes any scripts it creates by calling Awake()/Start() on them
 			GameObject* currentLuaObject = F_Lua["this_object"];

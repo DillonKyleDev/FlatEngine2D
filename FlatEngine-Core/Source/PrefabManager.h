@@ -1,11 +1,14 @@
 #pragma once
 #include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 #include "TagList.h"
 #include "Animation.h"
 #include "Audio.h"    // SoundData
 #include "TileMap.h"  // Tile
 #include "Scene.h"
 #include "Shape.h"
+#include "Texture.h"
 
 #include "box2d.h"
 #include <string>
@@ -39,10 +42,10 @@ namespace FlatEngine
 	};
 
 	struct TransformPrefabData : public ComponentPrefabData {
-		Vector2 origin = Vector2();
-		Vector2 position = Vector2();
-		Vector2 scale = Vector2();
-		float rotation = 0.0f;
+		Vector3 origin = Vector3();
+		Vector3 position = Vector3();
+		Vector3 scale = Vector3();
+		Vector3 rotation = Vector3();
 	};
 	struct SpritePrefabData : public ComponentPrefabData {		
 		int renderOrder = 0;
@@ -142,7 +145,12 @@ namespace FlatEngine
 		std::vector<std::string> tileSetNames;
 		std::map<std::string, std::vector<std::pair<Vector2, Vector2>>> collisionAreas;
 	};
-	// TODO: Body and Mesh
+	struct MeshPrefabData : public ComponentPrefabData {
+		std::string materialName = "";
+		std::string modelPath = "";
+		std::map<uint32_t, Texture> texturesByIndex = std::map<uint32_t, Texture>();
+		std::map<std::string, Vector4> uboVec4s = std::map<std::string, Vector4>();
+	};
 
 	struct Prefab {
 		std::string name;
@@ -161,8 +169,8 @@ namespace FlatEngine
 		void CreatePrefab(std::string path, GameObject gameObject);		
 		void AddPrefab(std::string path);
 		void InitializePrefabs();
-		GameObject* InstantiateSelfAndChildren(long parentID, long myID, Prefab prefab, Scene* scene, Vector2 spawnLocation = Vector2(0, 0));
-		GameObject* Instantiate(std::string prefabName, Vector2 spawnLocation, Scene* scene, long parentID = -1, long ID = -1);
+		GameObject* InstantiateSelfAndChildren(long parentID, long myID, Prefab prefab, Scene* scene, Vector3 spawnLocation = Vector3(0, 0, 0));
+		GameObject* Instantiate(std::string prefabName, Vector3 spawnLocation, Scene* scene, long parentID = -1, long ID = -1);
 		std::map<std::string, Prefab> GetPrefabs();
 
 	private:

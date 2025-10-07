@@ -11,6 +11,7 @@
 namespace FlatEngine
 {
 	class Mesh;
+	class Model;
 	class GraphicsPipeline;
 	class Material;
 
@@ -46,7 +47,9 @@ namespace FlatEngine
 		std::vector<VkCommandBuffer>& GetCommandBuffers();
 		void RecordCommandBuffer(GraphicsPipeline& graphicsPipeline);
 		void RecordCommandBuffer(VkPipelineLayout pipelineLayout, std::vector<uint32_t>& m_pushConstOffsets, std::vector<uint32_t>& m_pushConstSizes, std::vector<const void*>& m_pushValues);
-		void DrawIndexed(Mesh& mesh, std::shared_ptr<Material> material, ViewportType viewportType);
+		void BindIndexed(std::shared_ptr<Model> model);
+		void BindDescriptorSets(Mesh& mesh, std::shared_ptr<Material> material, ViewportType viewportType);
+		void DrawIndexed(std::shared_ptr<Model> model);
 		void BeginRenderPass(uint32_t imageIndex);
 		void EndRenderPass();
 

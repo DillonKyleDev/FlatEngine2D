@@ -41,7 +41,7 @@ namespace FlatEngine
 		GraphicsPipeline& GetGraphicsPipeline();
 		VkPipelineLayout& GetPipelineLayout();
 		VkDescriptorPool CreateDescriptorPool();
-		void CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, Model& model, std::map<uint32_t, Texture>& textures);
+		void CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, Texture>& textures);
 		Allocator& GetAllocator();
 		std::map<uint32_t, VkShaderStageFlags>* GetTexturesShaderStages();
 		uint32_t GetTextureCount();	
