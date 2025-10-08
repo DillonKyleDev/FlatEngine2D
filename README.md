@@ -2,8 +2,6 @@
 
 <img width="1920" height="1152" alt="2025-10-07" src="https://github.com/user-attachments/assets/ea75d70f-dc71-4066-b1b2-eb1f2517e67f" />
 
-<img width="1920" height="1032" alt="2025-10-04_2" src="https://github.com/user-attachments/assets/66491724-d664-47fa-b637-e230bf4c6fc0" />
-
 
 <a href="https://github.com/DillonKyleDev/FlatEngine2D?tab=readme-ov-file#documentation">Jump to documentation</a>
 
