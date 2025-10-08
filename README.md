@@ -51,7 +51,7 @@ Minor update: Even after simply grouping objects to render by Material/Graphics 
 
 I was able to get the Game View viewport rendering through a Camera component in the scene using a second renderpass.</br>
 
-There is a serious amount of optimization that still needs to be done to improve frame rate.  I still need to find the best way to group objects before rendering them, and after that I need to implement multi-threading to further improve performance.  There are many minor tweaks I can make to improve performance and those will come as my understanding of Vulkan improves.</br>
+There is a serious amount of optimization that still needs to be done to improve frame rate.  ~~I still need to find the best way to group objects before rendering them, and after that I need to implement multi-threading to further improve performance.~~  There are many minor tweaks I can make to improve performance and those will come as my understanding of Vulkan improves.</br>
 
 So far I've just been getting things working and only worrying about optimization once I fully understand the needs of my specific systems, but given the substantial decrease in frames as objects are added, optimization has moved it's way up the list.
 
