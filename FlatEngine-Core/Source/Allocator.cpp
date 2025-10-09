@@ -21,11 +21,11 @@ namespace FlatEngine
 		m_poolInfo = {};
 		m_logicalDevice = nullptr;
 		m_b_imguiAllocator = false;
+		m_texturePipelineData = nullptr;
 	}
 
 	Allocator::~Allocator()
 	{
-		//CleanupPools();
 	}
 
 	void Allocator::CleanupPools()
@@ -37,7 +37,7 @@ namespace FlatEngine
 			case AllocatorType::DescriptorPool:
 				for (uint32_t i = 0; i < m_descriptorPools.size(); i++)
 				{
-					vkDestroyDescriptorPool(m_logicalDevice->GetDevice(), m_descriptorPools[i], nullptr);
+					F_VulkanManager->QueueDescriptorPoolDeletion(m_descriptorPools[i]);
 				}
 				break;
 			case AllocatorType::CommandPool:
@@ -48,12 +48,12 @@ namespace FlatEngine
 		}
 	}
 
-	void Allocator::Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool)
+	void Allocator::Init(AllocatorType type, std::map<uint32_t, TexturePipelineData>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool)
 	{
 		CleanupPools();
 
 		m_type = type;
-		m_texturesShaderStages = texturesShaderStages;		
+		m_texturePipelineData = texturesShaderStages;		
 		m_logicalDevice = &logicalDevice;
 		if (m_poolSizes.size() == 0)
 		{
@@ -94,18 +94,21 @@ namespace FlatEngine
 
 		m_bindings.push_back(uboLayoutBinding);
 
-		for (uint32_t i = 0; i < m_texturesShaderStages->size(); i++)
+		uint32_t descriptorCount = 1;
+		for (uint32_t i = 0; i < m_texturePipelineData->size(); i++)
 		{
-			VkShaderStageFlags shaderStage = m_texturesShaderStages->at(i);
+			VkShaderStageFlags shaderStage = m_texturePipelineData->at(i).shaderStage;
+			VkDescriptorType descriptorType = m_texturePipelineData->at(i).descriptorType;
 
-			VkDescriptorSetLayoutBinding samplerLayoutBinding{};
-			samplerLayoutBinding.binding = i + 1;
-			samplerLayoutBinding.descriptorCount = 1;
-			samplerLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			samplerLayoutBinding.pImmutableSamplers = nullptr;
-			samplerLayoutBinding.stageFlags = shaderStage;
+			VkDescriptorSetLayoutBinding descriptorBinding{};
+			descriptorBinding.binding = i + 1;
+			descriptorBinding.descriptorCount = 1;
+			descriptorBinding.descriptorType = descriptorType;
+			descriptorBinding.pImmutableSamplers = nullptr;
+			descriptorBinding.stageFlags = shaderStage;
 
-			m_bindings.push_back(samplerLayoutBinding);
+			m_bindings.push_back(descriptorBinding);
+			descriptorCount++;
 		}
 
 		m_layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
@@ -189,13 +192,13 @@ namespace FlatEngine
 	void Allocator::SetDefaultDescriptorPoolConfig()
 	{
 		// Default Descriptor Pool Settings	
-		m_poolSizes = std::vector<VkDescriptorPoolSize>(m_texturesShaderStages->size() + 1, {});
+		m_poolSizes = std::vector<VkDescriptorPoolSize>(m_texturePipelineData->size() + 1, {});
 		m_poolSizes[0].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 		m_poolSizes[0].descriptorCount = static_cast<uint32_t>(m_sizePerPool);
-		for (uint32_t j = 1; j < m_texturesShaderStages->size() + 1; j++)
+		for (uint32_t j = 0; j < m_texturePipelineData->size(); j++)
 		{
-			m_poolSizes[j].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-			m_poolSizes[j].descriptorCount = static_cast<uint32_t>(m_sizePerPool);
+			m_poolSizes[j + 1].type = m_texturePipelineData->at(j).descriptorType;
+			m_poolSizes[j + 1].descriptorCount = static_cast<uint32_t>(m_sizePerPool);
 		}
 		m_poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		m_poolInfo.poolSizeCount = static_cast<uint32_t>(m_poolSizes.size());
@@ -229,7 +232,7 @@ namespace FlatEngine
 		}
 	}
 
-	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures)
+	void Allocator::AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, TexturePipelineData>& materialTextures, std::map<uint32_t, Texture>& meshTextures)
 	{
 		if (m_type != AllocatorType::Null)
 		{
@@ -278,10 +281,10 @@ namespace FlatEngine
 				}
 
 				std::vector<VkDescriptorImageInfo> imageInfos{};
-				imageInfos.resize(m_texturesShaderStages->size());
+				imageInfos.resize(m_texturePipelineData->size());
 
 				int imageIndex = 0;
-				for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = materialTextures.begin(); iter != materialTextures.end(); iter++)
+				for (std::map<uint32_t, TexturePipelineData>::iterator iter = materialTextures.begin(); iter != materialTextures.end(); iter++)
 				{
 					if (meshTextures.count(iter->first))
 					{
@@ -293,7 +296,7 @@ namespace FlatEngine
 						descriptorWrites[descriptorCounter].dstSet = descriptorSets[i];
 						descriptorWrites[descriptorCounter].dstBinding = descriptorCounter;
 						descriptorWrites[descriptorCounter].dstArrayElement = 0;
-						descriptorWrites[descriptorCounter].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+						descriptorWrites[descriptorCounter].descriptorType = meshTextures.at(iter->first).GetDescriptorType();
 						descriptorWrites[descriptorCounter].descriptorCount = 1;
 						descriptorWrites[descriptorCounter].pImageInfo = &imageInfos[imageIndex];
 
@@ -303,13 +306,18 @@ namespace FlatEngine
 					}
 				}
 
+				if (descriptorWrites.size() != descriptorCounter)
+				{
+					descriptorWrites.resize((size_t)descriptorCounter);
+				}
+
 				vkUpdateDescriptorSets(m_logicalDevice->GetDevice(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
 				m_allocationsRemainingByPool[m_currentPoolIndex] -= 1;
 			}
 		}
 		else
 		{			
-			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = materialTextures.begin(); iter != materialTextures.end(); iter++)
+			for (std::map<uint32_t, TexturePipelineData>::iterator iter = materialTextures.begin(); iter != materialTextures.end(); iter++)
 			{
 				if (meshTextures.count(iter->first))
 				{
@@ -367,9 +375,4 @@ namespace FlatEngine
 			}
 		}
 	}
-
-	//void Allocator::AllocateCommandBuffers(std::vector<VkCommandBuffer>& commandBuffers, uint32_t& allocatedFrom)
-	//{
-
-	//}
 }

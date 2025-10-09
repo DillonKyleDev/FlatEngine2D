@@ -36,8 +36,9 @@ namespace FlatEngine
 
 	void Material::SetDefaultValues()
 	{		
-		m_texturesStageFlags = std::map<uint32_t, VkShaderStageFlags>();
+		m_texturePipelineData = std::map<uint32_t, TexturePipelineData>();		
 		m_allocator = Allocator();
+
 		// handles
 		m_winSystem = nullptr;
 		m_logicalDevice = nullptr;
@@ -101,9 +102,14 @@ namespace FlatEngine
 		}
 
 		json texturesShaderData = json::object();
-		for (std::map<uint32_t, VkShaderStageFlags>::iterator textureData = m_texturesStageFlags.begin(); textureData != m_texturesStageFlags.end(); textureData++)
+		for (std::map<uint32_t, TexturePipelineData>::iterator textureData = m_texturePipelineData.begin(); textureData != m_texturePipelineData.end(); textureData++)
 		{
-			texturesShaderData.emplace(std::to_string(textureData->first), (int)textureData->second);
+			json texture = json::object();
+
+			texture.emplace("shaderStage", textureData->second.shaderStage);
+			texture.emplace("descriptorType", textureData->second.descriptorType);
+
+			texturesShaderData.emplace(std::to_string(textureData->first), texture);
 		}
 
 		json jsonData = {
@@ -114,7 +120,7 @@ namespace FlatEngine
 			{ "inputAssemblyData", inputAssemblyData },
 			{ "colorBlendAttachmentData", colorBlendAttachmentData },
 			{ "uboVec4Names", uboVec4Names },
-			{ "texturesShaderStageData", texturesShaderData }
+			{ "texturePipelineData", texturesShaderData }
 		};
 
 		std::string data = jsonData.dump(4);
@@ -128,7 +134,7 @@ namespace FlatEngine
 		{			
 			if (m_name != "imgui")
 			{
-				m_allocator.Init(AllocatorType::DescriptorPool, &m_texturesStageFlags, *m_logicalDevice);
+				m_allocator.Init(AllocatorType::DescriptorPool, &m_texturePipelineData, *m_logicalDevice);
 				m_graphicsPipeline.CreatePushConstantRanges();
 			}			
 			m_graphicsPipeline.CreateGraphicsPipeline(*m_logicalDevice, *m_winSystem, *m_renderPass, m_allocator.GetDescriptorSetLayout());
@@ -222,7 +228,7 @@ namespace FlatEngine
 
 	void Material::CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, Texture>& meshTextures)
 	{
-		m_allocator.AllocateDescriptorSets(descriptorSets, uniformBuffers, m_texturesStageFlags, meshTextures);
+		m_allocator.AllocateDescriptorSets(descriptorSets, uniformBuffers, m_texturePipelineData, meshTextures);
 	}
 
 	Allocator& Material::GetAllocator()
@@ -230,44 +236,44 @@ namespace FlatEngine
 		return m_allocator;
 	}
 
-	std::map<uint32_t, VkShaderStageFlags>* Material::GetTexturesShaderStages()
+	std::map<uint32_t, TexturePipelineData>* Material::GetTexturesPipelineData()
 	{
-		return &m_texturesStageFlags;
+		return &m_texturePipelineData;
 	}
 
 	uint32_t Material::GetTextureCount()
 	{
-		return (uint32_t)m_texturesStageFlags.size();
+		return (uint32_t)m_texturePipelineData.size();
 	}
 
-	void Material::AddTexture(uint32_t index, VkShaderStageFlags shaderStage)
+	void Material::AddTexture(uint32_t index, TexturePipelineData textureData)
 	{
-		if (m_texturesStageFlags.count(index))
+		if (m_texturePipelineData.count(index))
 		{
-			m_texturesStageFlags.at(index) = shaderStage;
+			m_texturePipelineData.at(index) = textureData;
 		}
 		else
 		{
-			m_texturesStageFlags.emplace(index, shaderStage);
+			m_texturePipelineData.emplace(index, textureData);
 		}
 
-		m_allocator.Init(AllocatorType::DescriptorPool, &m_texturesStageFlags, *m_logicalDevice);
+		m_allocator.Init(AllocatorType::DescriptorPool, &m_texturePipelineData, *m_logicalDevice);
 	}
 
 	void Material::RemoveTexture(int index)
 	{
-		if (index == -1 && m_texturesStageFlags.size())
+		if (index == -1 && m_texturePipelineData.size())
 		{			
-			std::map<uint32_t, VkShaderStageFlags>::iterator last = m_texturesStageFlags.end();
+			std::map<uint32_t, TexturePipelineData>::iterator last = m_texturePipelineData.end();
 			last--;
-			m_texturesStageFlags.erase(last);
+			m_texturePipelineData.erase(last);
 		}
-		else if (m_texturesStageFlags.count((uint32_t)index))
+		else if (m_texturePipelineData.count((uint32_t)index))
 		{
-			m_texturesStageFlags.erase((uint32_t)index);
+			m_texturePipelineData.erase((uint32_t)index);
 		}
 
-		m_allocator.Init(AllocatorType::DescriptorPool, &m_texturesStageFlags, *m_logicalDevice);
+		m_allocator.Init(AllocatorType::DescriptorPool, &m_texturePipelineData, *m_logicalDevice);
 	}
 
 	void Material::OnWindowResized()

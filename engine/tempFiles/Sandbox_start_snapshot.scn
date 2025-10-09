@@ -1096,7 +1096,7 @@
                     "yPosition": -2.0999999046325684,
                     "yRotation": 0.0,
                     "yScale": 5.099999904632568,
-                    "zPosition": -42.099998474121094,
+                    "zPosition": -42.5,
                     "zRotation": 0.0,
                     "zScale": 1.0
                 },
@@ -1107,7 +1107,7 @@
                     "materialName": "Water",
                     "modelPath": "..\\projects\\Sandbox\\models\\water.obj",
                     "textures": {
-                        "0": "..\\projects\\Sandbox\\images\\colors\\twilight.png"
+                        "0": "..\\projects\\Sandbox\\images\\colors\\sky.png"
                     },
                     "type": "Mesh",
                     "uboVec4s": {
@@ -1134,7 +1134,7 @@
             "prefabName": "",
             "spawnLocationX": 0.699999988079071,
             "spawnLocationY": -2.0999999046325684,
-            "spawnLocationZ": -42.099998474121094,
+            "spawnLocationZ": -42.5,
             "tags": [
                 {
                     "Ball": false
@@ -1801,9 +1801,9 @@
                     "colorX": 1.0,
                     "colorY": 1.0,
                     "colorZ": 1.0,
-                    "directionX": -17.799999237060547,
+                    "directionX": -9.5,
                     "directionY": 0.20000000298023224,
-                    "directionZ": 23.600000381469727,
+                    "directionZ": 31.799999237060547,
                     "id": 35,
                     "lightType": 2,
                     "type": "Light"
@@ -2306,7 +2306,7 @@
                     "_follow": false,
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "_isPrimaryCamera": true,
+                    "_isPrimaryCamera": false,
                     "farClippingDistance": 1000.0,
                     "followSmoothing": 0.10000000149011612,
                     "following": -1,

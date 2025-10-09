@@ -110,6 +110,8 @@ namespace FlatEngine
 	extern Vector2 AddImageToDrawList(VkDescriptorSet texture, Vector2 positionInGrid, Vector2 relativeCenterPoint, float textureWidthPx, float textureHeightPx, Vector2 offset, Vector2 scale, bool b_scalesWithZoom, float zoomMultiplier, ImDrawList* drawList, float rotation = 0, ImU32 addColor = 1, Vector2 uvStart = Vector2(0, 0), Vector2 uvEnd = Vector2(1, 1));
 	extern std::map<long, Mesh>& GetMeshes();
 	extern std::map<long, Light>& GetLights();
+	extern bool* F_b_showSceneView;
+	extern bool* F_b_showGameView;
 
 	// Multi-threading
 	extern std::shared_ptr<ThreadPool> F_ThreadPool;

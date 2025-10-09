@@ -18,6 +18,7 @@ namespace FlatEngine
 		m_textureHeight = 0;
 		m_allocationIndex = -1;
 		m_descriptorSets = std::vector<VkDescriptorSet>(VM_MAX_FRAMES_IN_FLIGHT, {});
+		m_descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 		m_images = std::vector<VkImage>(VM_MAX_FRAMES_IN_FLIGHT, {});
 		m_imageViews = std::vector<VkImageView>(VM_MAX_FRAMES_IN_FLIGHT, {});
 		m_imageMemory = std::vector<VkDeviceMemory>(VM_MAX_FRAMES_IN_FLIGHT, {});
@@ -197,6 +198,16 @@ namespace FlatEngine
 		return m_descriptorSets;
 	}
 
+	void Texture::SetDescriptorType(VkDescriptorType descriptorType)
+	{
+		m_descriptorType = descriptorType;
+	}
+
+	VkDescriptorType Texture::GetDescriptorType()
+	{
+		return m_descriptorType;
+	}
+
 	void Texture::CreateTextureImage()
 	{
 		m_images.resize(VM_MAX_FRAMES_IN_FLIGHT);
@@ -217,8 +228,7 @@ namespace FlatEngine
 		WinSys& windowSystem = F_VulkanManager->GetWinSystem();
 		LogicalDevice& logicalDevice = F_VulkanManager->GetLogicalDevice();
 		VkDevice& device = logicalDevice.GetDevice();
-		m_imageFormat = VK_FORMAT_R32G32B32A32_SFLOAT;
-		//Cleanup(logicalDevice);
+		m_imageFormat = VK_FORMAT_R32G32B32A32_SFLOAT;		
 
 		m_images.resize(VM_imageCount);
 		m_imageViews.resize(VM_imageCount);

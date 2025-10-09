@@ -43,9 +43,9 @@ namespace FlatEngine
 		VkDescriptorPool CreateDescriptorPool();
 		void CreateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, Texture>& textures);
 		Allocator& GetAllocator();
-		std::map<uint32_t, VkShaderStageFlags>* GetTexturesShaderStages();
+		std::map<uint32_t, TexturePipelineData>* GetTexturesPipelineData();
 		uint32_t GetTextureCount();	
-		void AddTexture(uint32_t index, VkShaderStageFlags shaderStage);
+		void AddTexture(uint32_t index, TexturePipelineData textureData);
 		void RemoveTexture(int index = -1);
 		void OnWindowResized();
 
@@ -71,7 +71,7 @@ namespace FlatEngine
 		GraphicsPipeline m_graphicsPipeline;
 		RenderPass* m_renderPass;
 		Allocator m_allocator;
-		std::map<uint32_t, VkShaderStageFlags> m_texturesStageFlags;		
+		std::map<uint32_t, TexturePipelineData> m_texturePipelineData;
 
 		// handles
 		VkInstance* m_instance;

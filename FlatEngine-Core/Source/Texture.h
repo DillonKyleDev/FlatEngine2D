@@ -10,6 +10,11 @@
 
 namespace FlatEngine
 {
+	struct TexturePipelineData {
+		VkShaderStageFlags shaderStage = VK_SHADER_STAGE_FRAGMENT_BIT;
+		VkDescriptorType descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+	};
+
 	enum Pivot {
 		PivotCenter,
 		PivotLeft,
@@ -61,6 +66,8 @@ namespace FlatEngine
 		VkFormat GetImageFormat();
 		void SetImageFormat(VkFormat imageFormat);
 		std::vector<VkDescriptorSet>& GetDescriptorSets();
+		void SetDescriptorType(VkDescriptorType descriptorType);
+		VkDescriptorType GetDescriptorType();
 
 		void CreateTextureImage();
 		void CreateRenderToTextureResources(VkCommandPool& commandPool);
@@ -70,6 +77,7 @@ namespace FlatEngine
 		int m_textureWidth;
 		int m_textureHeight;
 		std::vector<VkDescriptorSet> m_descriptorSets; // For ImGui to use for it's textures (icons, etc.)
+		VkDescriptorType m_descriptorType;
 		int m_allocationIndex;
 		std::vector<VkImage> m_images;
 		std::vector<VkImageView> m_imageViews;

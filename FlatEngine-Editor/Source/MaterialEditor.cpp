@@ -97,47 +97,101 @@ namespace FlatGui
 				vertexInputText = currentMaterial->GetVertexPath();
 				fragmentInputText = currentMaterial->GetFragmentPath();
 				uint32_t textureCount = currentMaterial->GetTextureCount();
-				std::map<uint32_t, VkShaderStageFlags>* texturesShaderData = currentMaterial->GetTexturesShaderStages();
+				std::map<uint32_t, FL::TexturePipelineData>* texturesShaderData = currentMaterial->GetTexturesPipelineData();
 				std::map<uint32_t, std::string> uboVec4Names = currentMaterial->GetUBOVec4Names();
+				FL::TexturePipelineData textureData = FL::TexturePipelineData();
+				static bool b_vertexSampler = false;
+				static bool b_fragmentSampler = true;
+				static bool b_combinedImageSampler = true;
+				static bool b_depthImage = false;
 
 				if (FL::RenderInput("##VertexShaderPathInput", "Vertex Shader Path", vertexInputText))
-				{
-					currentMaterial->SetVertexPath(vertexInputText);
+				{					
+					FL::F_VulkanManager->SetMaterialVertexPath(currentMaterial->GetName(), vertexInputText);
 				}
 
 				if (FL::RenderInput("##FragmentShaderPathInput", "Fragment Shader Path", fragmentInputText))
-				{
-					currentMaterial->SetFragmentPath(fragmentInputText);
+				{					
+					FL::F_VulkanManager->SetMaterialFragmentPath(currentMaterial->GetName(), fragmentInputText);
 				}
 
-				if (FL::RenderButton("Add Vertex Texture Sampler"))
+				if (FL::RenderCheckbox("Vertex Sampler", b_vertexSampler))
 				{
-					currentMaterial->AddTexture(textureCount, VK_SHADER_STAGE_VERTEX_BIT);
-
-					FL::F_VulkanManager->SaveMaterial(currentMaterial);
+					b_vertexSampler = true;
+					b_fragmentSampler = false;
 				}
 				ImGui::SameLine();
-				if (FL::RenderButton("Add Fragment Texture Sampler"))
+				if (FL::RenderCheckbox("Fragment Sampler", b_fragmentSampler))
 				{
-					currentMaterial->AddTexture(textureCount, VK_SHADER_STAGE_FRAGMENT_BIT);
+					b_vertexSampler = false;
+					b_fragmentSampler = true;					
+				}
 
+				if (FL::RenderCheckbox("Combined Image Sampler", b_combinedImageSampler))
+				{
+					b_combinedImageSampler = true;
+					b_depthImage = false;					
+				}
+				ImGui::SameLine();
+				if (FL::RenderCheckbox("Depth Image", b_depthImage))
+				{
+					b_combinedImageSampler = false;
+					b_depthImage = true;					
+				}
+
+				if (FL::RenderButton("Add Sampler"))
+				{
+					if (b_fragmentSampler)
+					{
+						textureData.shaderStage = VK_SHADER_STAGE_FRAGMENT_BIT;
+					}
+					else
+					{
+						textureData.shaderStage = VK_SHADER_STAGE_VERTEX_BIT;
+					}
+					if (b_combinedImageSampler)
+					{
+						textureData.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+					}
+					else
+					{
+						textureData.descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
+					}
+
+					FL::F_VulkanManager->AddTextureToMaterial(currentMaterial->GetName(), textureCount, textureData);					
 					FL::F_VulkanManager->SaveMaterial(currentMaterial);
 				}
 
-				for (std::map<uint32_t, VkShaderStageFlags>::iterator iterator = texturesShaderData->begin(); iterator != texturesShaderData->end(); iterator++)
+				for (std::map<uint32_t, FL::TexturePipelineData>::iterator iterator = texturesShaderData->begin(); iterator != texturesShaderData->end(); iterator++)
 				{
-					switch (iterator->second)
+					switch (iterator->second.shaderStage)
 					{
 					case VK_SHADER_STAGE_VERTEX_BIT:
 					{
-						std::string vertexString = "Vertex Sampler : layout(binding = " + std::to_string(iterator->first + 1) + ") uniform sampler2D [name])";
+						std::string vertexString = "";
+						if (iterator->second.descriptorType == VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER)
+						{
+							vertexString = "Vertex Sampler : layout(binding = " + std::to_string(iterator->first + 1) + ") uniform sampler2D [name])";
+						}
+						else
+						{
+							vertexString = "Vertex Depth : layout(input_attachment_index = 0, binding = " + std::to_string(iterator->first + 1) + ") uniform subpassInput inputDepth;";							
+						}
 						ImGui::Text(vertexString.c_str());
 						break;
 					}
 
 					case VK_SHADER_STAGE_FRAGMENT_BIT:
 					{
-						std::string fragmentString = "Fragment Sampler : layout(binding = " + std::to_string(iterator->first + 1) + ") uniform sampler2D [name])";
+						std::string fragmentString = "";
+						if (iterator->second.descriptorType == VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER)
+						{
+							fragmentString = "Fragment Sampler : layout(binding = " + std::to_string(iterator->first + 1) + ") uniform sampler2D [name])";
+						}
+						else
+						{
+							fragmentString = "Fragment Depth : layout(input_attachment_index = 0, binding = " + std::to_string(iterator->first + 1) + ") uniform subpassInput inputDepth;";
+						}
 						ImGui::Text(fragmentString.c_str());
 						break;
 					}
@@ -146,10 +200,9 @@ namespace FlatGui
 					}
 				}
 				if (FL::RenderButton("Remove Last Texture"))
-				{
-					currentMaterial->RemoveTexture();
-
-					FL::F_VulkanManager->SaveMaterial(currentMaterial);
+				{					
+					FL::F_VulkanManager->RemoveTextureFromMaterial(currentMaterial->GetName());
+					FL::F_VulkanManager->SaveMaterial(currentMaterial);					
 				}
 
 				// Whenever we add a new property to a materials UBO, we should make sure to recreate the commandBuffers in the Models of the Meshes that use that material, taking into account the new Uniform Buffer Size
@@ -172,15 +225,15 @@ namespace FlatGui
 						}
 						vec4Name = "";
 
-						//FL::F_VulkanManager->SaveMaterial(currentMaterial);
+						//FL::F_VulkanManager->SaveMaterial(currentMaterial);						
 					}
 				}
 
 				if (FL::RenderButton("Remove Last Vec4"))
 				{
-					currentMaterial->RemoveUBOVec4();	
+					FL::F_VulkanManager->RemoveUBOVec4FromMaterial(currentMaterial->GetName());	
 
-					//FL::F_VulkanManager->SaveMaterial(currentMaterial);
+					//FL::F_VulkanManager->SaveMaterial(currentMaterial);					
 				}
 
 				for (std::map<uint32_t, std::string>::iterator iter = uboVec4Names.begin(); iter != uboVec4Names.end(); iter++)

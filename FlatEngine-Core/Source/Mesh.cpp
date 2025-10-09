@@ -163,6 +163,9 @@ namespace FlatEngine
 		}
 
 		m_model = loadedModel;
+
+		F_VulkanManager->AddSceneViewMaterialMesh(m_materialName, GetID(), this);
+		F_VulkanManager->AddGameViewMaterialMesh(m_materialName, GetID(), this);
 	}
 
 	std::shared_ptr<Model> Mesh::GetModel()
@@ -222,14 +225,17 @@ namespace FlatEngine
 
 		if (m_sceneViewMaterial != nullptr && m_model != nullptr)
 		{
-			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = m_sceneViewMaterial->GetTexturesShaderStages()->begin(); iter != m_sceneViewMaterial->GetTexturesShaderStages()->end(); iter++)
+			for (std::map<uint32_t, TexturePipelineData>::iterator iter = m_sceneViewMaterial->GetTexturesPipelineData()->begin(); iter != m_sceneViewMaterial->GetTexturesPipelineData()->end(); iter++)
 			{
-				if (!m_texturesByIndex.count(iter->first) || (m_texturesByIndex.count(iter->first) && (m_texturesByIndex.at(iter->first).GetTexturePath() == "" || m_texturesByIndex.at(iter->first).GetTexturePath() == GetTextureObject("resourceNotPresent")->GetTexturePath())))
+				if (iter->second.descriptorType != VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT)
 				{
-					Texture emptyTexture = Texture();
-					m_texturesByIndex.emplace(iter->first, emptyTexture);
-					m_texturesByIndex.at(iter->first).LoadFromFile(GetTextureObject("resourceNotPresent")->GetTexturePath());
-					m_b_missingTextures = true;										
+					if (!m_texturesByIndex.count(iter->first) || (m_texturesByIndex.count(iter->first) && (m_texturesByIndex.at(iter->first).GetTexturePath() == "" || m_texturesByIndex.at(iter->first).GetTexturePath() == GetTextureObject("resourceNotPresent")->GetTexturePath())))
+					{
+						Texture emptyTexture = Texture();
+						m_texturesByIndex.emplace(iter->first, emptyTexture);
+						m_texturesByIndex.at(iter->first).LoadFromFile(GetTextureObject("resourceNotPresent")->GetTexturePath());
+						m_b_missingTextures = true;
+					}
 				}
 			}
 

@@ -60,15 +60,7 @@ namespace FlatEngine
         LogicalDevice& GetLogicalDevice();        
 
         static void check_vk_result(VkResult err);
-        static void CreateCommandPool(VkCommandPool& commandPool, LogicalDevice& logicalDevice, uint32_t queueFamilyIndices, VkCommandPoolCreateFlags flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);
-
-        // Renderpass
-        void CreateRenderToTextureRenderPassResources(RenderPass& renderPass, Texture& renderToTexture, VkCommandPool& commandPool);
-        void CreateImGuiRendePassResources();
-        void GetImGuiDescriptorSetLayoutInfo(std::vector<VkDescriptorSetLayoutBinding>& bindings, VkDescriptorSetLayoutCreateInfo& layoutInfo);
-        void GetImGuiDescriptorPoolInfo(std::vector<VkDescriptorPoolSize>& poolSizes, VkDescriptorPoolCreateInfo& poolInfo);
-        void CreateImGuiResources();
-        void QuitImGui();
+        static void CreateCommandPool(VkCommandPool& commandPool, LogicalDevice& logicalDevice, uint32_t queueFamilyIndices, VkCommandPoolCreateFlags flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT);       
 
         // Materials
         void LoadEngineMaterials();
@@ -78,6 +70,12 @@ namespace FlatEngine
         std::shared_ptr<Material> CreateNewMaterialFile(std::string fileName, std::string path = "");        
         void AddSceneViewMaterial(std::shared_ptr<Material> material);
         void AddGameViewMaterial(std::shared_ptr<Material> material);
+        void AddTextureToMaterial(std::string materialName, uint32_t index, TexturePipelineData textureData);
+        void RemoveTextureFromMaterial(std::string materialName, uint32_t index = -1);
+        void AddUBOVec4ToMaterial(std::string materialName, std::string uboVec4Name, int index = -1);
+        void RemoveUBOVec4FromMaterial(std::string materialName, int index = -1);
+        void SetMaterialVertexPath(std::string materialName, std::string vertexPath);
+        void SetMaterialFragmentPath(std::string materialName, std::string fragmentPath);
         std::shared_ptr<Material> GetMaterial(std::string materialName, ViewportType viewportType = ViewportType::SceneView);
         std::map<std::string, std::shared_ptr<Material>>& GetMaterials();
         void ReloadShaders();
@@ -96,17 +94,25 @@ namespace FlatEngine
         void DeleteQueuedVKObjects();
 
         // ImGui
+        void CreateImGuiRendePassResources();
+        void GetImGuiDescriptorSetLayoutInfo(std::vector<VkDescriptorSetLayoutBinding>& bindings, VkDescriptorSetLayoutCreateInfo& layoutInfo);
+        void GetImGuiDescriptorPoolInfo(std::vector<VkDescriptorPoolSize>& poolSizes, VkDescriptorPoolCreateInfo& poolInfo);
+        void CreateImGuiResources();
+        void QuitImGui();
         void CreateImGuiTexture(Texture& texture, std::vector<VkDescriptorSet>& descriptorSets);
-        void FreeImGuiTexture(uint32_t allocatedFrom);
+        void FreeImGuiTexture(uint32_t allocatedFrom);        
         // Scene View
+        void CreateRenderToTextureRenderPassResources(RenderPass& renderPass, Texture& renderToTexture, VkCommandPool& commandPool);
+        std::vector<VkDescriptorSet>& GetSceneViewDescriptorSets();  
         void CreateSceneViewGridObjects();
-        std::vector<VkDescriptorSet>& GetSceneViewDescriptorSets();   
         bool ShowSceneViewGridObjects();
         void SetShowSceneViewGridObjects(bool b_showGridObjects);
         void ToggleShowSceneViewGridObjects();
         void ToggleOrthographic();
         // Game View
         std::vector<VkDescriptorSet>& GetGameViewDescriptorSets();
+        // Post Processing
+        void CreatePostProcessingRenderPassResources();
 
         // WinSystem wrappers
         void CreateTextureImage(VkImage& image, std::string path, uint32_t mipLevels, VkDeviceMemory& imageMemory);
@@ -122,15 +128,18 @@ namespace FlatEngine
         
         RenderPass m_renderToTextureSceneViewRenderPass;
         RenderPass m_renderToTextureGameViewRenderPass;
+        RenderPass m_postProcessingRenderPass;
         RenderPass m_imGuiRenderPass;
         std::shared_ptr<Material> m_imGuiMaterial;
         std::map<std::string, std::shared_ptr<Material>> m_sceneViewMaterials;
         std::map<std::string, std::shared_ptr<Material>> m_gameViewMaterials;
-        std::map<std::string, std::map<long, Mesh*>> m_sceneViewMaterialMeshes;
-        std::map<std::string, std::map<long, Mesh*>> m_gameViewMaterialMeshes;
-        std::map<std::string, std::shared_ptr<Model>> m_models; // so we don't have to reload model indices and vertices for every object that uses it
+        std::map<std::string, std::map<std::string, std::map<long, Mesh*>>> m_sceneViewMaterialMeshes;
+        std::map<std::string, std::map<std::string, std::map<long, Mesh*>>> m_gameViewMaterialMeshes;
+        std::map<std::string, std::shared_ptr<Model>> m_models;
         Texture m_sceneViewTexture;
-        Texture m_gameViewTexture;        
+        Texture m_gameViewTexture;      
+        Texture m_postProcessingTexture;
+        std::vector<VkDescriptorSet> m_postProcessingDescriptorSets;
 
         bool m_b_showGridObjects;
         bool m_b_orthographic;
@@ -145,6 +154,7 @@ namespace FlatEngine
         VkCommandPool m_imGuiCommandPool;
         VkCommandPool m_sceneViewCommandPool;
         VkCommandPool m_gameViewCommandPool;
+        VkCommandPool m_postProcessingCommandPool;
         std::vector<VkSemaphore> m_imageAvailableSemaphores;
         std::vector<VkSemaphore> m_renderFinishedSemaphores;
         std::vector<VkFence> m_inFlightFences;        

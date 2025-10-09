@@ -29,6 +29,7 @@ namespace FlatEngine
 		void CreateIndexBuffer();
 		VkBuffer& GetVertexBuffer();
 		VkBuffer& GetIndexBuffer();
+		std::vector<Vertex> GetVertices();
 		std::vector<uint32_t> GetIndices();
 
 	private:

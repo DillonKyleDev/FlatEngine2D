@@ -25,6 +25,7 @@ namespace FlatEngine
         m_framebuffers = std::vector<VkFramebuffer>();
         m_imageViews = std::vector<VkImageView>();
         m_commandBuffers = std::vector<VkCommandBuffer>();
+        m_commandPool = nullptr;
 
         m_renderPassAttachments = std::vector<VkAttachmentDescription>();
         m_renderPassAttachmentRefs = std::vector<VkAttachmentReference>();
@@ -39,9 +40,7 @@ namespace FlatEngine
         m_colorImageView = VK_NULL_HANDLE;
         m_b_msaaEnabled = false;
         // depth testing
-        m_depthImage = VK_NULL_HANDLE;
-        m_depthImageMemory = VK_NULL_HANDLE;
-        m_depthImageView = VK_NULL_HANDLE;
+        m_depthTexture = Texture();
         m_b_depthBuffersEnabled = false;
         // handles
         m_instance = VK_NULL_HANDLE;
@@ -49,6 +48,7 @@ namespace FlatEngine
         m_physicalDevice = VK_NULL_HANDLE;
         m_logicalDevice = VK_NULL_HANDLE;
         
+        m_imageUsageFlags = 0;
 
         m_beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
         m_beginInfo.flags = 0;
@@ -306,11 +306,16 @@ namespace FlatEngine
         m_imageViews = imageViews;
     }
 
+    Texture& RenderPass::GetDepthTexture()
+    {
+        return m_depthTexture;
+    }
+
     void RenderPass::CreateFrameBuffers()
     {
         // More info here - https://vulkan-tutorial.com/en/Drawing_a_triangle/Drawing/Framebuffers
 
-        m_framebuffers.resize(m_imageViews.size());
+        m_framebuffers.resize(m_imageViews.size());     
 
         for (size_t i = 0; i < m_imageViews.size(); i++)
         {
@@ -321,7 +326,7 @@ namespace FlatEngine
             }
             if (m_b_depthBuffersEnabled)
             {
-                attachments.push_back(m_depthImageView);
+                attachments.push_back(m_depthTexture.GetImageViews()[i]);
             }
             attachments.push_back(m_imageViews[i]);
 
@@ -413,18 +418,43 @@ namespace FlatEngine
 
         VkFormat depthFormat = Helper::FindDepthFormat(m_physicalDevice->GetDevice());
         uint32_t singleMipLevel = 1;
+        m_depthTexture.SetDescriptorType(VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT);
 
-        m_winSystem->CreateImage(m_winSystem->GetExtent().width, m_winSystem->GetExtent().height, 1, m_msaaSamples, depthFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_depthImage, m_depthImageMemory);
-        m_winSystem->CreateImageView(m_depthImageView, m_depthImage, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, singleMipLevel);
+        std::vector<VkImage>& depthImages = m_depthTexture.GetImages();
+        std::vector<VkImageView>& depthImageViews = m_depthTexture.GetImageViews();
+        std::vector<VkDeviceMemory>& depthImageMemory = m_depthTexture.GetImageMemory();
+
+        depthImages.resize(VM_MAX_FRAMES_IN_FLIGHT);
+        depthImageViews.resize(VM_MAX_FRAMES_IN_FLIGHT);
+        depthImageMemory.resize(VM_MAX_FRAMES_IN_FLIGHT);
+
+        for (int i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
+        {
+            m_winSystem->CreateImage(m_winSystem->GetExtent().width, m_winSystem->GetExtent().height, 1, m_msaaSamples, depthFormat, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, depthImages[i], depthImageMemory[i]);
+            m_winSystem->CreateImageView(depthImageViews[i], depthImages[i], depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT, singleMipLevel);
+        }
+
+        m_winSystem->CreateTextureSampler(m_depthTexture.GetSampler(), m_depthTexture.GetMipLevels());
     }
 
     void RenderPass::DestroyDepthResources()
     {
         if (m_logicalDevice != nullptr)
         {
-            vkDestroyImageView(m_logicalDevice->GetDevice(), m_depthImageView, nullptr);
-            vkDestroyImage(m_logicalDevice->GetDevice(), m_depthImage, nullptr);
-            vkFreeMemory(m_logicalDevice->GetDevice(), m_depthImageMemory, nullptr);
+            std::vector<VkImage>& depthImages = m_depthTexture.GetImages();
+            std::vector<VkImageView>& depthImageViews = m_depthTexture.GetImageViews();
+            std::vector<VkDeviceMemory>& depthImageMemory = m_depthTexture.GetImageMemory();
+
+            depthImages.resize(VM_MAX_FRAMES_IN_FLIGHT);
+            depthImageViews.resize(VM_MAX_FRAMES_IN_FLIGHT);
+            depthImageMemory.resize(VM_MAX_FRAMES_IN_FLIGHT);
+
+            for (int i = 0; i < VM_MAX_FRAMES_IN_FLIGHT; i++)
+            {
+                vkDestroyImageView(m_logicalDevice->GetDevice(), depthImageViews[i], nullptr);
+                vkDestroyImage(m_logicalDevice->GetDevice(), depthImages[i], nullptr);
+                vkFreeMemory(m_logicalDevice->GetDevice(), depthImageMemory[i], nullptr);
+            }
         }
     }
 
@@ -460,13 +490,13 @@ namespace FlatEngine
             clearValues.push_back(msaa);
         }
 
-        m_renderPassInfo.framebuffer = m_framebuffers[VM_currentFrame]; // Was m_framebuffers[imageIndex] but changing it to VM_currentFrame removed frame bouncing/writing to the wrong frame
+        m_renderPassInfo.framebuffer = m_framebuffers[VM_currentFrame];
         m_renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
         m_renderPassInfo.pClearValues = clearValues.data();
         m_renderPassInfo.renderArea.extent = m_winSystem->GetExtent();
         m_renderPassInfo.renderPass = m_renderPass;
 
-        // we did specify viewport and scissor state for this pipeline to be dynamic. So we need to set them in the command buffer before issuing our draw command:
+        // we specified viewport and scissor state for this pipeline to be dynamic, so we need to set them in the command buffer before issuing our draw command:
         m_viewport.width = static_cast<float>(m_winSystem->GetExtent().width);
         m_viewport.height = static_cast<float>(m_winSystem->GetExtent().height);
         vkCmdSetViewport(m_commandBuffers[VM_currentFrame], 0, 1, &m_viewport);
@@ -560,38 +590,9 @@ namespace FlatEngine
         vkCmdBindIndexBuffer(m_commandBuffers[VM_currentFrame], indexBuffer, 0, VK_INDEX_TYPE_UINT32);
     }
 
-    void RenderPass::BindDescriptorSets(Mesh& mesh, std::shared_ptr<Material> material, ViewportType viewportType)
+    void RenderPass::BindDescriptorSets(VkDescriptorSet& descriptorSet, std::shared_ptr<Material> material, ViewportType viewportType)
     {
-        VkPipelineLayout& pipelineLayout = material->GetPipelineLayout();
-        VkDescriptorSet descriptorSet;
-
-        switch (viewportType)
-        {
-        case ViewportType::SceneView:
-        {
-            descriptorSet = mesh.GetSceneViewDescriptorSets()[VM_currentFrame]; // Use Mesh descriptor sets to draw the objects to the VkImage that will THEN be used with imgui material and the descriptor sets created using the imgui material
-
-            if (material->GetName() == "fl_empty")
-            {
-                descriptorSet = mesh.GetEmptySceneViewDescriptorSets()[VM_currentFrame];
-            }
-
-            break;
-        }
-        case ViewportType::GameView:
-        {
-            descriptorSet = mesh.GetGameViewDescriptorSets()[VM_currentFrame]; // Use Mesh descriptor sets to draw the objects to the VkImage that will THEN be used with imgui material and the descriptor sets created using the imgui material
-
-            if (material->GetName() == "fl_empty")
-            {
-                descriptorSet = mesh.GetEmptyGameViewDescriptorSets()[VM_currentFrame];
-            }
-
-            break;
-        }
-        default:
-            break;
-        }
+        VkPipelineLayout& pipelineLayout = material->GetPipelineLayout();        
 
         vkCmdBindDescriptorSets(m_commandBuffers[VM_currentFrame], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSet, 0, nullptr);
     }

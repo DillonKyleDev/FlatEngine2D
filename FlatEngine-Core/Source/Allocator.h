@@ -21,17 +21,15 @@ namespace FlatEngine
 		Allocator();
 		~Allocator();
 
-		void Init(AllocatorType type, std::map<uint32_t, VkShaderStageFlags>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool = 100);
+		void Init(AllocatorType type, std::map<uint32_t, TexturePipelineData>* texturesShaderStages, LogicalDevice& logicalDevice, uint32_t perPool = 100);
 		void SetFreed(uint32_t freedFrom);
-		void AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, VkShaderStageFlags>& materialTextures, std::map<uint32_t, Texture>& meshTextures);
+		void AllocateDescriptorSets(std::vector<VkDescriptorSet>& descriptorSets, std::vector<VkBuffer>& uniformBuffers, std::map<uint32_t, TexturePipelineData>& materialTextures, std::map<uint32_t, Texture>& meshTextures);
 		void ConfigureDescriptorSetLayout(std::vector<VkDescriptorSetLayoutBinding> bindings, VkDescriptorSetLayoutCreateInfo layoutInfo);
 		void CreateDescriptorSetLayout();
 		void CleanupDescriptorSetLayout();
 		VkDescriptorSetLayout& GetDescriptorSetLayout();
 		void ConfigureDescriptorPools(std::vector<VkDescriptorPoolSize> poolSizes, VkDescriptorPoolCreateInfo poolInfo);
-		VkDescriptorPool CreateDescriptorPool();
-
-		//void AllocateCommandBuffers(std::vector<VkCommandBuffer>& commandBuffers, uint32_t& allocatedFrom);
+		VkDescriptorPool CreateDescriptorPool();		
 
 	private:
 		void CleanupPools();
@@ -40,14 +38,13 @@ namespace FlatEngine
 		void SetDefaultDescriptorSetLayoutConfig();
 		void SetDefaultDescriptorPoolConfig();
 		void FillPools();
-		void CreateDescriptorPool(VkDescriptorPool& descriptorPool);
-		//void CreateCommandPool();
+		void CreateDescriptorPool(VkDescriptorPool& descriptorPool);		
 		void CheckPoolAvailability();
 
 		AllocatorType m_type;
 		uint32_t m_sizePerPool;
 		uint32_t m_startingPools;
-		std::map<uint32_t, VkShaderStageFlags>* m_texturesShaderStages;
+		std::map<uint32_t, TexturePipelineData>* m_texturePipelineData;
 		uint32_t m_currentPoolIndex;
 		std::vector<uint32_t> m_allocationsRemainingByPool;
 		std::vector<uint32_t> m_setsFreedByPool;

@@ -28,6 +28,7 @@ namespace FlatEngine
 
 	TagList::TagList(TagList* toCopy)
 	{
+		m_ownerID = -1;
 		std::map<std::string, bool>::iterator iterator;
 		for (iterator = toCopy->m_tags.begin(); iterator != toCopy->m_tags.end(); iterator++)
 		{
@@ -38,6 +39,17 @@ namespace FlatEngine
 			else
 			{
 				m_tags.emplace(iterator->first, iterator->second);
+			}
+		}
+		for (iterator = toCopy->m_collidesTags.begin(); iterator != toCopy->m_collidesTags.end(); iterator++)
+		{
+			if (m_collidesTags.count(iterator->first) > 0)
+			{
+				m_collidesTags.at(iterator->first) = iterator->second;
+			}
+			else
+			{
+				m_collidesTags.emplace(iterator->first, iterator->second);
 			}
 		}
 

@@ -18,7 +18,7 @@ layout(location = 3) in float smoothness;
 
 layout(location = 0) out vec4 outColor;
 
-layout(binding = 1) uniform sampler2D texSampler;
+layout(binding = 1, set = 0) uniform sampler2D texSampler;
 
 void main() {    
     vec4 specularTint = vec4(.5,.5,.5,1);

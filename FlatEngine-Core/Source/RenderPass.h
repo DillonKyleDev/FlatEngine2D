@@ -3,6 +3,7 @@
 #include "LogicalDevice.h"
 #include "WinSys.h"
 #include "Structs.h"
+#include "Texture.h"
 
 #include <vector>
 #include <memory>
@@ -13,7 +14,7 @@ namespace FlatEngine
 	class Mesh;
 	class Model;
 	class GraphicsPipeline;
-	class Material;
+	class Material;	
 
 	class RenderPass
 	{
@@ -35,6 +36,7 @@ namespace FlatEngine
 		void DestroyRenderPass();
 		VkRenderPass& GetRenderPass();
 		void ConfigureFrameBufferImageViews(std::vector<VkImageView>& imageViews);
+		Texture& GetDepthTexture();		
 		void CreateFrameBuffers();
 		void DestroyFrameBuffers();
 		void RecreateFrameBuffers();
@@ -48,7 +50,7 @@ namespace FlatEngine
 		void RecordCommandBuffer(GraphicsPipeline& graphicsPipeline);
 		void RecordCommandBuffer(VkPipelineLayout pipelineLayout, std::vector<uint32_t>& m_pushConstOffsets, std::vector<uint32_t>& m_pushConstSizes, std::vector<const void*>& m_pushValues);
 		void BindIndexed(std::shared_ptr<Model> model);
-		void BindDescriptorSets(Mesh& mesh, std::shared_ptr<Material> material, ViewportType viewportType);
+		void BindDescriptorSets(VkDescriptorSet& descriptorSet, std::shared_ptr<Material> material, ViewportType viewportType);
 		void DrawIndexed(std::shared_ptr<Model> model);
 		void BeginRenderPass(uint32_t imageIndex);
 		void EndRenderPass();
@@ -81,9 +83,7 @@ namespace FlatEngine
 		VkImageView m_colorImageView;
 		bool m_b_msaaEnabled;
 		// depth buffers
-		VkImage m_depthImage;
-		VkDeviceMemory m_depthImageMemory;
-		VkImageView m_depthImageView;
+		Texture m_depthTexture;
 		bool m_b_depthBuffersEnabled;
 		// handles
 		VkInstance* m_instance;
@@ -91,21 +91,11 @@ namespace FlatEngine
 		PhysicalDevice* m_physicalDevice;
 		LogicalDevice* m_logicalDevice;
 		VkCommandPool* m_commandPool;
-
 		
 		VkCommandBufferBeginInfo m_beginInfo{};
 		VkRenderPassBeginInfo m_renderPassInfo{};
 		VkViewport m_viewport{};
 		VkRect2D m_scissor{};
-
-		//// Figure these out after going through vulkan docs again
-		//std::vector<VkAttachmentDescription> m_colorAttachments;
-		//std::vector<VkClearValue> m_colorClears;
-		//std::vector<VkAttachmentDescription> m_depthAttachments;
-		//std::vector<VkClearValue> m_depthClears;
-		//std::vector<VkAttachmentDescription> m_resolveAttachments;
-		//std::vector<VkClearValue> m_resolveClears;
-		//std::vector<VkAttachmentDescription> m_inputAttachments;
 	};
 }
 

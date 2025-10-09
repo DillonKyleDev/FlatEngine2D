@@ -13,6 +13,7 @@
 #include "Animation.h"
 #include "Audio.h"
 #include "Text.h"
+#include "Texture.h"
 #include "CharacterController.h"
 #include "Physics.h"
 #include "Body.h"
@@ -2807,11 +2808,11 @@ namespace FlatGui
 		if (material != nullptr)
 		{
 			// Sampler2Ds
-			std::map<uint32_t, VkShaderStageFlags>* texturesShaderData = material->GetTexturesShaderStages();			
+			std::map<uint32_t, FL::TexturePipelineData>* texturesShaderData = material->GetTexturesPipelineData();
 			std::map<uint32_t, Texture>& meshTextures = mesh->GetTextures();			
 
 			int textureCounter = 0;
-			for (std::map<uint32_t, VkShaderStageFlags>::iterator iter = texturesShaderData->begin(); iter != texturesShaderData->end(); iter++)
+			for (std::map<uint32_t, FL::TexturePipelineData>::iterator iter = texturesShaderData->begin(); iter != texturesShaderData->end(); iter++)
 			{
 				int droppedTextureValue = -1;
 				std::string openedTexturePath = "";
@@ -2826,7 +2827,7 @@ namespace FlatGui
 				}
 
 				std::string shaderStageString = "";
-				switch (iter->second)
+				switch (iter->second.shaderStage)
 				{
 				case VK_SHADER_STAGE_VERTEX_BIT:
 					shaderStageString = "Vertex Sampled Tex binding = " + std::to_string(iter->first + 1);

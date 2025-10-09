@@ -14,7 +14,7 @@ function Start()
      -- required to access instance data
      local data = GetInstanceData("SpawnItems", my_id)
 
-     for i = 0, 10, 1
+     for i = 0, 1000, 1
      do
           -- local object = CreateGameObject()
           -- local mesh = object:AddMesh()
@@ -25,9 +25,10 @@ function Start()
           -- local transform = object:GetTransform()
           -- local pos = Vector3:new(RandomFloat(-10.0,10.0),RandomFloat(-10.0,10.0),RandomFloat(-10.0,10.0))
           -- transform:SetPosition(pos)
-          local force = Vector2:new(RandomFloat(-500.0,500.0),RandomFloat(5000.0,7000.0))
-          local ball = Instantiate("IcoSphere", Vector3:new(0,0,0))
-          ball:GetBody():ApplyForceToCenter(force)
+          -- local force = Vector2:new(RandomFloat(-500.0,500.0),RandomFloat(0.0,0.0))
+          local ball = Instantiate("IcoSphere", Vector3:new(0,0,2 *i))
+          ball:GetMesh():SetUBOVec4("Color", Vector4:new(RandomFloat(0.0, 1.0),RandomFloat(0.0, 1.0),RandomFloat(0.0, 1.0),1.0))
+          -- ball:GetBody():ApplyForceToCenter(force)
      end
 end
 

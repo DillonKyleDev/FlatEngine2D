@@ -241,6 +241,8 @@ namespace FlatGui
 
 	void RunOnceAfterInitialization()
 	{
+		FL::F_b_showSceneView = &FG_b_showSceneView;
+		FL::F_b_showGameView = &FG_b_showGameView;
 		SetupProfilerProcesses();
 	}
 
@@ -2094,24 +2096,24 @@ namespace FlatGui
 				FL::F_sceneViewCameraObject->GetCamera()->AddToVerticalViewAngle(mouseDelta.y * 0.25f);
 
 				Vector2 extent = Vector2((float)FL::F_VulkanManager->GetWinSystem().GetExtent().width, (float)FL::F_VulkanManager->GetWinSystem().GetExtent().height);
-				if (mousePos.x > extent.x)
+				if (mousePos.x > extent.x - 2)
 				{
-					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), 0, (int)mousePos.y);
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), 1, (int)mousePos.y);
 					lastMousePos = Vector2(0, mousePos.y);
 				}
-				else if (mousePos.x < 0)
+				else if (mousePos.x < 1)
 				{
-					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)extent.x, (int)mousePos.y);
-					lastMousePos = Vector2(extent.x, mousePos.y);
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)extent.x - 2, (int)mousePos.y);
+					lastMousePos = Vector2(extent.x - 1, mousePos.y);
 				}
-				if (mousePos.y > extent.y)
+				if (mousePos.y > extent.y - 1)
 				{
-					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)mousePos.x, 0);
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)mousePos.x, 1);
 					lastMousePos = Vector2(mousePos.x, 0);
 				}
-				else if (mousePos.y < 0)
+				else if (mousePos.y < 1)
 				{
-					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)mousePos.x, (int)extent.y);
+					SDL_WarpMouseInWindow(FL::F_VulkanManager->GetWinSystem().GetWindow(), (int)mousePos.x, (int)extent.y - 1);
 					lastMousePos = Vector2(mousePos.x, extent.y);
 				}
 			}

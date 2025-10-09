@@ -1,0 +1,128 @@
+Adding input action with duplicate name still adds the keybinding empty to the context
+
+Make zooming in and out of the scene view centered around the mouse position, not the center.
+
+Fix hierarchy ordering
+
+enable Multi-select and move/delete
+
+Increase zoom out and zoom in size and lighten gridlines based on zoom/change the mod to reflect the zoom level
+
+Add joint manager component
+
+
+Add DrawPolygon, DrawChain, DrawCapsule, functions
+
+Draw colliders directly into the scene view, boxes, circles, capsules, chains, segments
+
+Right click context for object creation inside scene view
+
+multiselect of objects and deletion + parenting
+
+Reordering game objects using maps in parent objects with their children ids changeable in the map
+
+0: 23
+1: 3
+2: 4
+3: 15
+
+Then saved to the json as key value pairs instead of just the array used now
+
+Scaling directly in the scene view on objects using a scale mode
+
+Make scene view buttons bigger, Gameobject select, chain segment manipulation
+
+Fix child rotation 
+
+Figure out what setactive does for each component type visually in scene view
+
+Fix mapping context editor weirdness (incorrectly allowing for creation of empty keybindings if same input action name is used)
+
+Multithreading support for box2D
+
+Add a way to quickly add colored shapes to the scene view and create colliders that are filled in colors or outlines
+
+implement character mover from box2d
+
+Add shapes to button component + rework
+
+Add sin and cosine functions and allow access through lua scripts
+
+Animations are a bit broken with the starting frame sprite path
+
+Unparent drag and drop currently not working in hierarchies
+
+Then add setting material for each Mesh component, which creates a new graphics pipeline using that material.
+
+
+Fix Window resizing and what happens in RecreateFrameBuffers() method in VulkanManager
+
+Deleting Mesh gameobjects and adding new ones after sometimes causes crashes.
+
+Deleting Mesh gameObjects does not work for all
+
+Crashes when changing Mesh material sometimes
+
+Crashes when you add images to images folder then go back to the engine while inside the images directorys
+
+Set up each component to have a GameObject* m_parentPtr so you can directly access it's parent instead of searching for it in the Scene.
+
+Reloading scene after stopping gameloop
+
+Rotations are in reverse, negative should go clockwise, positive should go counterclockwise
+
+Fix duplicate id's found in several inspector elements.. example: JointMaker bodyA and bodyB.. Remove references when right-clicking inputs
+
+RENDERING ORDER
+
+Grid is rendering over scene objects
+
+Other objects rendering through other objects
+
+Handle non-consumed vertex and fragment data in shaders, probably by leaving them in the shader files and not using them or by creating separate pipelines
+
+Add separate files for vertex and fragment shaders that users code in and parse them in the engine, grabbing keywords for variables and using those keywords and the following variables to create the dynamic uniform buffer object data.  Then, after parsing, write the actual shader code to real shader files and compile them into sprv files for the engine to read.
+
+uniform vec4 inputVariable;
+uniform float nextVariable;
+
+layout(.. = 0) out vec4 outputVariable // for fragment shader
+layout(.. = 0) out float outputFloat // for fragment shader
+
+main {
+	outputVariable = inputVariable;
+	outFloat = nextVariable;
+}
+
+
+Translates to .vert file as:
+
+
+........ uniformBufferObject {
+	vec4s[32];
+	floats[32];
+} ubo;
+
+layout(.. = 0) out vec4 outputVariable // for fragment shader
+layout(.. = 0) out float outputFloat // for fragment shader
+
+main {
+	outputVariable = vec4s[0];
+	outputFloat = floats[0];
+}
+
+instead of vector<std::string> that we need to sort, 
+std::map<int index, std::string> maybe?
+
+To use the depth information of a rendered scene image, try creating a separate renderpass like we did to render to imgui texture, but instead of color resources, create depth resources, then create an additional subpass dependency step in the sceneviewrendertexture renderpass setup that uses that depth image? (half baked thought)
+
+Render order independant algorithm for transparent materials:
+https://docs.vulkan.org/samples/latest/samples/api/oit_linked_lists/README.html
+
+Still a bug with transparent textures showing artifacts through models when viewing the other side of the model through transparent texture.
+
+Fix scene files with textures and ubo json saved wrong.
+
+Add descriptor sets into meshes for both scene view and game view and when setting material and creating resources, create resources for both descriptor sets sets
+
+Create a model for each viewport so there are unique uniform buffers being written to and used in each.
