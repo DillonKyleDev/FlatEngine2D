@@ -1,0 +1,107 @@
+{
+    "animation": {
+        "_loop": false,
+        "animationProperties": {
+            "audio": [],
+            "camera": [],
+            "canvas": [],
+            "characterController": [],
+            "event": [
+                {
+                    "_cppEvent": false,
+                    "_luaEvent": true,
+                    "functionName": "DestroySelf",
+                    "parameters": {
+                        "bool": false,
+                        "double": 0.0,
+                        "float": 0.0,
+                        "int": 0,
+                        "long": 0,
+                        "string": "",
+                        "vector2X": 0.0,
+                        "vector2Y": 0.0
+                    },
+                    "time": 629.41162109375
+                }
+            ],
+            "sprite": [
+                {
+                    "_alphaOnly": true,
+                    "_instantTintChange": false,
+                    "_offsetAnimated": false,
+                    "_pathAnimated": false,
+                    "_scaleAnimated": false,
+                    "_tintColorAnimated": true,
+                    "interpType": 0,
+                    "path": "",
+                    "speed": 0.10000000149011612,
+                    "time": 2.6666665077209473,
+                    "tintColorW": 0.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "xOffset": 0.0,
+                    "yOffset": 0.0
+                },
+                {
+                    "_alphaOnly": true,
+                    "_instantTintChange": false,
+                    "_offsetAnimated": false,
+                    "_pathAnimated": false,
+                    "_scaleAnimated": false,
+                    "_tintColorAnimated": true,
+                    "interpType": 0,
+                    "path": "",
+                    "speed": 0.10000000149011612,
+                    "time": 52.31370544433594,
+                    "tintColorW": 1.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "xOffset": 0.0,
+                    "yOffset": 0.0
+                },
+                {
+                    "_alphaOnly": true,
+                    "_instantTintChange": false,
+                    "_offsetAnimated": false,
+                    "_pathAnimated": false,
+                    "_scaleAnimated": false,
+                    "_tintColorAnimated": true,
+                    "interpType": 0,
+                    "path": "",
+                    "speed": 0.10000000149011612,
+                    "time": 421.3333435058594,
+                    "tintColorW": 1.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "xOffset": 0.0,
+                    "yOffset": 0.0
+                },
+                {
+                    "_alphaOnly": true,
+                    "_instantTintChange": false,
+                    "_offsetAnimated": false,
+                    "_pathAnimated": false,
+                    "_scaleAnimated": false,
+                    "_tintColorAnimated": true,
+                    "interpType": 0,
+                    "path": "",
+                    "speed": 0.10000000149011612,
+                    "time": 565.3333129882813,
+                    "tintColorW": 0.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "xOffset": 0.0,
+                    "yOffset": 0.0
+                }
+            ],
+            "text": [],
+            "transform": []
+        },
+        "length": 0.0,
+        "name": "FadeInOut"
+    }
+}

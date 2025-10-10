@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="scripts">
+      <UniqueIdentifier>{6D076287-D9E6-E022-E2FE-6BF94E5D4784}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\FlatGui.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Animator.cpp" />
+    <ClCompile Include="Source\FlatEngine-Editor.cpp" />
+    <ClCompile Include="Source\FlatGui.cpp" />
+    <ClCompile Include="Source\Hierarchy.cpp" />
+    <ClCompile Include="Source\ImGuiWrappersEditor.cpp" />
+    <ClCompile Include="Source\Inspector.cpp" />
+    <ClCompile Include="Source\Log.cpp" />
+    <ClCompile Include="Source\MainMenu.cpp" />
+    <ClCompile Include="Source\MappingContextEditor.cpp" />
+    <ClCompile Include="Source\Profiler.cpp" />
+    <ClCompile Include="Source\SceneView.cpp" />
+    <ClCompile Include="Source\Settings.cpp" />
+    <ClCompile Include="Source\Toolbar.cpp" />
+    <ClCompile Include="Source\FileExplorer.cpp" />
+    <ClCompile Include="Source\TileSetEditor.cpp" />
+    <ClCompile Include="Source\ProjectHub.cpp" />
+    <ClCompile Include="Source\PersistantObjectHierarchy.cpp" />
+  </ItemGroup>
+</Project>

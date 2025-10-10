@@ -1,0 +1,972 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor">
+      <UniqueIdentifier>{7E9B3B46-EA05-F0BC-3344-A1629FEDCD11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes">
+      <UniqueIdentifier>{847FDF27-7063-A07D-D9C3-9AD0C5C68AFF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Box2D">
+      <UniqueIdentifier>{92BCD59A-7EE1-241B-A72C-0AAB93B02339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Box2D\include">
+      <UniqueIdentifier>{0556576C-F1A6-42AE-1A0B-317006BBD517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Box2D\lib">
+      <UniqueIdentifier>{B854C151-A40F-B1FD-4DC7-29483961FB8D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\ImGui">
+      <UniqueIdentifier>{AE87529B-9AAC-A11B-C3F7-86ABAF7BA039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\ImGui\Backends">
+      <UniqueIdentifier>{78E9A32E-E457-F9AD-2D41-B4AD99EEEE49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\ImGui\ImGui_Docking">
+      <UniqueIdentifier>{961366C8-8265-3DB8-6B84-7AC8577556A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\ImGui\ImGui_Docking\misc">
+      <UniqueIdentifier>{31D49FAB-9D39-3332-2612-D50A927628A1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\ImGui\ImGui_Docking\misc\cpp">
+      <UniqueIdentifier>{83FEFB62-EF39-5C26-F82E-D9B564E9E056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\ImGui\ImGui_Docking\misc\fonts">
+      <UniqueIdentifier>{4A6F2B12-B635-882E-FF90-16916B96F692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\ImPlot">
+      <UniqueIdentifier>{C847A805-340A-DC8F-7DBA-6A1CE9BBB46D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Lua">
+      <UniqueIdentifier>{15BAF602-01B4-1F55-EA20-B665D6B985C1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2">
+      <UniqueIdentifier>{73BBD161-DFF2-19F9-E8FC-7D1C54B340F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\include">
+      <UniqueIdentifier>{E6A5D0D7-5289-DF17-5B8C-0D54C7EEA568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\include\sol">
+      <UniqueIdentifier>{A3E6F8F9-0FA0-63A4-98FF-7D7E04B81914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\include\sol\compatibility">
+      <UniqueIdentifier>{8C851838-F84B-7554-41A7-03B7ADACE3B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\include\sol\detail">
+      <UniqueIdentifier>{05A9BEB8-F110-8586-5A7C-999C46039C72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\include\sol\stack">
+      <UniqueIdentifier>{28D2E6DF-94EC-4981-DD0E-5A1549687188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\include\sol\stack\detail">
+      <UniqueIdentifier>{EACCA93E-D675-116E-FF0B-2DEDEB132CAF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\include\sol\utility">
+      <UniqueIdentifier>{06306E0F-7295-0196-FB6D-A36E67D2F604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\scripts">
+      <UniqueIdentifier>{CAFDFBC0-36E1-0A01-3FE4-383DAB46D151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Vendor\includes\Sol2\subprojects">
+      <UniqueIdentifier>{D6B19EBB-426B-0966-CBCA-23403783BFD5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\projects">
+      <UniqueIdentifier>{1A37B1AD-86EC-29A3-0FE1-237A7B9520A7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\projects\Pool">
+      <UniqueIdentifier>{43FC3170-2FF5-50C2-5827-3647447F30CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\projects\Pool\scripts">
+      <UniqueIdentifier>{9A0EB8F0-8633-0771-AF7E-EC009B02068F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\projects\Pool\scripts\cpp">
+      <UniqueIdentifier>{6C450D95-5800-FD40-01B8-758BED5147D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{56EB95D1-428D-C0A7-2B48-D4FB178947F8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Vendor\includes\Box2D\include\base.h">
+      <Filter>..\Vendor\includes\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Box2D\include\box2d.h">
+      <Filter>..\Vendor\includes\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Box2D\include\collision.h">
+      <Filter>..\Vendor\includes\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Box2D\include\id.h">
+      <Filter>..\Vendor\includes\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Box2D\include\math_functions.h">
+      <Filter>..\Vendor\includes\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Box2D\include\types.h">
+      <Filter>..\Vendor\includes\Box2D\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\Backends\imgui_impl_sdl2.h">
+      <Filter>..\Vendor\includes\ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\Backends\imgui_impl_sdlrenderer2.h">
+      <Filter>..\Vendor\includes\ImGui\Backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\ImGui_Docking\imconfig.h">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\ImGui_Docking\imgui.h">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\ImGui_Docking\imgui_internal.h">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\ImGui_Docking\imstb_rectpack.h">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\ImGui_Docking\imstb_textedit.h">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\ImGui_Docking\imstb_truetype.h">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImGui\ImGui_Docking\misc\cpp\imgui_stdlib.h">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking\misc\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImPlot\implot.h">
+      <Filter>..\Vendor\includes\ImPlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\ImPlot\implot_internal.h">
+      <Filter>..\Vendor\includes\ImPlot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Lua\lauxlib.h">
+      <Filter>..\Vendor\includes\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Lua\lua.h">
+      <Filter>..\Vendor\includes\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Lua\lua.hpp">
+      <Filter>..\Vendor\includes\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Lua\luaconf.h">
+      <Filter>..\Vendor\includes\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Lua\lualib.h">
+      <Filter>..\Vendor\includes\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\abort.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\as_args.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\as_returns.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\assert.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\base_traits.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\bind_traits.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\bytecode.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\call.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\compatibility.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\compatibility\compat-5.3.c.h">
+      <Filter>..\Vendor\includes\Sol2\include\sol\compatibility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\compatibility\compat-5.3.h">
+      <Filter>..\Vendor\includes\Sol2\include\sol\compatibility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\compatibility\compat-5.4.h">
+      <Filter>..\Vendor\includes\Sol2\include\sol\compatibility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\compatibility\lua_version.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol\compatibility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\config.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\coroutine.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\debug.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\demangle.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\deprecate.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\detail\build_version.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\dump_handler.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\ebco.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\environment.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\epilogue.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\error.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\error_handler.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\forward.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\forward_as.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\forward_detail.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function_result.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function_types.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function_types_core.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function_types_overloaded.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function_types_stateful.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function_types_stateless.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\function_types_templated.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\in_place.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\inheritance.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\load_result.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\lua_table.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\lua_value.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\make_reference.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\metatable.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\object.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\object_base.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\optional.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\optional_implementation.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\overload.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\packaged_coroutine.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\pairs_iterator.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\pointer_like.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\policies.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\prologue.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\property.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\protect.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\protected_function.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\protected_function_result.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\protected_handler.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\proxy_base.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\raii.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\reference.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\resolve.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\sol.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack\detail\pairs.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol\stack\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_check.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_check_get.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_check_get_qualified.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_check_get_unqualified.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_check_qualified.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_check_unqualified.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_core.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_field.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_get.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_get_qualified.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_get_unqualified.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_guard.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_iterator.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_pop.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_probe.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_proxy.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_proxy_base.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_push.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\stack_reference.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\state.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\state_handling.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\state_view.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\string_view.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\table.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\table_core.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\table_iterator.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\table_proxy.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\thread.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\tie.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\traits.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\trampoline.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\tuple.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\types.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\unicode.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\unique_usertype_traits.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\unreachable.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\unsafe_function.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\unsafe_function_result.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\userdata.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\usertype.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\usertype_container.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\usertype_container_launch.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\usertype_core.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\usertype_proxy.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\usertype_storage.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\usertype_traits.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\utility\is_integer.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\utility\to_string.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\variadic_args.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\variadic_results.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\version.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\includes\Sol2\include\sol\wrapper.hpp">
+      <Filter>..\Vendor\includes\Sol2\include\sol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\projects\Pool\scripts\cpp\EnemyAI.h">
+      <Filter>..\projects\Pool\scripts\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Body.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Box.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Button.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPPScript.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPPScriptHeaders.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPPScriptsHookup.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Canvas.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Capsule.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Chain.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CharacterController.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Circle.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Component.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DistanceJoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ECSManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntryPoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FlatEngine.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameLoop.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Joint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\JointMaker.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Line.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Logger.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MappingContext.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MotorJoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MouseJoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Physics.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Polygon.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PrefabManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PrismaticJoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ProfilerProcess.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Project.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RevoluteJoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Script.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Shape.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sound.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sprite.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TagList.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Text.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileMap.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileSet.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transform.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vector2.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vector4.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WeldJoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WheelJoint.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WindowManager.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Matrix.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Vendor\includes\ImGui\Backends\imgui_impl_sdl2.cpp">
+      <Filter>..\Vendor\includes\ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\Backends\imgui_impl_sdlrenderer2.cpp">
+      <Filter>..\Vendor\includes\ImGui\Backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\ImGui_Docking\imgui.cpp">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\ImGui_Docking\imgui_demo.cpp">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\ImGui_Docking\imgui_draw.cpp">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\ImGui_Docking\imgui_tables.cpp">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\ImGui_Docking\imgui_widgets.cpp">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\ImGui_Docking\misc\cpp\imgui_stdlib.cpp">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking\misc\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImGui\ImGui_Docking\misc\fonts\binary_to_compressed_c.cpp">
+      <Filter>..\Vendor\includes\ImGui\ImGui_Docking\misc\fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImPlot\implot.cpp">
+      <Filter>..\Vendor\includes\ImPlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImPlot\implot_demo.cpp">
+      <Filter>..\Vendor\includes\ImPlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\includes\ImPlot\implot_items.cpp">
+      <Filter>..\Vendor\includes\ImPlot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\projects\Pool\scripts\cpp\EnemyAI.cpp">
+      <Filter>..\projects\Pool\scripts\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AssetManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Body.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Box.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Button.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPPScript.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPPScriptMethods.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPPScriptsHookup.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Canvas.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Capsule.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Chain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CharacterController.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Circle.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Component.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DistanceJoint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ECSManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FlatEngine.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameLoop.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameView.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGuiWrappersCore.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Joint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\JointMaker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Line.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Logger.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LuaFunctions.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MappingContext.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MotorJoint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MouseJoint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Physics.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Polygon.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PrefabManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PrismaticJoint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Profiler.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ProfilerProcess.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Project.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RevoluteJoint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Script.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Shape.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sound.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sprite.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TagList.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Text.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileMap.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileSet.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transform.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Vector2.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Vector4.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WeldJoint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WheelJoint.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WindowManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Matrix.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Vendor\includes\Box2D\lib\box2d.lib">
+      <Filter>..\Vendor\includes\Box2D\lib</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Box2D\lib\box2dd.idb">
+      <Filter>..\Vendor\includes\Box2D\lib</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Box2D\lib\box2dd.lib">
+      <Filter>..\Vendor\includes\Box2D\lib</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Box2D\lib\box2dd.pdb">
+      <Filter>..\Vendor\includes\Box2D\lib</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Lua\lua54.dll">
+      <Filter>..\Vendor\includes\Lua</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Lua\lua54.lib">
+      <Filter>..\Vendor\includes\Lua</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\.clang-format">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\.dockerignore">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\.style.yapf">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\CMakeLists.txt">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\CONTRIBUTING.md">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\CONTRIBUTORS.md">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\Dockerfile">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\LICENSE.txt">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\list_headers.py">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\meson.build">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\meson_options.txt">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\scripts\build.linux.sh">
+      <Filter>..\Vendor\includes\Sol2\scripts</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\scripts\preparation.linux.sh">
+      <Filter>..\Vendor\includes\Sol2\scripts</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\scripts\preparation.osx.sh">
+      <Filter>..\Vendor\includes\Sol2\scripts</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\scripts\push.linux.sh">
+      <Filter>..\Vendor\includes\Sol2\scripts</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\scripts\run.linux.sh">
+      <Filter>..\Vendor\includes\Sol2\scripts</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\scripts\run.osx.sh">
+      <Filter>..\Vendor\includes\Sol2\scripts</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\sol2.pc.in">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </None>
+    <None Include="..\Vendor\includes\Sol2\subprojects\lua.wrap">
+      <Filter>..\Vendor\includes\Sol2\subprojects</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\Vendor\includes\Sol2\sol2.natvis">
+      <Filter>..\Vendor\includes\Sol2</Filter>
+    </Natvis>
+  </ItemGroup>
+</Project>
