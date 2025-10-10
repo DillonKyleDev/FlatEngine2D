@@ -4,7 +4,7 @@
 
 <img width="1920" height="1032" alt="2025-10-09_2" src="https://github.com/user-attachments/assets/aadbcc36-d84b-492f-a9ca-677a2e48628a" />
 
-### Building FlatEngine2D From Source
+## Building FlatEngine2D From Source
 
 If you are using the Release build of FlatEngine2D found in Releases you can safely ignore this section.
 
