@@ -1,7 +1,17 @@
 # FlatEngine - 2D Game Engine
 
-![engine](https://github.com/user-attachments/assets/885f13e4-e57b-4232-9c16-bdee07d63437)
+<img width="1920" height="1032" alt="2025-10-09" src="https://github.com/user-attachments/assets/8181f2e7-74fe-45f8-bf77-69c87c78dd38" />
 
+<img width="1920" height="1032" alt="2025-10-09_2" src="https://github.com/user-attachments/assets/aadbcc36-d84b-492f-a9ca-677a2e48628a" />
+
+
+## Update - Oct. 9th, 2025
+
+Version 2.0 of FlatEngine2D has just been released and can be found in the Releases section of this repo.  The update features fully revamped collision detection and joints using Box2D as well as a UI and UX update.</br>
+
+The many changes and overhauls I've been making to FlatEngine (3D) in pursuit of a Vulkan game engine have made me realize that it will be a while before the 2D aspects of the Vulkan-based FlatEngine will be fully realized.  As such, I've decided to update and release the last version of FlatEngine2D from before I added Vulkan to the project.  It will fullfil the role of my 2D game engine until FlatEngine (3D) is more feature complete. </br>
+
+Though it is still a long way from completion, the 3D version of FlatEngine using Vulkan can be found here: https://github.com/DillonKyleDev/FlatEngine
 
 ## UPDATE
 
