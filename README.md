@@ -7,7 +7,9 @@
 
 ## Update - Oct. 9th, 2025
 
-Version 2.0 of FlatEngine2D has just been released and can be found in the Releases section of this repo.  The update features fully revamped collision detection and joints using Box2D as well as a UI and UX update.</br>
+Version 2.0 of FlatEngine2D has just been released and can be found in the Releases section of this repo.  The update features fully revamped collision detection and joints using Box2D, new C++ scripting capabilities in addition to Lua, and a UI and UX update.</br>
+
+Please note that although FlatEngine2D is nearly complete, you may still encounter bugs and crashes occasionally, so please be sure to save your scenes and projects regularly to avoid progress being lost. </br>
 
 The many changes and overhauls I've been making to FlatEngine (3D) in pursuit of a Vulkan game engine have made me realize that it will be a while before the 2D aspects of the Vulkan-based FlatEngine will be fully realized.  As such, I've decided to update and release the last version of FlatEngine2D from before I added Vulkan to the project.  It will fullfil the role of my 2D game engine until FlatEngine (3D) is more feature complete. </br>
 
