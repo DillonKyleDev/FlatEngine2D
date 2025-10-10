@@ -66,11 +66,13 @@ namespace FlatGui
 			ImGuiIO& inputOutput = ImGui::GetIO();
 			Vector2 currentPos = ImGui::GetCursorScreenPos();
 			Vector2 centerOffset = Vector2(SCENE_VIEWPORT_WIDTH / 2, SCENE_VIEWPORT_HEIGHT / 2);
-			bool b_weightedScroll = false;
+			bool b_filled = false;
+			bool b_allowOverlap = true;
+			bool b_weightedScroll = true;
 
 			// Need both the center of the viewport and the center of the world to reference when drawing imagese to the scene view
 
-			AddSceneViewMouseControls("SceneViewCanvas", currentPos, canvas_sz, FG_sceneViewScrolling, FG_sceneViewCenter, FG_sceneViewGridStep);
+			AddSceneViewMouseControls("SceneViewCanvas", currentPos, canvas_sz, FG_sceneViewScrolling, FG_sceneViewCenter, FG_sceneViewGridStep, ImGui::GetColorU32(Vector4()), b_filled, 0, b_allowOverlap, b_weightedScroll);
 
 			RenderGridView(FG_sceneViewCenter, FG_sceneViewScrolling, b_weightedScroll, canvas_p0, canvas_p1, canvas_sz, FG_sceneViewGridStep, centerOffset);
 
