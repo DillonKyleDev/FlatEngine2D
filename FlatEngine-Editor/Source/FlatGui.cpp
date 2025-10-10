@@ -181,7 +181,10 @@ namespace FlatGui
 				{
 					FL::F_effectVolume = currentObjectJson["effectVolume"];
 				}
-				
+				if (currentObjectJson.contains("iconTransparency"))
+				{
+					FG_iconTransparency = currentObjectJson["iconTransparency"];
+				}
 				if (currentObjectJson.contains("currentFileDirectory"))
 				{
 					FG_currentDirectory = currentObjectJson["currentFileDirectory"];
@@ -299,6 +302,7 @@ namespace FlatGui
 			{ "_showProfiler", FG_b_showProfiler },
 			{ "_showMappingContextEditor", FG_b_showMappingContextEditor },
 			{ "_clearLogBuffer", FG_b_clearBufferEveryFrame },
+			{ "iconTransparency", FG_iconTransparency },
 			{ "yearsSinceSave", timeSaved.tm_year },
 			{ "monthsSinceSave", timeSaved.tm_mon },
 			{ "daysSinceSave", timeSaved.tm_mday },

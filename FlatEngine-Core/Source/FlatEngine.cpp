@@ -630,17 +630,15 @@ namespace FlatEngine
 			std::string rootPath = F_AssetManager.GetRootPath();
 
 			try
-			{				
+			{		
 				std::filesystem::create_directories(F_LoadedProject.GetBuildPath());
 
-				if (F_b_gameRuntime)
+				std::string existingDirectory = "..\\Build\\windows-x86_64\\Release\\FlatEngine-Core";
+				if (!DoesFileExist(existingDirectory))
 				{
-					std::filesystem::copy(rootPath + "\\Core", F_LoadedProject.GetBuildPath() + "\\Core", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
+					existingDirectory = "..\\FlatEngine-Core";
 				}
-				else
-				{
-					std::filesystem::copy(rootPath + "\\Build\\windows-x86_64\\Release\\FlatEngine-Core", F_LoadedProject.GetBuildPath() + "\\Core", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
-				}
+				std::filesystem::copy(existingDirectory, F_LoadedProject.GetBuildPath() + "\\Core", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
 			}
 			catch (std::exception& e)
 			{
@@ -649,7 +647,12 @@ namespace FlatEngine
 			}
 			try
 			{
-				std::filesystem::copy(rootPath + "\\Build\\windows-x86_64\\Release\\FlatEngine-Runtime", F_LoadedProject.GetBuildPath() + "\\Runtime", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
+				std::string existingDirectory = "..\\Build\\windows-x86_64\\Release\\FlatEngine-Runtime";
+				if (!DoesFileExist(existingDirectory))
+				{
+					existingDirectory = "..\\FlatEngine-Runtime";
+				}
+				std::filesystem::copy(existingDirectory, F_LoadedProject.GetBuildPath() + "\\Runtime", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
 			}
 			catch (std::exception& e)
 			{
@@ -658,7 +661,7 @@ namespace FlatEngine
 			}
 			try
 			{
-				std::string existingProjDir = rootPath + "\\projects\\" + GetFilenameFromPath(F_LoadedProject.GetPath());
+				std::string existingProjDir = "..\\projects\\" + GetFilenameFromPath(F_LoadedProject.GetPath());
 				std::string buildProjDir = F_LoadedProject.GetBuildPath() + "\\projects\\" + GetFilenameFromPath(F_LoadedProject.GetPath());
 				std::filesystem::create_directories(buildProjDir);
 				std::filesystem::copy(existingProjDir, buildProjDir, std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
@@ -670,7 +673,7 @@ namespace FlatEngine
 			}
 			try
 			{
-				std::filesystem::copy(rootPath + "\\engine", F_LoadedProject.GetBuildPath() + "\\engine", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
+				std::filesystem::copy("..\\engine", F_LoadedProject.GetBuildPath() + "\\engine", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
 			}
 			catch (std::exception& e)
 			{
@@ -679,14 +682,12 @@ namespace FlatEngine
 			}
 			try
 			{
-				if (F_b_gameRuntime)
-				{
-					std::filesystem::copy(rootPath + "\\Intermediates", F_LoadedProject.GetBuildPath() + "\\Intermediates", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
+				std::string existingDirectory = "..\\Build\\Intermediates";
+				if (!DoesFileExist(existingDirectory))
+				{					
+					existingDirectory = "../../../Intermediates";
 				}
-				else
-				{
-					std::filesystem::copy(rootPath + "\\Build\\Intermediates", F_LoadedProject.GetBuildPath() + "\\Intermediates", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
-				}
+				std::filesystem::copy(existingDirectory, F_LoadedProject.GetBuildPath() + "\\Intermediates", std::filesystem::copy_options::overwrite_existing | std::filesystem::copy_options::recursive);
 			}
 			catch (std::exception& e)
 			{
