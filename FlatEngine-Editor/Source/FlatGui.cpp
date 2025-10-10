@@ -651,12 +651,6 @@ namespace FlatGui
 				bool b_filled = false;
 				bool b_allowOverlap = false;
 				bool b_weightedScroll = true;
-				AddSceneViewMouseControls(invisibleButtonID, positionOnScreen, buttonSize, FG_sceneViewScrolling, FG_sceneViewCenter, FG_sceneViewGridStep, FL::GetColor32("transparent"), b_filled, 0, b_allowOverlap, b_weightedScroll);
-				const bool b_isClicked = ImGui::IsItemClicked();
-				if (b_isClicked && (FL::F_CursorMode == FL::F_CURSOR_MODE::TRANSLATE || FL::F_CursorMode == FL::F_CURSOR_MODE::SCALE || FL::F_CursorMode == FL::F_CURSOR_MODE::ROTATE))
-				{
-					SetFocusedGameObjectID(sprite->GetParentID());
-				}
 				
 				if (renderOrder <= FL::F_maxSpriteLayers && renderOrder >= 0)
 				{

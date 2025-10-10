@@ -1,0 +1,47 @@
+{
+    "tileSetData": {
+        "name": "Face",
+        "texturePath": "..\\projects\\Pool\\images\\texture.jpg",
+        "tileHeight": 16,
+        "tileSetPath": "..\\projects\\Pool\\images\\tileSets\\Face.tls",
+        "tileWidth": 16
+    },
+    "tiles": [
+        {
+            "index": 365
+        },
+        {
+            "index": 397
+        },
+        {
+            "index": 429
+        },
+        {
+            "index": 461
+        },
+        {
+            "index": 366
+        },
+        {
+            "index": 398
+        },
+        {
+            "index": 430
+        },
+        {
+            "index": 462
+        },
+        {
+            "index": 367
+        },
+        {
+            "index": 399
+        },
+        {
+            "index": 431
+        },
+        {
+            "index": 463
+        }
+    ]
+}

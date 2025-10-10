@@ -103,7 +103,7 @@
                             "cornerRadius": 0.0,
                             "density": 1.0,
                             "friction": 0.30000001192092896,
-                            "height": 2.0,
+                            "height": 6.539999961853027,
                             "points": [],
                             "radius": 1.0,
                             "restitution": 0.30000001192092896,
@@ -112,7 +112,7 @@
                             "rotationOffsetSin": 0.0,
                             "shape": 1,
                             "tangentSpeed": 0.0,
-                            "width": 2.0,
+                            "width": 6.539999961853027,
                             "xOffset": 0.0,
                             "yOffset": 0.0
                         }
@@ -176,7 +176,7 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
+                    "Projectile": true
                 },
                 {
                     "Table": false
@@ -1003,7 +1003,7 @@
                     "Table": false
                 },
                 {
-                    "Terrain": false
+                    "Terrain": true
                 },
                 {
                     "Wall": false
@@ -1016,9 +1016,9 @@
                     "id": 20,
                     "rotation": 0.0,
                     "type": "Transform",
-                    "xPos": -5.0,
+                    "xPos": -17.285715103149414,
                     "xScale": 1.0,
-                    "yPos": 0.0,
+                    "yPos": -2.775509834289551,
                     "yScale": 1.0
                 },
                 {
@@ -1039,13 +1039,13 @@
                             "_horizontal": false,
                             "_isLoop": false,
                             "_isSensor": false,
-                            "capsuleLength": 4.0,
+                            "capsuleLength": 12.0,
                             "cornerRadius": 0.0,
                             "density": 1.0,
                             "friction": 0.30000001192092896,
                             "height": 1.0,
                             "points": [],
-                            "radius": 1.0,
+                            "radius": 3.5299999713897705,
                             "restitution": 0.30000001192092896,
                             "rollingResistance": 0.0,
                             "rotationOffsetCos": 1.0,
@@ -1064,8 +1064,8 @@
             "name": "CapsuleBody",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": -5.0,
-            "spawnLocationY": 0.0,
+            "spawnLocationX": -17.285715103149414,
+            "spawnLocationY": -2.775509834289551,
             "tags": [
                 {
                     "Ball": false
@@ -1116,7 +1116,7 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
+                    "Projectile": true
                 },
                 {
                     "Table": false
@@ -1203,9 +1203,9 @@
                     "id": 22,
                     "rotation": 0.0,
                     "type": "Transform",
-                    "xPos": 0.0,
+                    "xPos": 0.40816330909729004,
                     "xScale": 1.0,
-                    "yPos": 0.0,
+                    "yPos": -2.122448444366455,
                     "yScale": 1.0
                 },
                 {
@@ -1246,8 +1246,8 @@
             "name": "Spawner",
             "parent": -1,
             "prefabName": "",
-            "spawnLocationX": 0.0,
-            "spawnLocationY": 0.0,
+            "spawnLocationX": 0.40816330909729004,
+            "spawnLocationY": -2.122448444366455,
             "tags": [
                 {
                     "Ball": false
@@ -1646,7 +1646,7 @@
         {
             "_isActive": true,
             "_isPersistant": false,
-            "_isPrefab": true,
+            "_isPrefab": false,
             "children": [],
             "collidesTags": [
                 {
@@ -1698,7 +1698,7 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
+                    "Projectile": true
                 },
                 {
                     "Table": false
@@ -1714,30 +1714,103 @@
                 {
                     "_isActive": true,
                     "_isCollapsed": false,
-                    "id": 38,
+                    "id": 43,
                     "rotation": 0.0,
                     "type": "Transform",
-                    "xPos": 6.4404096603393555,
+                    "xPos": -0.6530612707138062,
                     "xScale": 1.0,
-                    "yPos": 3.8660576343536377,
+                    "yPos": -2.2040817737579346,
                     "yScale": 1.0
                 },
                 {
                     "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 39,
-                    "path": "..\\projects\\Pool\\images\\smokeParticle.png",
-                    "pivotPoint": "PivotCenter",
-                    "renderOrder": 27,
-                    "tintColorW": 1.0,
-                    "tintColorX": 1.0,
-                    "tintColorY": 1.0,
-                    "tintColorZ": 1.0,
-                    "type": "Sprite",
-                    "xOffset": 65.5,
-                    "xScale": 0.009999999776482582,
-                    "yOffset": 66.0,
-                    "yScale": 0.009999999776482582
+                    "_isCollapsed": true,
+                    "collisionAreas": [],
+                    "height": 3,
+                    "id": 44,
+                    "tileHeight": 16,
+                    "tileSets": [
+                        {
+                            "name": "Face"
+                        }
+                    ],
+                    "tileWidth": 16,
+                    "tiles": [
+                        {
+                            "tileCoordX": 0.0,
+                            "tileCoordY": 0.0,
+                            "tileSetIndex": 365,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 0.0,
+                            "tileCoordY": 1.0,
+                            "tileSetIndex": 366,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 0.0,
+                            "tileCoordY": 2.0,
+                            "tileSetIndex": 367,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 1.0,
+                            "tileCoordY": 0.0,
+                            "tileSetIndex": 397,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 1.0,
+                            "tileCoordY": 1.0,
+                            "tileSetIndex": 398,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 1.0,
+                            "tileCoordY": 2.0,
+                            "tileSetIndex": 399,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 2.0,
+                            "tileCoordY": 0.0,
+                            "tileSetIndex": 429,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 2.0,
+                            "tileCoordY": 1.0,
+                            "tileSetIndex": 430,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 2.0,
+                            "tileCoordY": 2.0,
+                            "tileSetIndex": 431,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 3.0,
+                            "tileCoordY": 0.0,
+                            "tileSetIndex": 461,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 3.0,
+                            "tileCoordY": 1.0,
+                            "tileSetIndex": 462,
+                            "tileSetName": "Face"
+                        },
+                        {
+                            "tileCoordX": 3.0,
+                            "tileCoordY": 2.0,
+                            "tileSetIndex": 463,
+                            "tileSetName": "Face"
+                        }
+                    ],
+                    "type": "TileMap",
+                    "width": 4
                 },
                 {
                     "_isActive": true,
@@ -1746,14 +1819,14 @@
                     "_lockedXAxis": false,
                     "_lockedYAxis": false,
                     "angularDamping": 0.0,
-                    "bodyType": 2,
-                    "gravityScale": 0.0,
-                    "id": 40,
+                    "bodyType": 0,
+                    "gravityScale": 1.0,
+                    "id": 45,
                     "linearDamping": 0.0,
                     "shapes": [
                         {
-                            "_enableContactEvents": false,
-                            "_enableSensorEvents": false,
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
                             "_horizontal": false,
                             "_isLoop": false,
                             "_isSensor": false,
@@ -1761,49 +1834,29 @@
                             "cornerRadius": 0.0,
                             "density": 1.0,
                             "friction": 0.30000001192092896,
-                            "height": 1.0,
+                            "height": 6.0,
                             "points": [],
-                            "radius": 0.2800000011920929,
+                            "radius": 1.0,
                             "restitution": 0.30000001192092896,
                             "rollingResistance": 0.0,
                             "rotationOffsetCos": 1.0,
                             "rotationOffsetSin": 0.0,
-                            "shape": 2,
+                            "shape": 1,
                             "tangentSpeed": 0.0,
-                            "width": 1.0,
+                            "width": 8.0,
                             "xOffset": 0.0,
                             "yOffset": 0.0
                         }
                     ],
                     "type": "Body"
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "attachedScript": "Particle (Lua)",
-                    "id": 41,
-                    "scriptParameters": [],
-                    "type": "Script"
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "animationData": [
-                        {
-                            "name": "FadeInOut",
-                            "path": "..\\projects\\Pool\\animations\\FadeInOut.anm"
-                        }
-                    ],
-                    "id": 42,
-                    "type": "Animation"
                 }
             ],
-            "id": 13,
-            "name": "Particle",
+            "id": 14,
+            "name": "TileMap",
             "parent": -1,
-            "prefabName": "Particle",
-            "spawnLocationX": 6.4404096603393555,
-            "spawnLocationY": 3.8660576343536377,
+            "prefabName": "",
+            "spawnLocationX": -0.6530612707138062,
+            "spawnLocationY": -2.2040817737579346,
             "tags": [
                 {
                     "Ball": false
@@ -1860,7 +1913,7 @@
                     "Table": false
                 },
                 {
-                    "Terrain": false
+                    "Terrain": true
                 },
                 {
                     "Wall": false
