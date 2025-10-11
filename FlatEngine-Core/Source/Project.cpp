@@ -217,7 +217,7 @@ namespace FlatEngine
 						{
 							if (GetObjectByID(parentID) != nullptr)
 							{
-								GetObjectByID(parentID)->AddChild(myID);
+								GetObjectByID(parentID)->AddChild(myID, &sceneObject.second);
 							}
 						}
 					}

@@ -1,0 +1,17 @@
+{
+    "animation": {
+        "_loop": false,
+        "animationProperties": {
+            "audio": [],
+            "camera": [],
+            "canvas": [],
+            "characterController": [],
+            "event": [],
+            "sprite": [],
+            "text": [],
+            "transform": []
+        },
+        "length": 0.0,
+        "name": "Joints"
+    }
+}

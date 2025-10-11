@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 
 namespace FlatEngine
@@ -108,11 +109,12 @@ namespace FlatEngine
 		void SetParentID(long parentID);
 		long GetParentID();
 		GameObject *GetParent();
-		void AddChild(long childID);
+		void AddChild(long childID, GameObject* child = nullptr);
 		void RemoveChild(long childID);
 		GameObject *GetFirstChild();
 		GameObject *FindChildByName(std::string name);
 		std::vector<long> GetChildren();
+		std::map<long, GameObject*>& GetChildrenMap();
 		bool HasChildren();
 		void SetActive(bool b_active);
 		bool IsActive();
@@ -133,6 +135,7 @@ namespace FlatEngine
 		bool m_b_isActive;
 		std::vector<Component*> m_components;
 		std::vector<long> m_childrenIDs;
+		std::map<long, GameObject*> m_children;
 		bool m_b_persistant;
 		long m_hierarchyPosition;
 	};

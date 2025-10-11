@@ -36,6 +36,7 @@ namespace FlatEngine
 		m_components = std::vector<Component*>();
 		m_b_isActive = true;
 		m_childrenIDs = std::vector<long>();
+		m_children = std::map<long, GameObject*>();
 		m_b_persistant = false;
 		m_hierarchyPosition = 0;
 	}
@@ -885,28 +886,29 @@ namespace FlatEngine
 		return m_parentID;
 	}
 
-	void GameObject::AddChild(long childID)
+	void GameObject::AddChild(long childID, GameObject* child)
 	{
 		if (childID != -1)
 		{
-			bool b_contains = false;
-
-			for (long ID : m_childrenIDs)
+			if (m_children.count(childID) == 0)
 			{
-				if (ID == childID)
-				{
-					b_contains = true;
-				}
-			}
-			if (!b_contains)
-			{
+				m_children.emplace(childID, child);
 				m_childrenIDs.push_back(childID);
+			}
+			else if (m_children.at(childID) == nullptr)
+			{
+				m_children.at(childID) = child;
 			}
 		}
 	}
 
 	void GameObject::RemoveChild(long childID)
 	{
+		if (m_children.count(childID))
+		{
+			m_children.erase(childID);
+		}
+
 		for (int i = 0; i < m_childrenIDs.size(); i++)
 		{
 			if (m_childrenIDs[i] == childID)
@@ -937,6 +939,11 @@ namespace FlatEngine
 	std::vector<long> GameObject::GetChildren()
 	{
 		return m_childrenIDs;
+	}
+
+	std::map<long, GameObject*>& GameObject::GetChildrenMap()
+	{
+		return m_children;
 	}
 
 	bool GameObject::HasChildren()

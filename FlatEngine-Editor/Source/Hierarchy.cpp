@@ -430,6 +430,9 @@ namespace FlatGui
 		ImGui::PopStyleColor();
 
 
+		// Control click a Hierarchy item to focus on it in the Scene View
+		if (ImGui::GetIO().KeyCtrl && ImGui::IsItemClicked())
+		{
 			// Get Scene View Dimensions from its ImGui window
 			Vector2 sceneViewDimensions;
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
@@ -442,10 +445,6 @@ namespace FlatGui
 			ImGui::PopStyleVar();
 			ImGui::PopStyleVar();
 
-
-		// Control click a Hierarchy item to focus on it in the Scene View
-		if (ImGui::GetIO().KeyCtrl && ImGui::IsItemClicked())
-		{
 			FL::Transform* transform = currentObject.GetTransform();
 			Vector2 position = transform->GetAbsolutePosition();
 			FG_sceneViewScrolling = Vector2(position.x * -FG_sceneViewGridStep.x + (sceneViewDimensions.x / 2), position.y * FG_sceneViewGridStep.y + (sceneViewDimensions.y / 2));
@@ -569,11 +568,12 @@ namespace FlatGui
 					parent->RemoveChild(dropped->GetID());
 				}
 				// Add dropped object to this object as a child
-				currentObject.AddChild(dropped->GetID());
+				currentObject.AddChild(dropped->GetID(), FL::GetObjectByID(dropped->GetID()));
 				dropped->SetParentID(currentObject.GetID());				
 			}
 			ImGui::EndDragDropTarget();
 		}
+
 		ImGui::PopStyleColor();
 
 
@@ -600,22 +600,32 @@ namespace FlatGui
 			FL::PopMenuStyles();
 		}
 		
-		if (currentObject.HasChildren() && b_nodeOpen)
+		if (b_nodeOpen && currentObject.HasChildren())
 		{
-			std::vector<long> childrenIDs = currentObject.GetChildren();
-			
-			for (long childID : childrenIDs)
+			std::map<long, GameObject*>& childrenMap = currentObject.GetChildrenMap();
+
+			for (std::map<long, GameObject*>::iterator children = childrenMap.begin(); children != childrenMap.end(); children++)
 			{
-				GameObject* child = FL::GetObjectByID(childID);
+				std::string name = children->second->GetName();
+				const char* childName = name.c_str();
 
-				if (child != nullptr)
-				{
-					std::string name = child->GetName();
-					const char* childName = name.c_str();
-
-					AddObjectToHierarchy(*child, childName, node_clicked, queuedForDelete, parentToUnparent, childToRemove, indent);
-				}
+				AddObjectToHierarchy(*children->second, childName, node_clicked, queuedForDelete, parentToUnparent, childToRemove, indent);
 			}
+
+			//std::vector<long> childrenIDs = currentObject.GetChildren();
+			//
+			//for (long childID : childrenIDs)
+			//{
+			//	GameObject* child = FL::GetObjectByID(childID);
+
+			//	if (child != nullptr)
+			//	{
+			//		std::string name = child->GetName();
+			//		const char* childName = name.c_str();
+
+			//		AddObjectToHierarchy(*child, childName, node_clicked, queuedForDelete, parentToUnparent, childToRemove, indent);
+			//	}
+			//}
 
 			ImGui::TreePop();
 		}
