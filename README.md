@@ -21,7 +21,7 @@ When you are finished editing the source code, you need to build the Editor proj
 - This project is in active development and is a hobby project.
 - It will likely crash eventually so save often. ***There is no autosave***. However, when loading into a new scene, or when starting the game loop, FlatEngine2D saves a temporary copy of your scene in `engine/tempFiles`. The engine will then load this copy once you stop the game loop, preserving changes made after last save but before starting the game loop.
 - Things will change with updates.
-- Key systems are not optimized.
+- Key systems are not optimized. The Instantiate() function in particular is a bit heavy, so calling it multiple times per frame can cause frame time to increase.  I'll be looking into ways of optimizing this in the future. The Hierarchy is also less optimized and just hiding the viewport in the Viewports menu can drastically improve performance as the number of scene objects increases.
 - The Box2D implementation of joints is only partly complete and only includes distance joints at the moment. Expect ReadMe documentation changes to come in the near future.
 
 # Updates
