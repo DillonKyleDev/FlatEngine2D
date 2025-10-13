@@ -74,7 +74,7 @@
                     "_isActive": true,
                     "_isCollapsed": false,
                     "id": 0,
-                    "rotation": 0.0,
+                    "rotation": 5.434013843536377,
                     "type": "Transform",
                     "xPos": 14.0,
                     "xScale": 1.0,
@@ -1924,9 +1924,7 @@
             "_isActive": true,
             "_isPersistant": false,
             "_isPrefab": false,
-            "children": [
-                16
-            ],
+            "children": [],
             "collidesTags": [
                 {
                     "Ball": false
@@ -2025,172 +2023,6 @@
             "prefabName": "",
             "spawnLocationX": 7.509725570678711,
             "spawnLocationY": -8.482490539550781,
-            "tags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ]
-        },
-        {
-            "_isActive": true,
-            "_isPersistant": false,
-            "_isPrefab": false,
-            "children": [],
-            "collidesTags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ],
-            "components": [
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 48,
-                    "rotation": -77.48999786376953,
-                    "type": "Transform",
-                    "xPos": 3.1128382682800293,
-                    "xScale": 1.0,
-                    "yPos": 2.5291833877563477,
-                    "yScale": 1.0
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 49,
-                    "path": "..\\projects\\Pool\\images\\smokeParticle.png",
-                    "pivotPoint": "PivotTopLeft",
-                    "renderOrder": 27,
-                    "tintColorW": 1.0,
-                    "tintColorX": 1.0,
-                    "tintColorY": 1.0,
-                    "tintColorZ": 1.0,
-                    "type": "Sprite",
-                    "xOffset": 0.0,
-                    "xScale": 0.5009999871253967,
-                    "yOffset": 0.0,
-                    "yScale": 0.44999998807907104
-                }
-            ],
-            "id": 16,
-            "name": "r_arm",
-            "parent": 15,
-            "prefabName": "",
-            "spawnLocationX": 3.1128382682800293,
-            "spawnLocationY": 2.5291833877563477,
             "tags": [
                 {
                     "Ball": false

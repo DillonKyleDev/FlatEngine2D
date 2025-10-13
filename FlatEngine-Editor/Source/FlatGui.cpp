@@ -1900,7 +1900,7 @@ namespace FlatGui
 
 			Vector2 mousePos = Vector2(inputOutput.MousePos.x, inputOutput.MousePos.y);
 			float scrollInput = inputOutput.MouseWheel;
-			float zoomSpeed = 1;
+			float zoomSpeed = 0.2f;
 			float finalZoomSpeed = zoomSpeed * zoomMultiplier;
 
 			if (inputOutput.KeyCtrl)
@@ -1920,7 +1920,7 @@ namespace FlatGui
 
 			if (b_isHovered)
 			{
-				Vector2 mouseOffsetFromSceneCenter = ((FL::GetMousePosScreen() - FG_sceneViewportCenter) * 0.1f);
+				Vector2 mouseOffsetFromSceneCenter = ((FL::GetMousePosScreen() - FG_sceneViewportCenter) * 0.1f * zoomSpeed);
 
 				if (scrollInput > 0)
 				{
