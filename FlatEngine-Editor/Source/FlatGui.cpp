@@ -590,6 +590,7 @@ namespace FlatGui
 		Button* button = self.GetButton();
 		Canvas* canvas = self.GetCanvas();
 		Text* text = self.GetText();
+		CharacterController* characterController = self.GetCharacterController();
 		Body* body = self.GetBody();
 		JointMaker* jointMaker = self.GetJointMaker();
 		TileMap* tileMap = self.GetTileMap();
@@ -824,6 +825,79 @@ namespace FlatGui
 				}
 			}
 
+			if (characterController != nullptr)
+			{
+				//bool b_isActive = characterController->IsActive();
+				//Capsule* capsule = characterController->GetCapsule();
+				//b2Capsule capsuleShape = b2Shape_GetCapsule(capsule->GetShapeID());	
+				//Shape::ShapeProps shapeProps = capsule->GetShapeProps();
+				//bool b_isSensor = shapeProps.b_isSensor;				
+				//float length = shapeProps.capsuleLength;
+				//float radius = shapeProps.radius;
+				//float radiusScreen = radius * FG_sceneViewGridStep.x;
+				//Vector2 offset = shapeProps.positionOffset;
+				//float rotation = FL::RadiansToDegrees(b2Rot_GetAngle(shapeProps.rotationOffset));
+
+				//Vector2 center1 = Scene_ConvertWorldToScreen(Vector2(b2Body_GetWorldPoint(body->GetBodyID(), capsuleShape.center1)));
+				//Vector2 center2 = Scene_ConvertWorldToScreen(Vector2(b2Body_GetWorldPoint(body->GetBodyID(), capsuleShape.center2)));
+				//Vector2 difference = center2 - center1;
+				//Vector2 diffN = Vector2::Normalize(difference);
+				//Vector2 diffNR = diffN * radiusScreen;
+				//Vector2 diffPerp = Vector2::Rotate(diffNR, 90);
+				//Vector2 flippedDiffPerp = Vector2::Rotate(diffNR, -90);
+
+				//Vector4 color;
+				//Vector4 colorLight;
+
+				//if (b_isActive)
+				//{
+				//	if (b_isSensor)
+				//	{
+				//		color = FL::GetColor("sensorActive");
+				//		colorLight = FL::GetColor("sensorActiveLight");
+				//	}
+				//	else
+				//	{
+				//		color = FL::GetColor("capsuleColliderActive");
+				//		colorLight = FL::GetColor("capsuleColliderActiveLight");
+				//	}
+				//}
+				//else
+				//{
+				//	if (b_isSensor)
+				//	{
+				//		color = FL::GetColor("sensorInactive");
+				//		colorLight = FL::GetColor("sensorInactiveLight");
+				//	}
+				//	else
+				//	{
+				//		color = FL::GetColor("capsuleColliderInactive");
+				//		colorLight = FL::GetColor("capsuleColliderInactiveLight");
+				//	}
+				//}
+
+
+				//drawSplitter->SetCurrentChannel(drawList, FL::F_maxSpriteLayers + 2);
+
+				//FL::DrawCircle(center1, radiusScreen, colorLight, drawList, 2.0f);
+				//FL::DrawCircle(center1, radiusScreen, color, drawList);
+
+				//FL::DrawCircle(center2, radiusScreen, colorLight, drawList, 2.0f);
+				//FL::DrawCircle(center2, radiusScreen, color, drawList);
+
+				//FL::DrawLine(center1 - diffNR, center1 + diffNR, colorLight, 2.0f, drawList);
+				//FL::DrawLine(center2 - diffNR, center2 + diffNR, colorLight, 2.0f, drawList);
+				//FL::DrawLine(center1 - diffPerp, center1 + diffPerp, colorLight, 2.0f, drawList);
+				//FL::DrawLine(center2 - diffPerp, center2 + diffPerp, colorLight, 2.0f, drawList);
+
+				//// Sides
+				//FL::DrawLine(center1 + diffPerp, center1 + diffPerp + difference, colorLight, 2.0f, drawList);
+				//FL::DrawLine(center1 + diffPerp, center1 + diffPerp + difference, color, 1.0f, drawList);
+
+				//FL::DrawLine(center1 + flippedDiffPerp, center1 + flippedDiffPerp + difference, colorLight, 2.0f, drawList);
+				//FL::DrawLine(center1 + flippedDiffPerp, center1 + flippedDiffPerp + difference, color, 1.0f, drawList);
+			}
+
 			if (body != nullptr)
 			{
 				std::list<Box>& boxes = body->GetBoxes();
@@ -886,7 +960,16 @@ namespace FlatGui
 					bool b_isSensor = shapeProps.b_isSensor;
 					float radius = shapeProps.radius * FG_sceneViewGridStep.x;
 					Vector2 offset = shapeProps.positionOffset;
-					Vector2 center = Scene_ConvertWorldToScreen(position + Vector2::Rotate(offset, rotation));
+					Vector2 center;
+
+					//if (self.GetParentID() == -1)
+					{
+						center = Scene_ConvertWorldToScreen(absolutePosition + Vector2::Rotate(offset, rotation));
+					}
+					//else if (bodyProps.type == b2_kinematicBody)
+					{
+						//center = Scene_ConvertWorldToScreen(transform->GetPosition() + Vector2::Rotate(offset, rotation));
+					}				
 
 					drawSplitter->SetCurrentChannel(drawList, FL::F_maxSpriteLayers + 2);
 
@@ -1900,7 +1983,7 @@ namespace FlatGui
 
 			Vector2 mousePos = Vector2(inputOutput.MousePos.x, inputOutput.MousePos.y);
 			float scrollInput = inputOutput.MouseWheel;
-			float zoomSpeed = 0.2f;
+			float zoomSpeed = 0.7f;
 			float finalZoomSpeed = zoomSpeed * zoomMultiplier;
 
 			if (inputOutput.KeyCtrl)

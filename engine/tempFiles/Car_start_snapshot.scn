@@ -1,0 +1,994 @@
+{
+    "Scene GameObjects": [
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": true
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": true
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 0,
+                    "rotation": 0.0,
+                    "type": "Transform",
+                    "xPos": 0.0,
+                    "xScale": 1.0,
+                    "yPos": 0.0,
+                    "yScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_lockedRotation": false,
+                    "_lockedXAxis": false,
+                    "_lockedYAxis": false,
+                    "angularDamping": 0.0,
+                    "bodyType": 0,
+                    "gravityScale": 1.0,
+                    "id": 1,
+                    "linearDamping": 0.0,
+                    "shapes": [
+                        {
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
+                            "_horizontal": false,
+                            "_isLoop": false,
+                            "_isSensor": false,
+                            "capsuleLength": 4.0,
+                            "cornerRadius": 0.0,
+                            "density": 1.0,
+                            "friction": 0.30000001192092896,
+                            "height": 2.0,
+                            "points": [],
+                            "radius": 1.0,
+                            "restitution": 0.30000001192092896,
+                            "rollingResistance": 0.0,
+                            "rotationOffsetCos": 1.0,
+                            "rotationOffsetSin": 0.0,
+                            "shape": 1,
+                            "tangentSpeed": 0.0,
+                            "width": 60.0,
+                            "xOffset": 0.0,
+                            "yOffset": 0.0
+                        }
+                    ],
+                    "type": "Body"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 27,
+                    "path": "..\\projects\\Pool\\images\\colors\\field.png",
+                    "pivotPoint": "PivotCenter",
+                    "renderOrder": 27,
+                    "tintColorW": 1.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "type": "Sprite",
+                    "xOffset": 8.0,
+                    "xScale": 30.0,
+                    "yOffset": 8.0,
+                    "yScale": 1.0
+                }
+            ],
+            "id": 0,
+            "name": "Stage",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 0.0,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 11,
+                    "rotation": 0.0,
+                    "type": "Transform",
+                    "xPos": 4.1350722312927246e-07,
+                    "xScale": 1.0,
+                    "yPos": 0.027457712218165398,
+                    "yScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "distanceJoints": [],
+                    "id": 12,
+                    "motorJoints": [],
+                    "mouseJoints": [],
+                    "prismaticJoints": [],
+                    "revoluteJoints": [],
+                    "type": "JointMaker",
+                    "weldJoints": [],
+                    "wheelJoints": [
+                        {
+                            "baseProps": {
+                                "_collideConnected": false,
+                                "anchorAX": 2.049999952316284,
+                                "anchorAY": -1.0,
+                                "anchorBX": 0.0,
+                                "anchorBY": 0.0,
+                                "bodyAID": 6,
+                                "bodyBID": 5,
+                                "jointType": 7
+                            },
+                            "jointProps": {
+                                "_enableLimit": false,
+                                "_enableMotor": true,
+                                "_enableSpring": true,
+                                "dampingRatio": 15.0,
+                                "hertz": 10.0,
+                                "localAxisAX": 0.0,
+                                "localAxisAY": 0.0,
+                                "lowerTranslation": 1.0,
+                                "maxMotorTorque": 100.0,
+                                "motorSpeed": 0.0,
+                                "upperTranslation": 2.0
+                            }
+                        },
+                        {
+                            "baseProps": {
+                                "_collideConnected": false,
+                                "anchorAX": -1.75,
+                                "anchorAY": -1.0,
+                                "anchorBX": 0.0,
+                                "anchorBY": 0.0,
+                                "bodyAID": 6,
+                                "bodyBID": 7,
+                                "jointType": 7
+                            },
+                            "jointProps": {
+                                "_enableLimit": false,
+                                "_enableMotor": true,
+                                "_enableSpring": true,
+                                "dampingRatio": 15.0,
+                                "hertz": 10.0,
+                                "localAxisAX": 0.0,
+                                "localAxisAY": 0.0,
+                                "lowerTranslation": 1.0,
+                                "maxMotorTorque": 100.0,
+                                "motorSpeed": 0.0,
+                                "upperTranslation": 2.0
+                            }
+                        }
+                    ]
+                }
+            ],
+            "id": 4,
+            "name": "JointMaker",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 4.1350722312927246e-07,
+            "spawnLocationY": 0.027457712218165398,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 13,
+                    "rotation": -15.680280685424805,
+                    "type": "Transform",
+                    "xPos": 1.7222366333007813,
+                    "xScale": 1.0,
+                    "yPos": 7.369946479797363,
+                    "yScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_lockedRotation": false,
+                    "_lockedXAxis": false,
+                    "_lockedYAxis": false,
+                    "angularDamping": 0.0,
+                    "bodyType": 2,
+                    "gravityScale": 1.0,
+                    "id": 14,
+                    "linearDamping": 0.0,
+                    "shapes": [
+                        {
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
+                            "_horizontal": false,
+                            "_isLoop": false,
+                            "_isSensor": false,
+                            "capsuleLength": 4.0,
+                            "cornerRadius": 0.0,
+                            "density": 1.0,
+                            "friction": 1.0,
+                            "height": 1.0,
+                            "points": [],
+                            "radius": 0.6800000071525574,
+                            "restitution": 0.30000001192092896,
+                            "rollingResistance": 0.0,
+                            "rotationOffsetCos": 1.0,
+                            "rotationOffsetSin": 0.0,
+                            "shape": 2,
+                            "tangentSpeed": 0.0,
+                            "width": 1.0,
+                            "xOffset": 0.0,
+                            "yOffset": 0.0
+                        }
+                    ],
+                    "type": "Body"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 17,
+                    "path": "..\\projects\\Clash\\images\\wheel.png",
+                    "pivotPoint": "PivotCenter",
+                    "renderOrder": 27,
+                    "tintColorW": 1.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "type": "Sprite",
+                    "xOffset": 70.5,
+                    "xScale": 0.07999999821186066,
+                    "yOffset": 70.0,
+                    "yScale": 0.07999999821186066
+                }
+            ],
+            "id": 5,
+            "name": "BackWheel",
+            "parent": 6,
+            "prefabName": "",
+            "spawnLocationX": 1.7222366333007813,
+            "spawnLocationY": 7.369946479797363,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": true
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [
+                5,
+                7
+            ],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 15,
+                    "rotation": 0.0,
+                    "type": "Transform",
+                    "xPos": -0.32930827140808105,
+                    "xScale": 1.0,
+                    "yPos": 8.562021255493164,
+                    "yScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_lockedRotation": false,
+                    "_lockedXAxis": false,
+                    "_lockedYAxis": false,
+                    "angularDamping": 0.0,
+                    "bodyType": 2,
+                    "gravityScale": 1.0,
+                    "id": 16,
+                    "linearDamping": 0.0,
+                    "shapes": [
+                        {
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
+                            "_horizontal": false,
+                            "_isLoop": false,
+                            "_isSensor": false,
+                            "capsuleLength": 4.0,
+                            "cornerRadius": 0.0,
+                            "density": 1.0,
+                            "friction": 0.30000001192092896,
+                            "height": 2.3299999237060547,
+                            "points": [],
+                            "radius": 1.0,
+                            "restitution": 0.30000001192092896,
+                            "rollingResistance": 0.0,
+                            "rotationOffsetCos": 1.0,
+                            "rotationOffsetSin": 0.0,
+                            "shape": 1,
+                            "tangentSpeed": 0.0,
+                            "width": 6.050000190734863,
+                            "xOffset": 0.0,
+                            "yOffset": 0.0
+                        }
+                    ],
+                    "type": "Body"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "attachedScript": "Wheel (Lua)",
+                    "id": 19,
+                    "scriptParameters": [],
+                    "type": "Script"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 23,
+                    "path": "..\\projects\\Clash\\images\\sedanFullGreen.png",
+                    "pivotPoint": "PivotCenter",
+                    "renderOrder": 27,
+                    "tintColorW": 1.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "type": "Sprite",
+                    "xOffset": 256.0,
+                    "xScale": 0.10000000149011612,
+                    "yOffset": 99.5,
+                    "yScale": 0.10000000149011612
+                }
+            ],
+            "id": 6,
+            "name": "Car",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": -0.32930827140808105,
+            "spawnLocationY": 8.562021255493164,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": true
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 20,
+                    "rotation": 0.0,
+                    "type": "Transform",
+                    "xPos": -2.0779151916503906,
+                    "xScale": 1.0,
+                    "yPos": 7.4128031730651855,
+                    "yScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_lockedRotation": false,
+                    "_lockedXAxis": false,
+                    "_lockedYAxis": false,
+                    "angularDamping": 0.0,
+                    "bodyType": 2,
+                    "gravityScale": 1.0,
+                    "id": 21,
+                    "linearDamping": 0.0,
+                    "shapes": [
+                        {
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
+                            "_horizontal": false,
+                            "_isLoop": false,
+                            "_isSensor": false,
+                            "capsuleLength": 4.0,
+                            "cornerRadius": 0.0,
+                            "density": 1.0,
+                            "friction": 1.0,
+                            "height": 1.0,
+                            "points": [],
+                            "radius": 0.6800000071525574,
+                            "restitution": 0.30000001192092896,
+                            "rollingResistance": 0.0,
+                            "rotationOffsetCos": 1.0,
+                            "rotationOffsetSin": 0.0,
+                            "shape": 2,
+                            "tangentSpeed": 0.0,
+                            "width": 1.0,
+                            "xOffset": 0.0,
+                            "yOffset": 0.0
+                        }
+                    ],
+                    "type": "Body"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 22,
+                    "path": "..\\projects\\Clash\\images\\wheel.png",
+                    "pivotPoint": "PivotCenter",
+                    "renderOrder": 25,
+                    "tintColorW": 1.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "type": "Sprite",
+                    "xOffset": 70.5,
+                    "xScale": 0.07999999821186066,
+                    "yOffset": 70.0,
+                    "yScale": 0.07999999821186066
+                }
+            ],
+            "id": 7,
+            "name": "FrontWheel",
+            "parent": 6,
+            "prefabName": "",
+            "spawnLocationX": -2.0779151916503906,
+            "spawnLocationY": 7.4128031730651855,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": true
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 25,
+                    "rotation": 0.0,
+                    "type": "Transform",
+                    "xPos": 0.0,
+                    "xScale": 1.0,
+                    "yPos": 7.199999809265137,
+                    "yScale": 1.0
+                },
+                {
+                    "_follow": true,
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_isPrimaryCamera": false,
+                    "followSmoothing": 0.10000000149011612,
+                    "following": 6,
+                    "frustrumAlpha": 255.0,
+                    "frustrumBlue": 255.0,
+                    "frustrumGreen": 255.0,
+                    "frustrumRed": 255.0,
+                    "height": 30.0,
+                    "id": 26,
+                    "type": "Camera",
+                    "width": 50.0,
+                    "zoom": 47.900001525878906
+                }
+            ],
+            "id": 8,
+            "name": "Camera",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": 0.0,
+            "spawnLocationY": 7.199999809265137,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        },
+        {
+            "_isActive": true,
+            "_isPersistant": false,
+            "_isPrefab": false,
+            "children": [],
+            "collidesTags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": false
+                },
+                {
+                    "Vehicle": true
+                },
+                {
+                    "Wall": false
+                }
+            ],
+            "components": [
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 33,
+                    "rotation": -24.815196990966797,
+                    "type": "Transform",
+                    "xPos": -43.11441421508789,
+                    "xScale": 1.0,
+                    "yPos": 6.106577396392822,
+                    "yScale": 1.0
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "_lockedRotation": false,
+                    "_lockedXAxis": false,
+                    "_lockedYAxis": false,
+                    "angularDamping": 0.0,
+                    "bodyType": 0,
+                    "gravityScale": 1.0,
+                    "id": 34,
+                    "linearDamping": 0.0,
+                    "shapes": [
+                        {
+                            "_enableContactEvents": true,
+                            "_enableSensorEvents": true,
+                            "_horizontal": false,
+                            "_isLoop": false,
+                            "_isSensor": false,
+                            "capsuleLength": 4.0,
+                            "cornerRadius": 0.0,
+                            "density": 1.0,
+                            "friction": 0.30000001192092896,
+                            "height": 2.0,
+                            "points": [],
+                            "radius": 1.0,
+                            "restitution": 0.30000001192092896,
+                            "rollingResistance": 0.0,
+                            "rotationOffsetCos": 1.0,
+                            "rotationOffsetSin": 0.0,
+                            "shape": 1,
+                            "tangentSpeed": 0.0,
+                            "width": 30.0,
+                            "xOffset": 0.0,
+                            "yOffset": 0.0
+                        }
+                    ],
+                    "type": "Body"
+                },
+                {
+                    "_isActive": true,
+                    "_isCollapsed": false,
+                    "id": 35,
+                    "path": "..\\projects\\Pool\\images\\colors\\field.png",
+                    "pivotPoint": "PivotCenter",
+                    "renderOrder": 27,
+                    "tintColorW": 1.0,
+                    "tintColorX": 1.0,
+                    "tintColorY": 1.0,
+                    "tintColorZ": 1.0,
+                    "type": "Sprite",
+                    "xOffset": 8.0,
+                    "xScale": 15.0,
+                    "yOffset": 8.0,
+                    "yScale": 1.0
+                }
+            ],
+            "id": 9,
+            "name": "terrain2",
+            "parent": -1,
+            "prefabName": "",
+            "spawnLocationX": -43.11441421508789,
+            "spawnLocationY": 6.106577396392822,
+            "tags": [
+                {
+                    "Ball": false
+                },
+                {
+                    "Enemy": false
+                },
+                {
+                    "Npc": false
+                },
+                {
+                    "Player": false
+                },
+                {
+                    "Pocket": false
+                },
+                {
+                    "PocketBlocker": false
+                },
+                {
+                    "Table": false
+                },
+                {
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
+                },
+                {
+                    "Wall": false
+                }
+            ]
+        }
+    ]
+}

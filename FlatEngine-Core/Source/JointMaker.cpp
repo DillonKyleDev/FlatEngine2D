@@ -174,6 +174,32 @@ namespace FlatEngine
 		return joints;
 	}
 
+	DistanceJoint* JointMaker::GetDistanceJointByBodyID(long bodyID)
+	{
+		for (DistanceJoint& joint : m_distanceJoints)
+		{
+			if (bodyID == joint.GetBaseProps().bodyAID || bodyID == joint.GetBaseProps().bodyBID)
+			{
+				return &joint;
+			}
+		}
+
+		return nullptr;
+	}
+
+	WheelJoint* JointMaker::GetWheelJointByBodyID(long bodyID)
+	{
+		for (WheelJoint& joint : m_wheelJoints)
+		{
+			if (bodyID == joint.GetBaseProps().bodyAID || bodyID == joint.GetBaseProps().bodyBID)
+			{
+				return &joint;
+			}
+		}
+
+		return nullptr;
+	}
+
 	void JointMaker::Cleanup()
 	{
 		for (Joint* joint : GetJoints())

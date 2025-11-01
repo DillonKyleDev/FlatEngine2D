@@ -384,6 +384,12 @@ namespace FlatEngine
 				std::list<Capsule>& capsules = body->GetCapsules();
 				std::list<FL::Polygon>& polygons = body->GetPolygons();
 				std::list<Chain>& chains = body->GetChains();
+				FL::Physics::BodyProps bodyProps = body->GetBodyProps();
+
+				//if (self.GetParentID() != -1 && bodyProps.type == b2_kinematicBody)
+				//{
+				//	body->SetPosition(position);
+				//}
 
 				for (Box& box : boxes)
 				{
@@ -392,7 +398,7 @@ namespace FlatEngine
 
 					if (b_drawBoxInGame && b_isActive)
 					{
-						FL::Physics::BodyProps bodyProps = body->GetBodyProps();
+						
 						Shape::ShapeProps shapeProps = box.GetShapeProps();
 						Vector4 drawColor = box.GetInGameDrawColor();
 						float thickness = box.GetInGameDraThickness();
@@ -428,7 +434,16 @@ namespace FlatEngine
 						bool b_isSensor = shapeProps.b_isSensor;
 						float radius = shapeProps.radius * F_gameViewGridStep.x;
 						Vector2 offset = shapeProps.positionOffset;
-						Vector2 center = ConvertWorldToScreen(position + Vector2::Rotate(offset, rotation));
+						Vector2 center;
+
+						//if (self.GetParentID() == -1)
+						{
+							center = ConvertWorldToScreen(position + Vector2::Rotate(offset, rotation));
+						}
+						//else if (bodyProps.type == b2_kinematicBody)
+						{
+							//center = ConvertWorldToScreen(transform->GetPosition() + Vector2::Rotate(offset, rotation));
+						}
 
 						drawSplitter->SetCurrentChannel(drawList, FL::F_maxSpriteLayers + 2);
 
@@ -446,8 +461,7 @@ namespace FlatEngine
 					{
 						Vector4 color = capsule.GetInGameDrawColor();
 						Vector4 colorLight = Vector4(color.x, color.y, color.z, 0.35f);
-						float thickness = capsule.GetInGameDraThickness();
-						FL::Physics::BodyProps bodyProps = body->GetBodyProps();
+						float thickness = capsule.GetInGameDraThickness();						
 						Shape::ShapeProps shapeProps = capsule.GetShapeProps();
 						bool b_isSensor = shapeProps.b_isSensor;
 						b2Capsule capsuleShape = b2Shape_GetCapsule(capsule.GetShapeID());
@@ -496,8 +510,7 @@ namespace FlatEngine
 					{
 						Vector4 color = polygon.GetInGameDrawColor();
 						Vector4 colorLight = Vector4(color.x, color.y, color.z, 0.35f);
-						float thickness = polygon.GetInGameDraThickness();
-						FL::Physics::BodyProps& bodyProps = body->GetBodyProps();
+						float thickness = polygon.GetInGameDraThickness();						
 						Shape::ShapeProps& shapeProps = polygon.GetShapeProps();
 						bool b_isSensor = shapeProps.b_isSensor;
 						bool b_isLoop = shapeProps.b_isLoop;
@@ -543,8 +556,7 @@ namespace FlatEngine
 					bool b_drawBoxInGame = chain.DrawInGame();
 
 					if (b_drawBoxInGame && b_isActive)
-					{
-						FL::Physics::BodyProps& bodyProps = body->GetBodyProps();
+					{						
 						Shape::ShapeProps& shapeProps = chain.GetShapeProps();
 						bool b_isLoop = shapeProps.b_isLoop;
 						std::vector<Vector2>& points = shapeProps.points;

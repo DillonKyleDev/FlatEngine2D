@@ -15,6 +15,7 @@
 #include "MappingContext.h"
 #include "Project.h"
 #include "Body.h"
+#include "WheelJoint.h"
 
 #include "box2d.h"
 #include <fstream>
@@ -509,6 +510,7 @@ namespace FlatEngine
 			"GetBody", &GameObject::GetBody,
 			"GetCharacterController", &GameObject::GetCharacterController,		
 			"GetTileMap", &GameObject::GetTileMap,
+			"GetJointMaker", &GameObject::GetJointMaker,
 			"HasComponent", &GameObject::HasComponentLua,
 			
 			"AddSprite", &GameObject::AddSpriteLua,
@@ -720,7 +722,18 @@ namespace FlatEngine
 			"ApplyTorque", &Body::ApplyTorque,
 			"ApplyAngularImpulse", &Body::ApplyAngularImpulse,
 			"GetLinearVelocity", &Body::GetLinearVelocity,
-			"GetAngularVelocity", &Body::GetAngularVelocity
+			"GetAngularVelocity", &Body::GetAngularVelocity,
+			"GetDistanceJoint", &Body::GetDistanceJoint,
+			"GetWheelJoint", &Body::GetWheelJoint
+		);
+
+		F_Lua.new_usertype<JointMaker>("JointMaker",
+			"GetWheelJointByBodyID", &JointMaker::GetWheelJointByBodyID
+		);
+
+		F_Lua.new_usertype<WheelJoint>("WheelJoint",
+			"SetMotorSpeed", &WheelJoint::SetMotorSpeed,
+			"GetMotorSpeed", &WheelJoint::GetMotorSpeed
 		);
 
 		F_Lua.new_usertype<CharacterController>("CharacterController",

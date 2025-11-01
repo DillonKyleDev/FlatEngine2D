@@ -12,6 +12,7 @@ namespace FlatEngine
 		SetType(T_CharacterController);
 		SetID(myID);
 		SetParentID(parentID);
+		//m_capsule = Capsule();
 		m_maxAcceleration = 0.5f;
 		m_maxSpeed = 10.0f;
 		m_airControl = 0.2f;
@@ -37,6 +38,12 @@ namespace FlatEngine
 
 		std::string data = jsonData.dump();
 		return data;
+	}
+
+	Capsule* CharacterController::GetCapsule()
+	{
+		//return &m_capsule;
+		return nullptr;
 	}
 
 	void CharacterController::MoveToward(Vector2 direction)

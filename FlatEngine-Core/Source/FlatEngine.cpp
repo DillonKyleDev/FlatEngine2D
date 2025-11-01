@@ -1225,17 +1225,17 @@ namespace FlatEngine
 				//	F_CursorMode = F_CURSOR_MODE::TILE_MOVE;
 				//	break;
 
-				case SDLK_DELETE:
-					DeleteGameObject(F_FocusedGameObjectID);
+				case SDLK_DELETE:				
+					//DeleteGameObject(F_FocusedGameObjectID);
 					break;
 
 				case SDLK_HOME:
-					LoadScene(GetLoadedScenePath());
-					LogString("Scene Reloaded");
+					//LoadScene(GetLoadedScenePath());
+					//LogString("Scene Reloaded");
 					break;				
 
 				case SDLK_SPACE:
-					PauseGameLoop();
+					//PauseGameLoop();
 					break;				
 				}
 			}
@@ -3256,7 +3256,7 @@ namespace FlatEngine
 		jointProps.localAxisA = Vector2(CheckJsonFloat(jointJson, "localAxisAX", objectName), CheckJsonFloat(jointJson, "localAxisAY", objectName));
 		jointProps.lowerTranslation = CheckJsonFloat(jointJson, "lowerTranslation", objectName);
 		jointProps.upperTranslation = CheckJsonFloat(jointJson, "upperTranslation", objectName);
-		jointProps.maxMotorTorque = CheckJsonFloat(jointJson, "maxMotorForce", objectName);
+		jointProps.maxMotorTorque = CheckJsonFloat(jointJson, "maxMotorTorque", objectName);
 		jointProps.motorSpeed = CheckJsonFloat(jointJson, "motorSpeed", objectName);
 	}
 

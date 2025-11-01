@@ -1,21 +1,15 @@
 {
     "mappings": {
-        "Keyboard: Backspace": {
-            "doubleAction": "",
-            "downAction": "",
-            "holdAction": "",
-            "upAction": ""
-        },
         "Keyboard: a": {
             "doubleAction": "",
-            "downAction": "IA_Left",
-            "holdAction": "",
+            "downAction": "",
+            "holdAction": "IA_Left",
             "upAction": ""
         },
         "Keyboard: d": {
             "doubleAction": "",
-            "downAction": "IA_Right",
-            "holdAction": "",
+            "downAction": "",
+            "holdAction": "IA_Right",
             "upAction": ""
         },
         "Keyboard: s": {
@@ -35,12 +29,6 @@
             "downAction": "IA_BeginShot",
             "holdAction": "IA_Aiming",
             "upAction": "IA_ReleaseShot"
-        },
-        "Mouse: Middle Click": {
-            "doubleAction": "",
-            "downAction": "",
-            "holdAction": "",
-            "upAction": ""
         }
     },
     "name": "MC_Player"

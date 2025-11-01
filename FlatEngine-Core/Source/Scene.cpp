@@ -165,10 +165,10 @@ namespace FlatEngine
 
 		GameObject* newObjectPtr = AddSceneObject(newObject);
 
-		if (parentID != -1 && m_sceneObjects.count(parentID))
-		{
-			m_sceneObjects.at(parentID).AddChild(newObject.GetID(), newObjectPtr);
-		}
+		//if (parentID != -1 && m_sceneObjects.count(parentID))
+		//{
+		//	m_sceneObjects.at(parentID).AddChild(newObject.GetID(), &(*newObjectPtr));
+		//}
 
 		return newObjectPtr;
 	}
@@ -322,6 +322,7 @@ namespace FlatEngine
 		std::sort(m_sortedHierarchyObjects.begin(), m_sortedHierarchyObjects.end(), SortHierarchyObjects);
 	}
 
+	// TODO: Loop m_sortedHierarchyObjects in when Deleting GameObjects and delete from there too.
 	std::vector<GameObject*> Scene::GetSortedHierarchyObjects()
 	{
 		return m_sortedHierarchyObjects;

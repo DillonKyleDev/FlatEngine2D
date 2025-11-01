@@ -12,43 +12,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -57,13 +27,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": true
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -74,7 +44,7 @@
                     "_isActive": true,
                     "_isCollapsed": false,
                     "id": 0,
-                    "rotation": 5.434013843536377,
+                    "rotation": 6.244240760803223,
                     "type": "Transform",
                     "xPos": 14.0,
                     "xScale": 1.0,
@@ -131,43 +101,13 @@
                     "Ball": true
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -176,13 +116,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": true
-                },
-                {
                     "Table": false
                 },
                 {
-                    "Terrain": false
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -199,43 +139,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -244,13 +154,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -291,7 +201,7 @@
                                 "hertz": 0.5,
                                 "length": 4.0,
                                 "maxLength": 5.0,
-                                "maxMotorForce": 2.0,
+                                "maxMotorForce": -1.0,
                                 "minLength": 3.0,
                                 "motorSpeed": 10.0
                             }
@@ -315,7 +225,7 @@
                                 "hertz": 0.15000000596046448,
                                 "length": 4.0,
                                 "maxLength": 5.0,
-                                "maxMotorForce": 2.0,
+                                "maxMotorForce": -1.0,
                                 "minLength": 3.0,
                                 "motorSpeed": 10.0
                             }
@@ -342,43 +252,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -387,13 +267,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -410,43 +290,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -455,13 +305,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -529,43 +379,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -574,13 +394,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -597,43 +417,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -642,13 +432,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -695,43 +485,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -740,13 +500,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -763,43 +523,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -808,13 +538,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -882,43 +612,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -927,13 +627,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -952,43 +652,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -997,13 +667,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": true
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1071,43 +741,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1116,13 +756,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": true
-                },
-                {
                     "Table": false
                 },
                 {
-                    "Terrain": false
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1139,43 +779,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1184,13 +794,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1253,43 +863,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1298,13 +878,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1321,43 +901,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1366,13 +916,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1419,43 +969,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1464,13 +984,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1487,43 +1007,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1532,13 +1022,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1585,43 +1075,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1630,13 +1090,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": false
-                },
-                {
                     "Table": false
                 },
                 {
                     "Terrain": false
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1653,43 +1113,13 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
@@ -1698,13 +1128,13 @@
                     "PocketBlocker": false
                 },
                 {
-                    "Projectile": true
-                },
-                {
                     "Table": false
                 },
                 {
-                    "Terrain": false
+                    "Terrain": true
+                },
+                {
+                    "Vehicle": false
                 },
                 {
                     "Wall": false
@@ -1862,52 +1292,19 @@
                     "Ball": false
                 },
                 {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
                     "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
                 },
                 {
                     "Npc": false
                 },
                 {
-                    "NpcTrigger": false
-                },
-                {
                     "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
                 },
                 {
                     "Pocket": false
                 },
                 {
                     "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
                 },
                 {
                     "Table": false
@@ -1916,170 +1313,7 @@
                     "Terrain": true
                 },
                 {
-                    "Wall": false
-                }
-            ]
-        },
-        {
-            "_isActive": true,
-            "_isPersistant": false,
-            "_isPrefab": false,
-            "children": [],
-            "collidesTags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
-                },
-                {
-                    "Wall": false
-                }
-            ],
-            "components": [
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 46,
-                    "rotation": 0.0,
-                    "type": "Transform",
-                    "xPos": 7.509725570678711,
-                    "xScale": 1.0,
-                    "yPos": -8.482490539550781,
-                    "yScale": 1.0
-                },
-                {
-                    "_isActive": true,
-                    "_isCollapsed": false,
-                    "id": 47,
-                    "path": "..\\projects\\Pool\\images\\texture.jpg",
-                    "pivotPoint": "PivotCenter",
-                    "renderOrder": 27,
-                    "tintColorW": 1.0,
-                    "tintColorX": 1.0,
-                    "tintColorY": 1.0,
-                    "tintColorZ": 1.0,
-                    "type": "Sprite",
-                    "xOffset": 256.0,
-                    "xScale": 0.10000000149011612,
-                    "yOffset": 256.0,
-                    "yScale": 0.10000000149011612
-                }
-            ],
-            "id": 15,
-            "name": "Character",
-            "parent": -1,
-            "prefabName": "",
-            "spawnLocationX": 7.509725570678711,
-            "spawnLocationY": -8.482490539550781,
-            "tags": [
-                {
-                    "Ball": false
-                },
-                {
-                    "Collectable": false
-                },
-                {
-                    "Cup": false
-                },
-                {
-                    "Enemy": false
-                },
-                {
-                    "EnemyDamage": false
-                },
-                {
-                    "EnemyTrigger": false
-                },
-                {
-                    "EnvironmentalDamage": false
-                },
-                {
-                    "EnvironmentalTrigger": false
-                },
-                {
-                    "InteractableObject": false
-                },
-                {
-                    "Npc": false
-                },
-                {
-                    "NpcTrigger": false
-                },
-                {
-                    "Player": false
-                },
-                {
-                    "PlayerDamage": false
-                },
-                {
-                    "PlayerTrigger": false
-                },
-                {
-                    "Pocket": false
-                },
-                {
-                    "PocketBlocker": false
-                },
-                {
-                    "Projectile": false
-                },
-                {
-                    "Table": false
-                },
-                {
-                    "Terrain": false
+                    "Vehicle": false
                 },
                 {
                     "Wall": false

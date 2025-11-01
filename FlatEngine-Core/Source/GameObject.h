@@ -115,6 +115,7 @@ namespace FlatEngine
 		GameObject *FindChildByName(std::string name);
 		std::vector<long> GetChildren();
 		std::map<long, GameObject*>& GetChildrenMap();
+		void CollectChildren();
 		bool HasChildren();
 		void SetActive(bool b_active);
 		bool IsActive();

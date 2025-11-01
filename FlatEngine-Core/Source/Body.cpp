@@ -35,6 +35,7 @@ namespace FlatEngine
 		m_b_endSensorTouchCallbackSet = false;
 
 		m_distanceJoints = std::list<DistanceJoint*>();
+		m_wheelJoints = std::list<WheelJoint*>();
 	}
 
 	Body::~Body()
@@ -617,7 +618,33 @@ namespace FlatEngine
 		case Joint::JT_Distance:
 		{
 			m_distanceJoints.push_back(static_cast<DistanceJoint*>(joint));
+			break;
+		}
+		case Joint::JT_Wheel:
+		{
+			m_wheelJoints.push_back(static_cast<WheelJoint*>(joint));
+			break;
 		}
 		}
+	}
+
+	std::list<DistanceJoint*> Body::GetDistanceJoints()
+	{
+		return m_distanceJoints;
+	}
+
+	std::list<WheelJoint*> Body::GetWheelJoints()
+	{
+		return m_wheelJoints;
+	}
+
+	DistanceJoint* Body::GetDistanceJoint()
+	{
+		return m_distanceJoints.front();
+	}
+
+	WheelJoint* Body::GetWheelJoint()
+	{
+		return m_wheelJoints.front();
 	}
 }

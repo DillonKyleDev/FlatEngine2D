@@ -66,7 +66,7 @@ namespace FlatEngine
 		Vector2 rotatedPosition = m_position;
 		GameObject* objectParent = GetParent()->GetParent();
 
-		if (objectParent != nullptr)
+		if (objectParent != nullptr && body == nullptr)
 		{						
 			Transform* parentTransform = objectParent->GetTransform();
 			float parentRotation = parentTransform->GetAbsoluteRotation();

@@ -3,8 +3,8 @@
 ----------------------------
 
 F_Tags = {
+    "Vehicle",
     "Ball",
-    "Cup",
     "Table",
     "Pocket",
     "PocketBlocker",
@@ -12,15 +12,5 @@ F_Tags = {
     "Enemy",
     "Npc",
     "Terrain",
-    "PlayerTrigger",
-    "EnemyTrigger",
-    "NpcTrigger",
-    "EnvironmentalTrigger",
-    "PlayerDamage",
-    "EnemyDamage",
-    "EnvironmentalDamage",
-    "Projectile",
-    "InteractableObject",
-    "Collectable",
-    "Wall",
+    "Wall"
 }

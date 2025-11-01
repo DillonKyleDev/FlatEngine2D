@@ -31,6 +31,9 @@ namespace FlatEngine
         void AddWheelJoint(Joint::BaseProps baseProps = Joint::BaseProps(), WheelJoint::WheelJointProps jointProps = WheelJoint::WheelJointProps());
 
         std::vector<Joint*> GetJoints();
+        //Joint* GetJointByBodyID(long bodyID);
+        DistanceJoint* GetDistanceJointByBodyID(long bodyID);
+        WheelJoint* GetWheelJointByBodyID(long bodyID);
 
         void Cleanup();
         void RemoveJoint(long jointIDToDelete);

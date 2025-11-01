@@ -26,6 +26,19 @@ namespace FlatEngine
 		json GetJointData();
 		WheelJointProps& GetJointProps();
 
+		void SetJointProps(WheelJointProps jointProps);
+		void SetEnableSpring(bool b_enableSpring);
+		void SetSpringHertz(float hertz);
+		float GetSpringHertz();
+		void SetSpringDampingRatio(float springDampingRatio);
+		float GetSpringDampingRatio();
+		void SetEnableMotor(bool b_enableMotor);
+		void SetMotorSpeed(float motorSpeed);
+		float GetMotorSpeed();
+		void SetMaxMotorTorque(float maxMotorTorque);
+		float GetMotorTorque();
+		void SetEnableLimit(bool b_enableLimit);
+
     private:
         WheelJointProps m_jointProps;
     };

@@ -13,15 +13,10 @@ namespace FlatEngine
 {
 	class Joint;
 	class DistanceJoint;
+	class WheelJoint;
 
 	class Body : public Component
 	{
-		friend class BoxBody;
-		friend class CircleBody;
-		friend class CapsuleBody;
-		friend class PolygonBody;
-		friend class ChainBody;
-
 	public:
 		Body(long myID = -1, long parentID = -1);
 		~Body();
@@ -92,6 +87,10 @@ namespace FlatEngine
 		void AddChain(Shape::ShapeProps shapeProps = Shape::ShapeProps());
 
 		void AddJoint(Joint* joint);
+		std::list<DistanceJoint*> GetDistanceJoints();
+		std::list<WheelJoint*> GetWheelJoints();
+		DistanceJoint* GetDistanceJoint();
+		WheelJoint* GetWheelJoint();
 
 		void Cleanup();
 
@@ -103,6 +102,7 @@ namespace FlatEngine
 		std::list<Polygon> m_polygons;
 		std::list<Chain> m_chains;
 		std::list<DistanceJoint*> m_distanceJoints;
+		std::list<WheelJoint*> m_wheelJoints;
 
 		Physics::BodyProps m_bodyProps;			
 		// Contacts

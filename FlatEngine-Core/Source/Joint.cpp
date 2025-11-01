@@ -70,6 +70,11 @@ namespace FlatEngine
 		
 		m_baseProps.bodyAID = bodyAID;
 		RecreateJoint();
+
+		if (GetObjectByID(bodyAID) != nullptr)
+		{
+			GetObjectByID(bodyAID)->GetBody()->AddJoint(this);
+		}
 	}
 
 	void Joint::SetBodyBID(long bodyBID)
@@ -81,6 +86,11 @@ namespace FlatEngine
 
 		m_baseProps.bodyBID = bodyBID;
 		RecreateJoint();
+
+		if (GetObjectByID(bodyBID) != nullptr)
+		{
+			GetObjectByID(bodyBID)->GetBody()->AddJoint(this);
+		}
 	}
 
 	Joint::JointType Joint::GetJointType()

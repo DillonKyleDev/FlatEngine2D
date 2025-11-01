@@ -888,12 +888,29 @@ namespace FlatEngine
 
 	void GameObject::AddChild(long childID, GameObject* child)
 	{
+		bool b_hasChild = false;
+
+		for (int i = 0; i < m_childrenIDs.size(); i++)
+		{
+			if (m_childrenIDs[i] == childID)
+			{
+				b_hasChild = true;				
+			}
+		}
+
+		if (!b_hasChild)
+		{
+			m_childrenIDs.push_back(childID);
+		}
+
 		if (childID != -1)
 		{
 			if (m_children.count(childID) == 0)
-			{
-				m_children.emplace(childID, child);
-				m_childrenIDs.push_back(childID);
+			{				
+				if (child != nullptr)
+				{
+					m_children.emplace(childID, child);
+				}			
 			}
 			else if (m_children.at(childID) == nullptr)
 			{
@@ -944,6 +961,25 @@ namespace FlatEngine
 	std::map<long, GameObject*>& GameObject::GetChildrenMap()
 	{
 		return m_children;
+	}
+
+	void GameObject::CollectChildren()
+	{
+		for (long ID : m_childrenIDs)
+		{
+			GameObject* child = GetObjectByID(ID);
+			if (child != nullptr)
+			{
+				if (m_children.count(ID) == 0)
+				{
+					m_children.emplace(ID, child);
+				}
+				else
+				{
+					m_children.at(ID) = child;
+				}
+			}
+		}
 	}
 
 	bool GameObject::HasChildren()

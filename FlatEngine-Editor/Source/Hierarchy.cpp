@@ -97,8 +97,15 @@ namespace FlatGui
 			float isPrefabIconColumnWidth = 25;
 			static float currentIndent = 10;
 			static bool b_allAreVisible = false;
-			std::vector<GameObject*> sceneObjects = FL::GetLoadedScene()->GetSortedHierarchyObjects();
+			//std::vector<GameObject*> sceneObjects = FL::GetLoadedScene()->GetSortedHierarchyObjects();
+			std::map<long, GameObject>& sceneObjectsMap = FL::GetLoadedScene()->GetSceneObjects();
+			std::vector<GameObject*> sceneObjects = std::vector<GameObject*>();
 			std::map<long, GameObject>& persistantObjects = FL::GetPersistantObjects();
+
+			for (std::map<long, GameObject>::iterator iter = sceneObjectsMap.begin(); iter != sceneObjectsMap.end(); iter++)
+			{
+				sceneObjects.push_back(&iter->second);
+			}
 
 			static int node_clicked = -1;
 
@@ -119,7 +126,7 @@ namespace FlatGui
 					ImGui::TableNextRow();
 					// {
 
-						// Visible/Invisible all gameObjects at once
+					// Visible/Invisible all gameObjects at once
 					ImGui::TableSetColumnIndex(0);
 					if (b_allAreVisible)
 					{
@@ -602,30 +609,30 @@ namespace FlatGui
 		
 		if (b_nodeOpen && currentObject.HasChildren())
 		{
-			std::map<long, GameObject*>& childrenMap = currentObject.GetChildrenMap();
+			//std::map<long, GameObject*>& childrenMap = currentObject.GetChildrenMap();
 
-			for (std::map<long, GameObject*>::iterator children = childrenMap.begin(); children != childrenMap.end(); children++)
-			{
-				std::string name = children->second->GetName();
-				const char* childName = name.c_str();
-
-				AddObjectToHierarchy(*children->second, childName, node_clicked, queuedForDelete, parentToUnparent, childToRemove, indent);
-			}
-
-			//std::vector<long> childrenIDs = currentObject.GetChildren();
-			//
-			//for (long childID : childrenIDs)
+			//for (std::map<long, GameObject*>::iterator children = childrenMap.begin(); children != childrenMap.end(); children++)
 			//{
-			//	GameObject* child = FL::GetObjectByID(childID);
+			//	std::string name = children->second->GetName();
+			//	const char* childName = name.c_str();
 
-			//	if (child != nullptr)
-			//	{
-			//		std::string name = child->GetName();
-			//		const char* childName = name.c_str();
-
-			//		AddObjectToHierarchy(*child, childName, node_clicked, queuedForDelete, parentToUnparent, childToRemove, indent);
-			//	}
+			//	AddObjectToHierarchy(*children->second, childName, node_clicked, queuedForDelete, parentToUnparent, childToRemove, indent);
 			//}
+
+			std::vector<long> childrenIDs = currentObject.GetChildren();
+			
+			for (long childID : childrenIDs)
+			{
+				GameObject* child = FL::GetObjectByID(childID);
+
+				if (child != nullptr)
+				{
+					std::string name = child->GetName();
+					const char* childName = name.c_str();
+
+					AddObjectToHierarchy(*child, childName, node_clicked, queuedForDelete, parentToUnparent, childToRemove, indent);
+				}
+			}
 
 			ImGui::TreePop();
 		}

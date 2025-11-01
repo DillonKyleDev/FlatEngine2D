@@ -1955,11 +1955,11 @@ namespace FlatGui
 			//	ImGui::CloseCurrentPopup();
 			//}
 
-			//if (ImGui::MenuItem("Wheel Joint"))
-			//{
-			//	jointMaker->AddWheelJoint();
-			//	ImGui::CloseCurrentPopup();
-			//}
+			if (ImGui::MenuItem("Wheel Joint"))
+			{
+				jointMaker->AddWheelJoint();
+				ImGui::CloseCurrentPopup();
+			}
 
 			//if (ImGui::MenuItem("Motor Joint"))
 			//{
@@ -2346,7 +2346,82 @@ namespace FlatGui
 
 	void RenderWheelJointProps(WheelJoint* joint)
 	{
+		long jointID = joint->GetJointID();
+		std::string ID = std::to_string(jointID);
+		if (joint->GetBodyA() != nullptr)
+		{
+			ID += std::to_string(joint->GetBodyA()->GetID());
+		}
+		if (joint->GetBodyB() != nullptr)
+		{
+			ID += std::to_string(joint->GetBodyB()->GetID());
+		}
+		WheelJoint::WheelJointProps jointProps = joint->GetJointProps();
+		float dampingRatio = jointProps.dampingRatio;
+		bool b_enableLimit = jointProps.b_enableLimit;
+		bool b_enableMotor = jointProps.b_enableMotor;
+		bool b_enableSpring = jointProps.b_enableSpring;
+		float hertz = jointProps.hertz;
+		Vector2 localAxisA = jointProps.localAxisA;
+		float lowerTranslation = jointProps.lowerTranslation;
+		float upperTranslation = jointProps.upperTranslation;
+		float maxMotorTorque = jointProps.maxMotorTorque;
+		float motorSpeed = jointProps.motorSpeed;		
 
+
+		if (FL::RenderCheckbox("Enable Spring##Wheel" + ID, b_enableSpring))
+		{
+			joint->SetEnableSpring(b_enableSpring);
+		}
+		if (FL::RenderCheckbox("Enable Motor##Wheel" + ID, b_enableMotor))
+		{
+			joint->SetEnableMotor(b_enableMotor);
+		}
+		if (FL::RenderCheckbox("Enable Limit##Wheel" + ID, b_enableLimit))
+		{
+			joint->SetEnableLimit(b_enableLimit);
+		}
+
+		if (FL::PushTable("##DistanceJointProps" + ID, 2))
+		{
+			// if (b_enableLimits) <-- Probably
+			//if (FL::RenderFloatDragTableRow("##TranslationTarget" + ID, "Local Axis X", localAxisA.x, 0.1f, -FLT_MAX, FLT_MAX))
+			//{				
+			//	//joint->SetLocalAxisA(localAxisA);
+			//}
+			//if (FL::RenderFloatDragTableRow("##LocalAxisAY" + ID, "Local Axis Y", localAxisA.y, 0.1f, -FLT_MAX, FLT_MAX))
+			//{
+			//	//joint->SetLocalAxisA(localAxisA);
+			//}
+
+			// Spring
+			if (b_enableSpring)
+			{
+				if (FL::RenderFloatDragTableRow("##DampingRatioWheel" + ID, "Spring Damping Ratio", dampingRatio, 0.1f, 0, FLT_MAX))
+				{
+					joint->SetSpringDampingRatio(dampingRatio);
+				}
+				if (FL::RenderFloatDragTableRow("##SpringHertzWheel" + ID, "Spring Hertz", hertz, 0.1f, 0, FLT_MAX))
+				{
+					joint->SetSpringHertz(hertz);
+				}
+			}
+			// Motor
+			if (b_enableMotor)
+			{
+				if (FL::RenderFloatDragTableRow("##MotorSpeedWheel" + ID, "Motor Speed", motorSpeed, 0.1f, -FLT_MAX, FLT_MAX))
+				{
+					joint->SetMotorSpeed(motorSpeed);
+				}
+				if (FL::RenderFloatDragTableRow("##MaxMotorTorqueWheel" + ID, "Max Motor Torque", maxMotorTorque, 0.1f, 0, FLT_MAX))
+				{
+					joint->SetMaxMotorTorque(maxMotorTorque);
+				}
+			}
+			FL::PopTable();
+		}
+
+		FL::MoveScreenCursor(0, 3.0f);
 	}
 
 	void RenderTileMapComponent(TileMap* tileMap)
